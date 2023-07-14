@@ -80,7 +80,7 @@
 			}
 			.contentsContainer {
 				width: 99%;
-				height: 82%;
+				height: 88%;
 				overflow-x: hidden;
 				overflow-y: hidden;
 				position: absolute;
@@ -88,21 +88,24 @@
 			}
 			.contents {
 				width: 99%;
-				height: 58%;
+				height: 100%;
 				overflow-x: scroll;
 				overflow-y: scroll;
 				white-space: nowrap;
 			}
 			.westpanel {
+				float: left;
 				vertical-align: top;
 				width: 290px;
 			}
 			.eastpanel {
+				float: left;
 				vertical-align: top;
+				width: calc(99% - 290px);
 			}
 			.dataListContainer {
 				width: 290px;
-				height: 58%;
+				height: 100%;
 				overflow-x: scroll;
 				overflow-y: scroll;
 			}
@@ -261,8 +264,23 @@
 			
 			function handleOnLoad() {
 				applyPageStyle();
+				renderContentsEastPanel();
 				startClock();
 				attachWindowResizeEvent();
+			}
+
+			function renderContentsEastPanel() {
+				let containerId = "contents";
+				let container = document.getElementById(containerId);
+				let html = '';
+				
+				html += '<font color="#ff0000"><b>This is the first line of the contents</b></font>';
+				for (let i=0; i<200; i++) {
+					html += '<br/>This is a very long line of text. It is so long that it exceeds the width of its containing div... This is a very long line of text. It is so long that it exceeds the width of its containing div... This is a very long line of text. It is so long that it exceeds the width of its containing div...';
+				}
+				html += '<br/><font color="#ff0000"><b>This is the last line of the contents</b></font>';
+
+				container.innerHTML = html;
 			}
 			
 			function attachWindowResizeEvent() {
@@ -1360,77 +1378,15 @@
 			</table>
 		</div>
 		<div id="contents1" class="contentsContainer">
-			<table border="0" style="width:100%;height:100%;" cellpadding="0" cellspacing="0">
-				<tr>
-					<td class="westpanel">
-						<div id="dataListContainer" class="dataListContainer"></div>
-					</td>
-					<td class="eastpanel">
-						<div id="contents" class="contents">
-							<font color="#ff0000"><b>This is the first line of the contents</b></font>
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
-							<br/><font color="#ff0000"><b>This is the last line of the contents</b></font>
-						</div>
-						<div id="pleaseWaitDialogContainer" class="pleaseWaitDialogContainer"></div>
-						<div id="dialogContainer" class="dialogContainer"></div>
-					</td>
-				</tr>
-			</table>
+			<div class="westpanel">
+				<div id="dataListContainer" class="dataListContainer"></div>
+			</div>
+			<div class="eastpanel">
+				<div id="contents" class="contents">
+				</div>
+				<div id="pleaseWaitDialogContainer" class="pleaseWaitDialogContainer"></div>
+				<div id="dialogContainer" class="dialogContainer"></div>
+			</div>
 		</div>
 		<div id="footer1" class="footer">
 			<table border="0" style="height:100%;width:100%;">

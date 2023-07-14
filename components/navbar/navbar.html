@@ -51,7 +51,7 @@
 			/**
 			 * The jQuery document ready event handler
 			 */
-			$(document).ready(function() {
+			function handlePageOnLoad() {
 				//initialize globals
 				_navBarTopPageSize = 10;
 				_navBarTopPage = 1;
@@ -98,7 +98,7 @@
 				_navBarBottom = new Navbar(navbarOptsBottom);
 				refreshNavbarTop();
 				refreshNavbarBottom();
-			});
+			}
 			
 			function refreshNavbarTop() {
 				//get values from page
@@ -155,7 +155,7 @@
 			}
 		</script>
 	</head>
-	<body>
+	<body onload="handlePageOnLoad();">
 		<div class="dataTable">
 			<table border="1" cellspacing="0" cellpadding="0">
 				<tr class="headerRow">
@@ -187,7 +187,7 @@
 					<td>
 						<input id="txt_aligntoTop" type="text" value="div1" size="10">
 					</td>
-					<td rospan="3">
+					<td rowspan="3">
 						<select size="1" onchange="refreshTheme(this.value);">
 							<option value="black" selected="selected">black</option>
 							<option value="blue">blue</option>

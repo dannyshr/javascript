@@ -1,0 +1,582 @@
+
+.ui-resizable { position: relative;}
+.ui-resizable-handle { position: absolute;font-size: 0.1px;z-index: 99999; display: block; }
+.ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle { display: none; }
+.ui-resizable-n { cursor: n-resize; height: 7px; width: 100%; top: -5px; left: 0; }
+.ui-resizable-s { cursor: s-resize; height: 7px; width: 100%; bottom: -5px; left: 0; }
+.ui-resizable-e { cursor: e-resize; width: 7px; right: -5px; top: 0; height: 100%; }
+.ui-resizable-w { cursor: w-resize; width: 7px; left: -5px; top: 0; height: 100%; }
+.ui-resizable-se { background-image: url('../../../images/shared/res_handle_se.png');cursor: se-resize; width: 12px; height: 12px; right: 1px; bottom: 1px; }
+.ui-resizable-sw { background-image: url('../../../images/shared/res_handle_sw.png');cursor: sw-resize; width: 12px; height: 12px; left: 1px; bottom: 1px; }
+.ui-resizable-nw { background-image: url('../../../images/shared/res_handle_nw.png');cursor: nw-resize; width: 12px; height: 12px; left: 1px; top: 1px; }
+.ui-resizable-ne { background-image: url('../../../images/shared/res_handle_ne.png');cursor: ne-resize; width: 12px; height: 12px; right: 1px; top: 1px;}
+
+.ui-draggable .ui-dialog-titlebar { cursor: move; }
+
+.horizontalSpacer {
+	width: 5px;
+}
+
+.verticalSpacer {
+	height: 5px;
+}
+
+.background,.header,.footer,.windowHeader,.button,.buttonDisabled,.buttonNoBorder,.buttonNoBorderDisabled,.toolbar,.toolbarDisabled,.toolbarButton,.toolbarButtonDisabled,.toolbarButtonNoBorder,.toolbarButtonNoBorderDisabled,.splitButton,.progressBarBG {
+	background-image: url('../../../images/themes/black/background.gif');
+	background-repeat: repeat-x;
+	background-position: center;
+}
+
+.backgroundHover,.headerHover,.footerHover,.buttonHover,.buttonNoBorderHover,.toolbarHover,.toolbarButtonHover,.toolbarButtonNoBorderHover,.splitButtonHover,.windowFooter {
+	background-image: url('../../../images/themes/black/background_hover.gif');
+	background-repeat: repeat-x;
+	background-position: center;
+}
+
+.header {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	vertical-align: middle;
+	text-align: left;
+}
+
+.headerText,.headerTextHover,.headerTextDisabled,.windowHeaderText {
+	color: #ffffff;
+	font-family: Arial, Verdana, Tahoma;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.footer {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.footerText,.footerTextHover,.footerTextDisabled {
+	color: #ffffff;
+	font-family: Arial, Verdana, Tahoma;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.button,.buttonDisabled {
+	border: 1px solid #cccccc;
+	cursor: default;
+}
+
+.buttonHover {
+	border: 1px solid #aaaaaa;
+	cursor: pointer;
+}
+
+.buttonNoBorder,.buttonNoBorderDisabled {
+	border: 0px solid transparent;
+	cursor: default;
+}
+
+.buttonNoBorderHover {
+	border: 0px solid transparent;
+	cursor: pointer;
+}
+
+.buttonIcon,.buttonIconDisabled {
+	
+}
+
+.buttonText,.buttonTextDisabled,.buttonTextHover,.splitButtonText,.splitButtonTextHover,.splitButtonTextDisabled,.toolbarButtonText,.toolbarButtonTextHover,.toolbarButtonTextDisabled {
+	font-family: Arial, Verdana, Tahoma;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	vertical-align: top;
+}
+
+.buttonText,.splitButtonText,.toolbarButtonText {
+	color: #000000;
+}
+
+.buttonTextHover {
+	color: #000000;
+}
+
+.buttonTextDisabled {
+	color: #ffffff;
+}
+
+.iconTextTable {
+	height: 100%;
+	width: 100%;
+}
+
+.iconCell {
+	text-align: center;
+}
+
+.textCell {
+	text-align: center;
+}
+
+.panel,.panelHover {
+	border: 1px solid transparent;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.label,.labelHover {
+	height: 100%;
+}
+
+.labelText,.labelTextHover,.labelTextDisabled,.panelText,.panelTextHover,.panelTextDisabled {
+	color: #000000;
+	font-family: Arial, Verdana, Tahoma;
+	font-weight: normal;
+	font-size: 12px;
+}
+
+.textbox,.textboxHover {
+	background-color: #ffffff;
+	border-bottom: 1px inset #000000;
+	border-top: 1px inset #000000;
+	border-left: 1px inset #000000;
+	border-right: 1px inset #000000;
+}
+
+.textboxText,.textboxTextHover {
+	color: #000000;
+	font-family: Arial, Verdana, Tahoma;
+	font-weight: normal;
+	font-size: 12px;
+}
+
+.textboxTextDefault {
+	color: #aaaaaa;
+	font-family: Arial, Verdana, Tahoma;
+	font-weight: normal;
+	font-size: 12px;
+}
+
+.textboxTextDisabled {
+	color: #aaaaaa;
+	font-family: Arial, Verdana, Tahoma;
+	font-weight: normal;
+	font-size: 12px;
+}
+
+.uiLocker,.uiLockerHover {
+	background-color: #cccccc;
+	display: none;
+	z-index: 9998;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+
+.window {
+	background-color: #ffffff;
+	border-top: 0px solid #000000;
+	border-bottom: 0px solid #000000;
+	border-left: 0px solid #000000;
+	border-right: 0px solid #000000;
+	z-index: 9999;
+}
+
+.windowHeader {
+	height: 30px;
+	vertical-align: middle;
+	width: 100%;
+}
+
+.windowFooter {
+	height: 30px;
+	vertical-align: middle;
+	width: 100%;
+	/*border-bottom: 1px outset #cccccc;*/
+	border-top: 1px outset #cccccc;
+	margin-top: -2px;
+}
+
+.windowHeaderIconCol {
+	float: left;
+	width: 20px;
+	margin-top: 4px;
+	margin-left: 2px;
+}
+
+.windowHeaderTextCol {
+	float: left;
+	text-align: left;
+	/*width: 80%;*/
+}
+
+.windowHeaderText {
+	text-align: left;
+	white-space: nowrap;
+	cursor: default;
+}
+
+.windowHeaderButtonsCol {
+	float: right;
+}
+
+.windowButton,.windowButtonClose,.windowButtonCollapse,.windowButtonExpand,.windowButtonMaximize,.windowButtonRestore {
+	width: 16px;
+	height: 16px;
+	text-align: center;
+	vertical-align: middle;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.windowButtonClose {
+	background-image: url('../../../images/shared/close.png');
+}
+
+.windowButtonCollapse {
+	background-image: url('../../../images/shared/collapse.png');
+}
+
+.windowButtonMaximize {
+	background-image: url('../../../images/shared/maximize.gif');
+}
+
+.windowButtonRestore {
+	background-image: url('../../../images/shared/restore.gif');
+}
+
+.windowButtonExpand {
+	background-image: url('../../../images/shared/expand.png');
+}
+
+.windowBody {
+	background-color: #ffffff;
+	overflow-y: auto; 
+	overflow-x: auto;
+	border-top: 0px solid #000000;
+	border-bottom: 1px solid #000000;
+	border-left: 1px solid #000000;
+	border-right: 1px solid #000000;
+	padding-left: 3px;
+	padding-right: 3px;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+.toolbarButton,.toolbarButtonDisabled {
+	border: 1px solid #aaaaaa;
+	cursor: default;
+}
+
+.toolbarButtonHover {
+	border: 1px solid #cccccc;
+	cursor: pointer;
+}
+
+.toolbarButtonNoBorder,.toolbarButtonNoBorderDisabled {
+	border: 0px solid transparent;
+	cursor: default;
+}
+
+.toolbarButtonNoBorderHover {
+	border: 0px solid transparent;
+	cursor: pointer;
+}
+
+.splitButton {
+	border: 1px solid #aaaaaa;
+	cursor: default;
+	text-align: left;
+}
+
+.splitButtonHover {
+	border: 1px solid #cccccc;
+	cursor: pointer;
+	text-align: left;
+}
+
+.splitButtonIconArrowDown,.splitButtonIconArrowUp {
+	width: 16px;
+	height: 16px;
+	text-align: center;
+	vertical-align: middle;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.splitButtonIconArrowDown {
+	background-image: url('../../../images/shared/arrow_down.gif');
+}
+
+.splitButtonIconArrowUp {
+	background-image: url('../../../images/shared/arrow_up.gif');
+}
+
+.splitButtonIcon,.splitButtonIconDisabled {
+}
+
+.splitButtonOptions {
+	border: 1px solid #aaaaaa;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background-image: url('../../../images/shared/bg_menu.png');
+	background-repeat: repeat;
+	background-position: center;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	z-index: 9997;
+}
+
+.splitButtonOption {
+}
+
+.splitButtonOptionHover {
+	background-color: #000000;
+}
+
+.splitButtonOptionText,.splitButtonOptionTextHover,.splitButtonOptionTextDisabled {
+	font-family: Arial, Verdana, Tahoma;
+	font-weight: normal;
+	font-size: 12px;
+}
+
+.splitButtonOptionText {
+	color: #000000;
+}
+
+.splitButtonOptionTextHover {
+	color: #ffffff;
+}
+
+.splitButtonOptionTextDisabled {
+	color: #aaaaaa;
+}
+
+.hSeparator,.hSeparatorHover {
+	background-image: url('../../../images/shared/hsep.png');
+	background-repeat: repeat-y;
+	background-position: center;
+	width: 2px;
+	height: 100%;
+}
+
+.vSeparator,.vSeparatorHover {
+	background-image: url('../../../images/shared/vsep.png');
+	background-repeat: repeat-x;
+	background-position: center;
+	height: 8px;
+	width: 100%;
+}
+
+.itemWrapper {
+	border: 0px solid transparent;
+	margin-left: 1px;
+	margin-right: 1px;
+	margin-bottom: 1px;
+	margin-top: 1px;
+}
+
+.tabPanel {
+	border: 1px solid #000000;	
+}
+
+.tabsButtons {
+	height: 26px;
+}
+
+.tabsBodies {
+	
+}
+
+.tab {
+	border: 1px solid #ff0000;
+}
+
+.tabButton {
+	float: left;
+	border: 1px solid #00ff00;
+	width: auto;
+	height: 26px;
+}
+
+.tabButtonIcon {
+	float: left;
+}
+
+.tabButtonText {
+	float: left;
+}
+
+.roundBorder {
+	border-left-width: 0px;
+	border-right-width: 0px;
+	background-color: #000000;
+	opacity: 0.8;
+	filter : Alpha(opacity=80);
+	display: block;
+	height: 1px;
+	overflow: hidden;
+	font-size: 1px;
+}
+
+.spinner {
+	border: 1px solid #000000;
+	background-color: #ffffff;
+}
+
+.spinnerDisabled {
+	border: 1px solid #000000;
+	background-color: #cccccc;
+}
+
+.spinnerTextBox {
+	border: 0px solid transparent;
+	background-color: #ffffff;
+}
+
+.spinnerText,.spinnerTextDisabled {
+	color: #000000;
+	font-family: Arial, Verdana, Tahoma;
+	font-weight: normal;
+	font-size: 12px;
+}
+
+.spinnerTextBoxDisabled {
+	border: 0px solid transparent;
+	background-color: #cccccc;
+}
+
+.spinnerButtonDown,.spinnerButtonDownHover {
+	background-image: url('../../../images/shared/arrow_down.gif');
+	background-repeat: no-repeat;
+	height: 6px;
+	width: 10px;
+	margin-top: 1px;
+	margin-left: 2px;
+}
+
+.spinnerButtonDownDisabled {
+	background-image: url('../../../images/shared/arrow_down_dis.gif');
+	background-repeat: no-repeat;
+	height: 6px;
+	width: 10px;
+	margin-top: 1px;
+	margin-left: 2px;
+}
+
+.spinnerButtonDownHover {
+	cursor: pointer;
+}
+
+.spinnerButtonUp,.spinnerButtonUpHover {
+	background-image: url('../../../images/shared/arrow_up.gif');
+	background-repeat: no-repeat;
+	height: 6px;
+	width: 10px;
+	margin-top: 1px;
+	margin-left: 2px;
+}
+
+.spinnerButtonUpDisabled {
+	background-image: url('../../../images/shared/arrow_up_dis.gif');
+	background-repeat: no-repeat;
+	height: 6px;
+	width: 10px;
+	margin-top: 1px;
+	margin-left: 2px;
+}
+
+.spinnerButtonUpHover {
+	cursor: pointer;
+}
+
+.thumbnailsView {
+	border: 1px solid #ff0000;
+	overflow-y: scroll;
+	overflow-x: auto;
+	z-index: 1;
+}
+
+.thumbnailsToolbarText {
+	color: #ffffff;
+	font-family: Arial, Verdana, Tahoma;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.thumbnailsViewTooltipContainer {
+	display: none;
+	border: 1px solid #0000ff;
+	border-radius: 3px 3px 3px 3px;
+	background-color: #cccccc;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+	width: 250px;
+}
+
+.thumbnailsViewTooltip {
+	overflow-x: auto; 	
+	overflow-y: auto; 	
+}
+
+.tooltipCloseButton {
+	width: 16px;
+	height: 16px;
+	text-align: center;
+	vertical-align: middle;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-image: url('../../../images/shared/close.png');
+}
+
+.horizontalLayout {
+	float: left;
+	height: 100%;
+}
+
+.verticalLayout {
+	float: none;
+	width: 100%;
+}
+
+.hSpacer,.hSpacerHover {
+	width: 10px;
+	height: 5px;
+}
+
+.vSpacer,.vSpacerHover {
+	width: 5px;
+	height: 10px;
+}
+
+.progressBar,.progressBarHover {
+	
+}
+
+.progressBarColor {
+	background-color: #000000;
+}
+
+.progressBarText,.progressBarTextHover,.progressBarTextDisabled {
+	font-family: Arial, Verdana, Tahoma;
+	font-weight: bold;
+	font-size: 12px;
+	text-align: center;
+}
+
+.progressBarInfoText {
+	color: #000000;
+	font-family: Arial, Verdana, Tahoma;
+	font-weight: normal;
+	font-size: 12px;
+	text-align: left;
+	border: 0px solid transparent;
+}

@@ -1,0 +1,369 @@
+<html>
+	<head>
+		<title>Splitter</title>
+		<link type="text/css" href="resources/themes/shared.css" rel="stylesheet" >
+		<link type="text/css" href="resources/themes/ui.resizable.css" rel="stylesheet" />
+		<link id="themes" type="text/css" href="resources/themes/winxp_blue.css" rel="stylesheet" >
+		<link type="text/css" href="resources/css/grid.css" rel="stylesheet" >
+		<style>
+			.panel {
+				height: 100%;
+				width: 100%;
+				border: 2px solid #000000;
+			}
+			
+			.vsplitter {
+				height: 100%;
+				width: 100%;
+				/* No padding allowed */
+			}
+			
+			.hsplitterCenter {
+				height: 100%;
+				width: 100%;
+				/* No padding allowed */
+			}
+			
+			.centerTop {
+				width: 100%;
+				height: 600px;
+				overflow: auto;
+			}
+			
+			.centerBottom {
+				width: 100%;
+				background-color: #110000;
+				overflow: auto;
+				/* No margin or border allowed */
+			}
+			
+			.vsplitterCenterBottom {
+				width: 100%;
+				/* No padding allowed */
+			}
+			
+			.centerBottomLeft {
+				background-color: #ffff00;
+				overflow: auto;
+				float: left;
+				/* No margin or border allowed */
+			}
+			
+			.centerBottomRight {
+				background-color: #ff0f0f;
+				overflow: auto;
+				/* No margin or border allowed */
+			}
+			
+			.hsplitterLeft {
+				background-color: #0000cc;
+				float: left;
+				/* No padding allowed */
+			}
+						
+			.vsplitterRight {
+				/* No padding allowed */
+			}
+			
+			.center {
+				width: 100%;
+				height: 100%;
+				background-color: #cccccc;
+				overflow: auto;
+				float: left;
+				/* No margin or border allowed */
+			}
+			
+			.right {
+				background-color: #ffffff;
+				overflow: auto;
+				/* No margin or border allowed */
+			}
+			
+			.leftTop {
+				height: 460px;
+				background-color: #0000cc;
+				overflow: auto;
+				/* No margin or border allowed */
+			}
+			
+			.leftBottom {
+				background-color: #00cc00;
+				overflow: auto;
+				/* No margin or border allowed */
+			}
+			
+		</style>
+	</head>
+	
+	<body>
+		<form action=""  class="page">
+			<div class="panel">
+				<div id="vsplitter1" class="vsplitter" 
+					type="v" 
+					minSize1="150" 
+					maxSize1="200" 
+					minSize2="400" 
+					maxSize1="700" 
+					>
+					<div id="hsplitter1" class="hsplitterLeft"
+						type="h" 
+						minSize1="300" 
+						maxSize1="480" 
+						minSize2="80" 
+						maxSize1="150" 
+						>
+						<div class="leftTop">
+							<table class="fullWidthPanel" rules="all" border="0" cellpadding="0" cellspacing="0">
+								<tr>
+									<th></th>
+									<th>Cols</th>
+									<th></th>
+									<th>Rows</th>
+									<th>Rules</th>
+								</tr>
+								<tr>
+									<td>
+										<button type="button" onclick="createGrid('grid1');">Create Grid</button>
+									</td>
+									<td>
+										<select size="1" id="cmbCols" onchange="createGrid('grid1');">
+											<option value="20" selected>20</option>
+											<option value="50">50</option>
+											<option value="60">60</option>
+											<option value="70">70</option>
+											<option value="80">80</option>
+											<option value="90">90</option>
+											<option value="100">100</option>
+											<option value="110">110</option>
+											<option value="120">120</option>
+										</select>
+									</td>
+									<td>x</td>
+									<td>
+										<select size="1" id="cmbRows" onchange="createGrid('grid1');">
+											<option value="20" selected>20</option>
+											<option value="50">50</option>
+											<option value="60">60</option>
+											<option value="70">70</option>
+											<option value="80">80</option>
+											<option value="90">90</option>
+											<option value="100">100</option>
+											<option value="110">110</option>
+											<option value="120">120</option>
+										</select>
+									</td>
+									<td>
+										<select size="1" id="cmbRules" onchange="setGridRules('grid1',this.value);">
+											<option value="all" selected>all</option>
+											<option value="cols">cols</option>
+											<option value="none">none</option>
+											<option value="rows">rows</option>
+										</select>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="leftBottom">
+							<div>
+								Help Topics
+							</div>
+						</div>
+					</div>
+						
+					<div id="vsplitter2" class="vsplitterRight"
+						type="v" 
+						minSize1="400" 
+						maxSize1="700" 
+						minSize2="80" 
+						maxSize1="150" 
+						>
+						<div class="center">
+							<div id="hsplitter2" class="hsplitterCenter"
+								type="h" 
+								minSize1="300" 
+								maxSize1="480" 
+								minSize2="80" 
+								maxSize1="150" 
+								>
+								<div class="centerTop">
+									Center Panel
+									<table id="grid1" class="grid" rules="all" border="1" cellpadding="0" cellspacing="0">
+									</table>
+								</div>
+								<div id="vsplitter3" class="vsplitterCenterBottom"
+									type="v" 
+									minSize1="200" 
+									maxSize1="350" 
+									minSize2="200" 
+									maxSize1="350" 
+									>
+									<div class="centerBottomLeft">
+										Server Log
+									</div>
+									<div class="centerBottomRight">
+										Client Log
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="right" >
+							<div>
+								right panel
+							</div>
+							<div>
+								<input style="width:100%;" type="text" value="my text">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<script type="text/javascript" src="../../_shared/scripts/jquery/jquery.js"></script>
+			<script type="text/javascript" src="../../_shared/scripts/jquery/jquery.ui.full.js"></script>
+			<script type="text/javascript" src="resources/scripts/splitter.js"></script>
+			<script type="text/javascript" >
+				
+				function createGrid(_gridId) {
+					//declare locals
+					var height = screen.availHeight;
+					var width = screen.availWidth;
+					var minRowHeight = 5;
+					var minColWidth = 5;
+					var numRows = document.getElementById("cmbRows").value;
+					var numCols = document.getElementById("cmbCols").value;
+					//numRows = (height / minRowHeight);
+					//numCols = (width / minColWidth);
+					var maxRows = 200;
+					var maxCols = 200;
+					numRows = (numRows>maxRows) ? maxRows : numRows;
+					numCols = (numCols>maxCols) ? maxCols : numCols;
+					var comp = null;
+					var html = "";
+					
+					//get elements by their ids
+					comp = $("#"+_gridId);
+					
+					//check for nulls
+					if (comp==null) {
+						return;
+					}
+					
+					//alert("height:"+height+"\nwidth:"+width+"\nnumRows:"+numRows+"\nnumCols:"+numCols);
+					//set the browser's cursor
+					//document.cursor = "wait";
+					
+					//start the grid's body
+					html += "<tbody>"
+					
+					//loop through the rows
+					for (var i=0;i<numRows;i++) {
+						//start a row
+						html += "<tr>"
+						
+						//loop through the cols
+						for (var j=0;j<numCols;j++) {
+							//create a cell
+							html += "<td></td>"
+						}
+						
+						//end a row
+						html += "</tr>"
+					}
+					
+					//end the grid's body
+					html += "</tbody>"
+					
+					//display the grid
+					comp[0].innerHTML = html;
+					
+					//set the browser's cursor
+					//document.cursor = "default";
+					
+					//setMoveable("widget1");
+					//setResizeable("widget1");
+				}
+				
+				function setGridRules(_gridId,_newValue) {
+					var comp = null;
+					
+					//get elements by their ids
+					comp = $("#"+_gridId);
+					
+					//check for nulls
+					if (comp==null) {
+						return;
+					}
+					
+					comp.attr("rules",_newValue)
+				}
+				
+				function initSplitter(_compId) {
+					//declare locals
+					var comp = null;
+					var selector = "#"+_compId;
+					var _splitterType = "v";
+					var _accessKey = "V";
+					var opts = null;
+					var minSize1 = null;
+					var maxSize1 = null;
+					var minSize2 = null;
+					var maxSize2 = null;
+					
+					//get components by their ids
+					comp = $(selector);
+					
+					//get the component's attributes
+					_splitterType = comp.attr("type");
+					minSize1 = comp.attr("minSize1");
+					maxSize1 = comp.attr("maxSize1");
+					minSize2 = comp.attr("minSize2");
+					maxSize2 = comp.attr("maxSize2");
+					
+					//set defaults if necessary
+					if (_splitterType==null || _splitterType=="") {
+						_splitterType=="v"
+					}
+					
+					//build the options
+					if (_splitterType.toLowerCase()=="h") {
+						_accessKey = "H";
+						opts = {
+									type: _splitterType,
+									resizeToWidth: true,
+									//sizeTop: true,
+									outline: true,
+									minTop: minSize1, 
+									maxTop: maxSize1, 
+									minBottom: minSize2,
+									maxBottom: maxSize2,
+									accessKey: _accessKey
+								};
+					}
+					else {
+						opts = {
+									type: _splitterType,
+									resizeToWidth: true,
+									//sizeLeft: true,
+									outline: true,
+									minLeft: minSize1, 
+									maxLeft: maxSize1, 
+									minRight: minSize2,
+									maxRight: maxSize2,
+									accessKey: _accessKey
+								};
+					}
+					
+					//invoke the plugin
+					$(selector).splitter(opts);
+				}
+				
+				initSplitter("vsplitter1");
+				initSplitter("vsplitter2");
+				initSplitter("vsplitter3");
+				initSplitter("hsplitter1");
+				initSplitter("hsplitter2");
+			</script>
+		</form>
+	</body>
+</html>

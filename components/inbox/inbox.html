@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+    <title>jQuery Popup Notification</title>
+    <link href="resources/css/notifier.css" rel="stylesheet" type="text/css" />
+    <link href="resources/css/footer.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../_shared/scripts/jquery/jquery.js"></script>
+    <script type="text/javascript" src="../../../_shared/scripts/jquery/ui.core.js"></script>
+    <script type="text/javascript" src="resources/scripts/ui.notificationmsg.js"></script>
+    <script type="text/javascript" src="resources/scripts/flasher.js"></script>
+    <script type="text/javascript" src="resources/scripts/notifier.js"></script>
+    <script type="text/javascript">
+		//declare global variables
+		var messageBoxId = "messageBox";
+		var messageBoxFlasherId = "messageBoxFlasher";
+		var notifier = null;
+		
+        $(document).ready(function(){
+            $('#btnslide').click(appendMessage);
+            $('#closeButton').click(function(){ $('#'+_messageBoxId).notificationmsg('hide'); });
+			var options = {
+				showTotal: true,
+				showNew: true,
+				showButtonClearAll: true,
+				showButtonClearSelected: true,
+				showButtonMarkSelectedRead: true,
+				showButtonMarkAllUnread: true,
+				showButtonMarkSelectedUnread: true,
+				showButtonMarkAllRead: true
+			};
+			notifier = new Notifier(messageBoxId,messageBoxFlasherId,options);
+        });
+		
+		function appendMessage() {
+			notifier.appendMessage();
+		}
+		
+		function toggleMessageBox2() {
+			_toggleMessageBox(_messageBoxId);
+			//toggle the flashing
+			if (isFlashing(_flashingObjectId)) {
+				_flahIntervalId = toggleFlash(_flashingObjectId,500,_flahIntervalId);	
+				window.clearInterval(_flahIntervalId);
+			}
+		}
+		
+		function clearAllMessages() {
+			_clearAllMessages(sysMessages,_messageBoxDivId,_newMessagesObjId,_totalMessagesObjId);
+			//stop the flashing if necessary
+			if (isFlashing(_flashingObjectId)) {
+				_flahIntervalId = toggleFlash(_flashingObjectId,500,_flahIntervalId);	
+				window.clearInterval(_flahIntervalId);
+			}
+		}
+		
+		function markAllMessagesAsRead() {
+			_markAllMessagesAsRead(_messageTableId,sysMessages,_newMessagesObjId);
+			//stop the flashing if necessary
+			if (isFlashing(_flashingObjectId)) {
+				_flahIntervalId = toggleFlash(_flashingObjectId,500,_flahIntervalId);	
+				window.clearInterval(_flahIntervalId);
+			}
+		}
+		
+		function messageOnAfterClick() {
+			updateMessagesArray(_messageTableId,sysMessages);
+			var _new = getNewMessagesCount(_messageTableId);
+			if (_new==0) {
+				//stop the flashing if necessary
+				if (isFlashing(_flashingObjectId)) {
+					_flahIntervalId = toggleFlash(_flashingObjectId,500,_flahIntervalId);	
+					window.clearInterval(_flahIntervalId);
+				}
+			}
+		}
+		
+		function showMessage(_messageSeverityType,_message,timeStamp) {
+			//declare locals
+			var url = "../customObjects/index.htm?severity=";
+			
+			//check for nulls
+			if (_messageSeverityType==null) {
+				_messageSeverityType = "None";
+			}
+			alert("Severity: " + _messageSeverityType + "\nTimestamp: "+timeStamp+"\nMessage is: "+_message);
+			//window.open(url + _messageSeverityType);
+		}
+		
+    </script>
+</head>
+<body>
+    <form id="form1">
+    <div>
+		<div id="messageBox">
+		</div>
+		<table>
+			<tbody>
+				<tr>
+					<td>
+						<p>Lo rem ipsu m dol or sit am et, conse cte tuer adi pis cing elit. Vest ibu lum ac tel lus eu tur pis tem por phar etra. Fus ce eget odio id ma uris volu tpat accums an. Viva mus sag ittis tincid unt nibh. Ali quam elem en tum, ips um vel</p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="footerFrame">
+							<table style="width:100%;height:100%;">
+								<tbody>
+									<tr>
+										<td>
+											<div class="footerContents">
+												<table cellspacing="0" cellpadding="0" border="0" style="width:100%;height:100%;">
+													<tr>
+														<td class="footerCellText">
+															some footer text
+														</td>
+														<td class="footerCell">
+														    <div style="display:inline; text-align:center">
+																<input id="btnslide" type="button" value="Add Message" /><br />
+															</div>
+														</td>
+														<td class="footerCell">
+															<div id="messageBoxFlasher"></div>
+														</td>
+													</tr>
+												</table>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+    </form>
+</body>
+</html>

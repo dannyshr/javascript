@@ -1,0 +1,18 @@
+/* @C Danny Shraga 2009 */
+
+.page {
+	width: 99%;
+	height: 98%;
+}
+
+.fullWidthPanel {
+	width: 100%;
+}
+
+.icon-help {
+	background-image: url("shared/icon-help.png");
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+	cursor: pointer;
+}

@@ -1,0 +1,33 @@
+
+p {
+	width: 20px;
+}
+
+.footerFrame {
+	background-color: #aaaaaa;
+	height: 35px;
+	width: 100%;
+	position: fixed; 
+	bottom: 0px;
+	left: 0px;
+}
+
+.footerContents {
+	background-color: #aaaaaa;
+	text-align: center;
+	font-size: 10px;
+	color: #CC0000;
+	font-family: Verdana;
+	height: 35px;
+}
+
+.footerCellText {
+	height:100%;
+	width:90%;
+	vertical-align:middle;
+}
+
+.footerCell {
+	height:100%;
+	vertical-align:middle;
+}

@@ -1,0 +1,411 @@
+<html>
+	<head>
+		<title>Ajax poll test</title>
+		<link href="resources/css/ajaxpoll.css" rel="stylesheet" type="text/css" />
+		<script src="../../_shared/scripts/jquery/jquery.js" type="text/javascript"></script>
+		<script language="javascript">
+			var pollInterval = null;
+			
+			(function($) {
+				$.fn.poll = function(options){
+				   var $this = $(this);
+				   // extend our default options with those provided
+				   var opts = $.extend({}, $.fn.poll.defaults, options);
+				   var _intervalObj = setInterval(update, opts.interval);
+
+				   // method used to update element html
+				   function update(){
+					   $.ajax({
+						   type: opts.type,
+						   url: opts.url,
+						   success: opts.success
+					   });
+				   };
+				   
+				   //return the interval
+				   return _intervalObj;
+				};
+
+				// default options
+				$.fn.poll.defaults = {
+				   type: "POST",
+				   url: ".",
+				   success: '',
+				   interval: 2000
+				};
+			})(jQuery);
+		
+			function startPolling() {
+				var interval = document.getElementById("cmbInterval").value;
+				pollInterval = $("#chat").poll({
+					url: "data.html",
+					interval: interval,
+					type: "GET",
+					success: function(data) {
+						updateDataSource(data);
+					}
+				});
+			}
+			
+			function stopPolling() {
+				window.clearInterval(pollInterval);
+			}
+			
+			function clearData() {
+				$("#chat").html("<tr><td colspan=\"4\"></td></tr>");
+				$("#logger").html("");
+			}
+			
+			function getCurrentDateTime() {
+				//declare locals
+				var retVal = null;
+				var today = new Date();
+				var d = today.getDate();
+				var mo = today.getMonth()+1;
+				var y = today.getFullYear();
+				var h = today.getHours();
+				var m = today.getMinutes();
+				var s = today.getSeconds();
+				var dateDelimiter = "/";
+				var timeDelimiter = ":";
+				
+				//build the date time string
+				//add a zero in front of numbers<10
+				if (d<10) {
+					d = "0" + d;
+				}
+				if (mo<10) {
+					mo = "0" + mo;
+				}
+				if (h<10) {
+					h = "0" + h;
+				}
+				if (m<10) {
+					m = "0" + m;
+				}
+				if (s<10) {
+					s = "0" + s;
+				}
+				
+				//write the value	
+				retVal=d+dateDelimiter+mo+dateDelimiter+y+" "+h+timeDelimiter+m+timeDelimiter+s;
+				
+				//return the method's value
+				return retVal;
+			}
+			
+			function updateDataSource(data) {
+				//declare locals
+				var dataTableId = "dataRows";
+				var dataTableBodyId = "dataRowsBody";
+				var tempDivId = "tempData";
+				var destTableId = "chat";
+				var dataTableBodyObj = null;
+				var numRowsSource = 0;
+				var numRowsDest = 0;
+				var scrollDivId = "chatBoxDiv";
+				var scrollDivObj = null;
+				var dataTableObj = null;
+				var currRowSourceId = null;
+				var currRowSourceObj = null;
+				var destTableObj = null;
+				var scrollHeight = false;
+				var destRowIndex = -1;
+				var rowHeight = 20;
+				var rowCss = "chatBoxTableRow";
+				var rowCssUpdated = "chatBoxTableRowUpdated";
+				var rowCssAdded = "chatBoxTableRowAdded";
+				
+				//append the data into a temporary div
+				$("#"+tempDivId).append(data);
+				
+				//get elements by their ids
+				dataTableObj = document.getElementById(dataTableId);
+				destTableObj = document.getElementById(destTableId);
+				scrollDivObj = document.getElementById(scrollDivId);
+				dataTableBodyObj = document.getElementById(dataTableBodyId);
+				
+				//check for nulls
+				if (dataTableObj==null || destTableObj==null || dataTableBodyObj==null || scrollDivObj==null) {
+					return;
+				}
+				
+				//get the number of rows in the destination table
+				numRowsDest = document.getElementById(destTableId).rows.length;
+				
+				//check if the destination table is empty
+				if (numRowsDest==0) {
+					//update the destination table
+					$("#"+destTableId).append(dataTableBodyObj.innerHTML);
+					scrollHeight = true;
+				}
+				else {
+					//loop through the AJAX fetched rows
+					numRowsSource = dataTableObj.rows.length;
+					for (var i=0;i<numRowsSource;i++) {
+						//get the current data rows object
+						currRowSourceObj = dataTableObj.rows[i];
+						currRowSourceId = currRowSourceObj.id;
+						
+						//check if the current row exists in the destination table
+						if (rowIdExists(currRowSourceId,destTableId)) {
+							if (!rowDataExists(currRowSourceId,currRowSourceObj,destTableId)) {
+								//update the destination table's row with the data in the current row
+								destRowIndex = getRowIndex(currRowSourceId,destTableId);
+								if (destRowIndex>-1) {
+									try {
+										destTableObj.rows[destRowIndex].innerHTML = currRowSourceObj.innerHTML;
+									}
+									catch(err) {/*alert("An error occured\n"+err.message);*/};
+									destTableObj.rows[destRowIndex].className = rowCssUpdated;
+									//scroll the div to its correct height
+									if (scrollDivObj.scrollTop > (destRowIndex * rowHeight)) {
+										scrollDivObj.scrollTop = 0;
+										scrollDivObj.scrollTop = (destRowIndex * rowHeight);
+									}
+									else {
+										scrollDivObj.scrollTop = (destRowIndex * rowHeight);
+									}
+								}
+							}
+						}
+						else {
+							//add the current row to the destination table
+							$("#"+destTableId).append("<tr id=\""+currRowSourceId+"\" class=\""+rowCssAdded+"\">"+dataTableObj.rows[i].innerHTML+"</tr>");
+							scrollHeight = true;
+						}
+					}
+				}
+				
+				//check if we need to scroll the div to its max height
+				if (scrollHeight) {
+					//scroll the div to its max height
+					scrollDivObj.scrollTop = scrollDivObj.scrollHeight;
+					//loggerObj.scrollTop = loggerObj.scrollHeight;
+				}
+				
+				//clear the data from the temporary div
+				$("#"+tempDivId).html("");
+			}
+			
+			function getRowIndex(_rowId,_tableId) {
+				//declare lcoals
+				var _rowObj = null;
+				var _tableObj = null;
+				var _currRowId = null;
+				var numRows = null;
+				var index = -1;
+				
+				//check for nulls
+				if (_rowId==null || _rowId=='' || _tableId==null || _tableId=='') {
+					return -1;
+				}
+				
+				//get elements by their ids
+				_tableObj = document.getElementById(_tableId);
+				
+				//check for nulls
+				if (_tableObj==null) {
+					return -1;
+				}
+				
+				//loop through the table's rows
+				numRows = _tableObj.rows.length;
+				for (var i=0;i<numRows;i++) {
+					//get the current row object
+					_currRowId = _tableObj.rows[i].id;
+					
+					//check if the current row's id matches the sent rowId
+					if (_currRowId.toLowerCase()==_rowId.toLowerCase()) {
+						index = i;
+						break;
+					}
+				}
+				
+				//return the method's value
+				return index;
+			}
+			
+			
+			function rowIdExists(_rowId,_destinationTableId) {
+				//declare lcoals
+				var _destinationTableObj = null;
+				var _currRowObj = null;
+				var numRows = null;
+				
+				//check for nulls
+				if (_rowId==null || _rowId=='' || _destinationTableId==null || _destinationTableId=='') {
+					return false;
+				}
+				
+				//get elements by their ids
+				_destinationTableObj = document.getElementById(_destinationTableId);
+				
+				//check for nulls
+				if (_destinationTableObj==null) {
+					return false;
+				}
+				
+				//loop through the table's rows
+				numRows = _destinationTableObj.rows.length;
+				for (var i=0;i<numRows;i++) {
+					//get the current row object
+					_currRowObj = _destinationTableObj.rows[i];
+					
+					//check if the current row's id matches the sent rowId
+					if (_currRowObj.id.toLowerCase()==_rowId.toLowerCase()) {
+						return true;
+					}
+				}
+				
+				//return the method's value
+				return false;
+			}
+			
+			function rowDataExists(_rowId,_rowObj,_destinationTableId) {
+				//declare lcoals
+				var _destinationTableObj = null;
+				var _currRowObj = null;
+				var numRows = null;
+				var retVal = false;
+				
+				//check for nulls
+				if (_rowId==null || _rowId=='' || _rowObj==null || _destinationTableId==null || _destinationTableId=='') {
+					return false;
+				}
+				
+				//get elements by their ids
+				_destinationTableObj = document.getElementById(_destinationTableId);
+				
+				//check for nulls
+				if (_destinationTableObj==null) {
+					return false;
+				}
+				
+				//loop through the table's rows
+				numRows = _destinationTableObj.rows.length;
+				for (var i=0;i<numRows;i++) {
+					//get the current row object
+					_currRowObj = _destinationTableObj.rows[i];
+					
+					//check if the current row's id matches the sent rowId
+					if (_currRowObj.id.toLowerCase()==_rowId.toLowerCase()) {
+						//check if the two rows match
+						if (rowsMatch(_rowObj,_currRowObj)) {
+							retVal = true;
+						}
+						else {
+							retVal = false;
+						}
+						break;
+					}
+				}
+				
+				//return the method's value
+				return retVal;
+			}
+			
+			function rowsMatch(_row1,_row2) {
+				//declare lcoals
+				var _cols1 = null;
+				var _cols2 = null;
+				var numCols1 = null;
+				var numCols2 = null;
+				var colContent1 = null;
+				var colContent2 = null;
+				var retVal = true;
+				
+				//check for nulls
+				if (_row1==null && _row2==null) {
+					return true;
+				}
+				else {
+					if (_row1==null || _row2==null) {
+						return false;
+					}
+					
+					//compare the row's columns number
+					numCols1 = _row1.cells.length;
+					numCols2 = _row2.cells.length;
+					if (numCols1!=numCols2) {
+						return false;
+					}
+					
+					//compare the row's columns contents
+					for (var i=0;i<numCols1;i++) {
+						//get the current column's content
+						colContent1 = _row1.cells[i].innerHTML;
+						colContent2 = _row2.cells[i].innerHTML;
+						
+						//compare the contents
+						if (colContent1!=colContent2) {
+							retVal = false;
+							break;
+						}
+					}
+					
+					//return the method's value
+					return retVal;
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<form id="form1" method="post">
+			<table>
+				<tr>
+					<td>
+						<button id="btnStart" type="button" onclick="startPolling();">Start Polling</button>
+					</td>
+					<td>
+						<button id="btnStop" type="button" onclick="stopPolling();">Stop Polling</button>
+					</td>
+					<td>
+						<button id="btnClear" type="button" onclick="clearData();">Clear</button>
+					</td>
+					<td>
+						<select id="cmbInterval" value="1000">
+							<option value="1" >1</option>
+							<option value="2" >2</option>
+							<option value="3" >3</option>
+							<option value="4" >4</option>
+							<option value="5" >5</option>
+							<option value="10" >10</option>
+							<option value="50" >50</option>
+							<option value="100" >100</option>
+							<option value="200" >200</option>
+							<option value="300" >300</option>
+							<option value="400" >400</option>
+							<option value="500" >500</option>
+							<option value="1000" selected>1000</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+			<div id="tempData" style="display:none;border:0px solid black;width:0px;height:0px;">
+			</div>
+			<div class="chatBox">
+				<table border="0" cellpadding="0" cellspacing="0" class="chatBoxTable">
+					<thead class="chatBoxTableHeaderRow">
+						<th class="chatBoxTableHeaderColId">
+							Id
+						</th>
+						<th class="chatBoxTableHeaderColTime">
+							time
+						</th>
+						<th class="chatBoxTableHeaderColSender">
+							sender
+						</th>
+						<th class="chatBoxTableHeaderColMessage">
+							message
+						</th>
+					</thead>
+				</table>
+				<div id="chatBoxDiv" class="chatBoxTableContainer">
+					<table id="chat" border="0" cellpadding="0" cellspacing="0" class="chatBoxTable">
+					</table>
+				</div>
+			</div>
+		</form>
+	</body>
+</html>

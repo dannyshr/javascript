@@ -1,0 +1,223 @@
+
+<html>
+	<head>
+		<title>CheckBoxes test</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
+		<script src="resources/scripts/selectionmodel.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			var ssm = false;
+		</script>
+	</head>
+
+	<body>
+		<form action method="post" name="form1">
+			<table border="1" cellpadding="0" cellspacing="0">
+				<tr>
+					<td>
+						Single Selection Mode
+					</td>
+					<td colspan="4">
+						<input type="checkbox" id="cbSSM" name="cbSSM" title="click here to turn the single selection mode on or off" onclick="if (this.checked) {document.getElementById('cbAll').style.visibility='hidden';} else {document.getElementById('cbAll').style.visibility='visible';} ssm=this.checked;" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="button" id="btnAdd" name="btnAdd" value="Add" />
+					</td>
+					<td>
+						<input type="button" id="btnEdit" name="btnEdit" value="Edit" disabled="true" />
+					</td>
+					<td>
+						<input type="button" id="btnDelete" name="btnDelete" value="Delete" disabled="true" />
+					</td>
+					<td>
+						<input type="button" id="btnView" name="btnView" value="View" disabled="true" />
+					</td>
+					<td>
+						<input type="button" id="btnAck" name="btnAck" value="Ack" disabled="true" />
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<input type="checkbox" id="cbAll" name="cbAll" onclick="toggleCheckboxGroup('cb',10,this.checked);toggleButtonsModeByCheckboxAll(this,'btnEdit,btnView','btnDelete,btnAck')" title="click here to select/unselect all" />
+					</th>
+					<th>Column 1</th>
+					<th>Column 2</th>
+					<th>Column 3</th>
+					<th>Column 4</th>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" id="cb[0]" name="cb[0]" onclick="if (ssm) {toggleSingleSelectionModeInCheckboxGroup(this,'cb',10);} toggleButtonsModeByCheckboxGroup(this,'cb',10,'btnEdit,btnView','btnDelete,btnAck')" />
+					</td>
+					<td>
+						Column 1 data
+					</td>
+					<td>
+						Column 2 data
+					</td>
+					<td>
+						Column 3 data
+					</td>
+					<td>
+						Column 4 data
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" id="cb[1]" name="cb[1]" onclick="if (ssm) {toggleSingleSelectionModeInCheckboxGroup(this,'cb',10);} toggleButtonsModeByCheckboxGroup(this,'cb',10,'btnEdit,btnView','btnDelete,btnAck')" />
+					</td>
+					<td>
+						Column 1 data
+					</td>
+					<td>
+						Column 2 data
+					</td>
+					<td>
+						Column 3 data
+					</td>
+					<td>
+						Column 4 data
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" id="cb[2]" name="cb[2]" onclick="if (ssm) {toggleSingleSelectionModeInCheckboxGroup(this,'cb',10);} toggleButtonsModeByCheckboxGroup(this,'cb',10,'btnEdit,btnView','btnDelete,btnAck')" />
+					</td>
+					<td>
+						Column 1 data
+					</td>
+					<td>
+						Column 2 data
+					</td>
+					<td>
+						Column 3 data
+					</td>
+					<td>
+						Column 4 data
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" id="cb[3]" name="cb[3]" onclick="if (ssm) {toggleSingleSelectionModeInCheckboxGroup(this,'cb',10);} toggleButtonsModeByCheckboxGroup(this,'cb',10,'btnEdit,btnView','btnDelete,btnAck')" />
+					</td>
+					<td>
+						Column 1 data
+					</td>
+					<td>
+						Column 2 data
+					</td>
+					<td>
+						Column 3 data
+					</td>
+					<td>
+						Column 4 data
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" id="cb[4]" name="cb[4]" onclick="if (ssm) {toggleSingleSelectionModeInCheckboxGroup(this,'cb',10);} toggleButtonsModeByCheckboxGroup(this,'cb',10,'btnEdit,btnView','btnDelete,btnAck')" />
+					</td>
+					<td>
+						Column 1 data
+					</td>
+					<td>
+						Column 2 data
+					</td>
+					<td>
+						Column 3 data
+					</td>
+					<td>
+						Column 4 data
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" id="cb[5]" name="cb[5]" onclick="if (ssm) {toggleSingleSelectionModeInCheckboxGroup(this,'cb',10);} toggleButtonsModeByCheckboxGroup(this,'cb',10,'btnEdit,btnView','btnDelete,btnAck')" />
+					</td>
+					<td>
+						Column 1 data
+					</td>
+					<td>
+						Column 2 data
+					</td>
+					<td>
+						Column 3 data
+					</td>
+					<td>
+						Column 4 data
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" id="cb[6]" name="cb[6]" onclick="if (ssm) {toggleSingleSelectionModeInCheckboxGroup(this,'cb',10);} toggleButtonsModeByCheckboxGroup(this,'cb',10,'btnEdit,btnView','btnDelete,btnAck')" />
+					</td>
+					<td>
+						Column 1 data
+					</td>
+					<td>
+						Column 2 data
+					</td>
+					<td>
+						Column 3 data
+					</td>
+					<td>
+						Column 4 data
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" id="cb[7]" name="cb[7]" onclick="if (ssm) {toggleSingleSelectionModeInCheckboxGroup(this,'cb',10);} toggleButtonsModeByCheckboxGroup(this,'cb',10,'btnEdit,btnView','btnDelete,btnAck')" />
+					</td>
+					<td>
+						Column 1 data
+					</td>
+					<td>
+						Column 2 data
+					</td>
+					<td>
+						Column 3 data
+					</td>
+					<td>
+						Column 4 data
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" id="cb[8]" name="cb[8]" onclick="if (ssm) {toggleSingleSelectionModeInCheckboxGroup(this,'cb',10);} toggleButtonsModeByCheckboxGroup(this,'cb',10,'btnEdit,btnView','btnDelete,btnAck')" />
+					</td>
+					<td>
+						Column 1 data
+					</td>
+					<td>
+						Column 2 data
+					</td>
+					<td>
+						Column 3 data
+					</td>
+					<td>
+						Column 4 data
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" id="cb[9]" name="cb[9]" onclick="if (ssm) {toggleSingleSelectionModeInCheckboxGroup(this,'cb',10);} toggleButtonsModeByCheckboxGroup(this,'cb',10,'btnEdit,btnView','btnDelete,btnAck')" />
+					</td>
+					<td>
+						Column 1 data
+					</td>
+					<td>
+						Column 2 data
+					</td>
+					<td>
+						Column 3 data
+					</td>
+					<td>
+						Column 4 data
+					</td>
+				</tr>
+				
+			</table>
+		</form>
+	</body>
+</html>

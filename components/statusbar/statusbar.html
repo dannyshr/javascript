@@ -1,0 +1,292 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<title>Statusbar</title>
+		<style type="text/css">
+			.div1 {
+				height: 150px;
+				width: 250px;
+				background-color: #ffff00;
+				border: 1px solid #000000;
+				position: absolute;
+				top: 330px;
+				left: 60px;
+			}
+			
+			.div2 {
+				height: 100px;
+				width: 150px;
+				background-color: #00ffff;
+				border: 1px solid #000000;
+				position: absolute;
+				top: 330px;
+				left: 660px;
+			}
+			
+			.headerRow {
+				background-color: #cccccc;
+			}
+			
+			.statusbar1 {
+			}
+			
+			.statusbar2 {
+			}
+			
+			.clock1 {
+			}
+			
+			.clock2 {
+			}
+			
+			.comp5 {
+				height: 20px;
+				width: 50px;
+				color: #ff0000;
+				background-color: #000000;
+			}
+			
+			.navbar1 {
+			}
+			
+			.dataTable {
+				position: absolute;
+				top: 200px;
+			}
+		</style>
+		<script src="../../../_shared/scripts/jquery/jquery.js" type="text/javascript"></script>
+		<script src="../../../_shared/scripts/utils/utils.js" type="text/javascript"></script>
+		<script src="../navbar/resources/scripts/navbar.js" type="text/javascript"></script>
+		<script src="../clock/resources/scripts/clock.js" type="text/javascript"></script>
+		<script src="resources/scripts/statusbar.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			//declare globals
+			var statusbar1 = null;
+			var statusbar2 = null;
+			var clock1 = null;
+			var clock2 = null;
+			var navbar1 = null;
+			
+			/**
+			 * The jQuery document ready event handler
+			 */
+			$(document).ready(function() {
+				//initialize globals
+				
+				//declare locals
+				var statusbar1Opts = {
+					alignTo: "div1"
+					,alignment: "top"
+					,showConfig: false
+				};
+				var statusbar2Opts = {
+					alignTo: "div2"
+					,alignment: "top"
+					,showConfig: false
+				};
+				var clock1Opts = {
+					themesPath:"../clock/resources/themes/"
+					,alignment: "top"
+					,showConfig: false
+					//,width: "80"
+				};
+				var clock2Opts = {
+					themesPath:"../clock/resources/themes/"
+					,alignment: "top"
+					,showConfig: false
+					//,width: "80"
+				};
+				var navbar1Opts = {
+					themesPath:"../navbar/resources/themes/"
+					,showConfig: true
+					,showPagesCombo:true
+					//,alignTo: "div1"
+					,alignment: "top"
+					,totalRecords: 100
+					,pageNumber: 1
+					,pageSize: 10
+				};
+				statusbar1 = new Statusbar("statusbar1",statusbar1Opts);
+				statusbar2 = new Statusbar("statusbar2",statusbar2Opts);
+				clock1 = new Clock("clock1",clock1Opts);
+				clock2 = new Clock("clock2",clock2Opts);
+				navbar1 = new Navbar("navbar1",navbar1Opts);
+			});
+			
+			function refreshComponent1() {
+				//declare locals
+				var opts = null;
+				var _compName = document.getElementById("txt_AddCompComp1").value;
+				var _alignTo = document.getElementById("txt_AlignToComp1").value;
+				if (_alignTo!=null && _alignTo!="") {
+					opts = {
+						alignTo: _alignTo
+					};
+					statusbar1.reRender(opts);
+				}
+
+				//check for nulls
+				if (_compName!=null && _compName!="") {
+					switch (_compName) {
+						case "clock1":
+							statusbar1.addComponent("clock1");
+							break;
+						case "clock2":
+							statusbar1.addComponent("clock2");
+							break;
+						case "comp5":
+							statusbar1.addComponent("comp5");
+							break;
+						case "navbar1":
+							statusbar1.addComponent("navbar1");
+							break;
+					}
+					clock1.reRender();
+					clock2.reRender();
+					navbar1.reRender();
+				}
+			}
+			
+			function refreshComponent2() {
+				//declare locals
+				var opts = null;
+				var _compName = document.getElementById("txt_AddCompComp2").value;
+				var _alignTo = document.getElementById("txt_AlignToComp2").value;
+				if (_alignTo!=null && _alignTo!="") {
+					opts = {
+						alignTo: _alignTo
+					};
+					statusbar2.reRender(opts);
+				}
+
+				//check for nulls
+				if (_compName!=null && _compName!="") {
+					switch (_compName) {
+						case "clock1":
+							statusbar2.addComponent("clock1");
+							break;
+						case "clock2":
+							statusbar2.addComponent("clock2");
+							break;
+						case "comp5":
+							statusbar2.addComponent("comp5");
+							break;
+						case "navbar1":
+							statusbar2.addComponent("navbar1");
+							break;
+					}
+				}
+				clock1.reRender();
+				clock2.reRender();
+				navbar1.reRender();
+			}
+			
+			function resetShowConfig(_cbObj,_compObj) {
+				//declare locals
+				var opts = {
+					showConfig: _cbObj.checked
+				};
+				
+				_compObj.reRender(opts);
+				clock1.reRender();
+				clock2.reRender();
+				navbar1.reRender();
+			}
+			
+			function refreshTheme(_newtheme) {
+				//get values from page
+				var opts = {
+					theme: _newtheme
+				};
+				
+				//refresh the coponent with the values
+				statusbar1.reRender(opts);
+				statusbar2.reRender(opts);
+				clock1.reRender(opts);
+				clock2.reRender(opts);
+				navbar1.reRender(opts);
+			}
+		</script>
+	</head>
+	<body>
+		<div class="dataTable">
+			<table border="1" cellspacing="0" cellpadding="0">
+				<tr class="headerRow">
+					<th>Component</th>
+					<th>Align To</th>
+					<th>Add Component</th>
+					<th>Show Config</th>
+					<th>Theme</th>
+					<th>Refresh</th>
+				</tr>
+				<tr>
+					<td>
+						statusbar1
+					</td>
+					<td>
+						<input id="txt_AlignToComp1" type="text" value="div1" size="10">
+					</td>
+					<td>
+						<input id="txt_AddCompComp1" type="text" value="" size="10">
+					</td>
+					<td>
+						<input type="checkbox" onclick="resetShowConfig(this,statusbar1);">
+					</td>
+					<td rospan="3">
+						<select size="1" onchange="refreshTheme(this.value);">
+							<option value="black" selected="selected">black</option>
+							<option value="blue">blue</option>
+							<option value="green">green</option>
+							<option value="orange">orange</option>
+							<option value="red">red</option>
+						</select>
+					</td>
+					<td>
+						<input type="button" value="Refresh" onclick="refreshComponent1();">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						statusbar2
+					</td>
+					<td>
+						<input id="txt_AlignToComp2" type="text" value="div2" size="10">
+					</td>
+					<td>
+						<input id="txt_AddCompComp2" type="text" value="" size="10">
+					</td>
+					<td>
+						<input type="checkbox" onclick="resetShowConfig(this,statusbar2);">
+					</td>
+					<td>
+					</td>
+					<td>
+						<input type="button" value="Refresh" onclick="refreshComponent2();">
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="div1" class="div1">
+			statusbar 1
+		</div>
+		<div id="div2" class="div2">
+			statusbar 2
+		</div>
+		<div id="statusbar1" class="statusbar1"></div>
+		<div id="statusbar2" class="statusbar2"></div>
+		<div id="comp3Outer" class="comp3Outer">
+			clock1
+			<div id="clock1" class="clock1"></div>
+		</div>
+		<div id="comp4Outer" class="comp4Outer">
+			clock2
+			<div id="clock2" class="clock2">
+			</div>
+		</div>
+		<div id="comp5" class="comp5">comp 5</div>
+		<div id="comp6Outer" class="comp6Outer">
+			navbar1
+			<div id="navbar1" class="navbar1"></div>
+		</div>
+	</body>
+</html>

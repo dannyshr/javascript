@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Portlets</title>
+		<link type="text/css" href="resources/css/portlet.css" rel="stylesheet" />
+		<link type="text/css" href="resources/css/slider.css" rel="stylesheet" />
+	</head>
+	
+	<body>
+		<form id="frmTest" action="" >
+			<div id="menu1" class="menuContainer">
+				<table id="menu1_MainTable" class="containerTable" align="center" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td id="menu1_ContentsTd" class="contentsTd">
+							<div id="menu1_ContentsDiv" class="contentsDiv" state="collapsed">
+								<table border="0" cellspacing="0" cellpadding="0">
+									<tr>
+										<td>
+											<img class="navButtonPrev" src="resources/images/ArrowLeft.png" title="Click here to move to the previous set of items">
+										</td>
+										<td class="middleAlignedPanel">
+											<div id="menu1_slidingMenu" class="slidingMenu" >
+												<table class="slidingMenuItems" border="0" cellspacing="0" cellpadding="0">
+													<tr>
+														<td><div class="spacerColumn"></div></td>
+														<td>
+															<table class="slidingMenuItem">
+																<tr>
+																	<td>
+																		<a href="#" class="linkButton" portlet="portlet1">
+																			<img title="Control Center" src="resources/images/controlCenter.png" class="buttonImage"> 
+																		</a>
+																	</td>
+																</tr>
+																<tr>
+																	<td class="centerAlignedPanel">
+																		<input class="cbPortlet" type="checkbox" portlet="portlet1" checked="true">
+																	</td>
+																</tr>
+															</table>
+														</td>
+														<td>
+															<table class="slidingMenuItem">
+																<tr>
+																	<td>
+																		<a href="#" class="linkButton" portlet="portlet2">
+																			<img title="Fault Management" src="resources/images/fm.png" class="buttonImage"> 
+																		</a>
+																	</td>
+																</tr>
+																<tr>
+																	<td class="centerAlignedPanel">
+																		<input class="cbPortlet" type="checkbox" portlet="portlet2" checked="true">
+																	</td>
+																</tr>
+															</table>
+														</td>
+														<td>
+															<table class="slidingMenuItem">
+																<tr>
+																	<td>
+																		<a href="#" class="linkButton" portlet="portlet3">
+																			<img title="Octopus" src="resources/images/octopus.png" class="buttonImage"> 
+																		</a>
+																	</td>
+																</tr>
+																<tr>
+																	<td class="centerAlignedPanel">
+																		<input class="cbPortlet" type="checkbox" portlet="portlet3" checked="true">
+																	</td>
+																</tr>
+															</table>
+														</td>
+														<td>
+															<table class="slidingMenuItem">
+																<tr>
+																	<td>
+																		<a href="#" class="linkButton" portlet="portlet4">
+																			<img title="Hi-Care" src="resources/images/hicare.png" class="buttonImage"> 
+																		</a>
+																	</td>
+																</tr>
+																<tr>
+																	<td class="centerAlignedPanel">
+																		<input class="cbPortlet" type="checkbox" portlet="portlet4" checked="true">
+																	</td>
+																</tr>
+															</table>
+														</td>
+														<td>
+															<table class="slidingMenuItem">
+																<tr>
+																	<td>
+																		<a href="#" class="linkButton" portlet="portlet5">
+																			<img title="Reports" src="resources/images/reports.png" class="buttonImage"> 
+																		</a>
+																	</td>
+																</tr>
+																<tr>
+																	<td class="centerAlignedPanel">
+																		<input class="cbPortlet" type="checkbox" portlet="portlet5" checked="true">
+																	</td>
+																</tr>
+															</table>
+														</td>
+														<td>
+															<table class="slidingMenuItem">
+																<tr>
+																	<td>
+																		<a href="#" class="linkButton" portlet="portlet6">
+																			<img title="EMS Management" src="resources/images/emsManagement.png" class="buttonImage"> 
+																		</a>
+																	</td>
+																</tr>
+																<tr>
+																	<td class="centerAlignedPanel">
+																		<input class="cbPortlet" type="checkbox" portlet="portlet6" checked="true">
+																	</td>
+																</tr>
+															</table>
+														</td>
+														<td><div class="spacerColumn"></div></td>
+													</tr>
+												</table>
+											</div>
+										</td>
+										<td>
+											<img class="navButtonNext" src="resources/images/ArrowRight.png" title="Click here to move to the next set of items">
+										</td>
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td id="menu1_HandlerTd" class="handlerTd" >
+							<table class="handlerTable" align="center" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td class="menuHandlerPreTd"><div class="menuHandlerPre"></div></td>
+									<td><div class="menuHandler"><img id="menuHandlerImage" class="menuHandlerImage" src="resources/images/expand.png" title="Click here to collapse/expand this panel"></div></td>
+									<td class="menuHandlerPostTd"><div class="menuHandlerPost"></div></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<br/>
+			<br/>
+			<div class="demo">
+				<table border="0" class="container" cellpadding="0" cellspacing="10">
+				<tr>
+				<td class="portletContainerColumn">
+				<div class="column">
+					<div class="inactivePortlet">
+						<div id="portlet1" class="portlet" state="expanded">
+							<div class="portlet-header">
+								<div style="" class="portletHeader-disabled" title="Portlet 1 Tooltip">
+									<table class="portletHeaderContainer" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td class="portletHeaderIconTd"><img class="portletHeaderIcon" src="resources/images/portletIcon.png" /></td>
+											<td class="portletHeaderTitle">Control Center</td>
+											<td class="portletHeaderButtons">
+												<button class="portletHeaderButtonCollapseDisabled" style="" title="click here to Collapse/Expand me..." buttonCollapseDisabled="true" buttonCollapseStyleClass="portletHeaderButtonCollapse" buttonCollapseStyleClassDisabled="portletHeaderButtonCollapseDisabled" buttonCollapseStyleClassHover="portletHeaderButtonCollapseHover" onBeforeCollapse=";" onAfterCollapse=";" ></button><button class="portletHeaderButtonExpand" style="display:none;" buttonExpandDisabled="false" buttonExpandStyleClass="portletHeaderButtonExpand" buttonExpandStyleClassDisabled="portletHeaderButtonExpandDisabled" buttonExpandStyleClassHover="portletHeaderButtonExpandHover" onBeforeExpand=";" onAfterExpand=";" ></button><button class="portletHeaderButtonClose" style="" title="click here to Close me..." buttonCloseDisabled="false" buttonCloseStyleClass="portletHeaderButtonClose" buttonCloseStyleClassDisabled="portletHeaderButtonCloseDisabled" buttonCloseStyleClassHover="portletHeaderButtonCloseHover" onBeforeClose=";" onAfterClose=";" ></button>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div class="portlet-content">
+								<table class="fullWidthPanel">
+									<tr>
+										<td class="portletContentColumnRight">
+											<div>
+												Using <a href="controlcenter/ConCent.jsf" target="_top" class="portalLink" title="Click here to launch the Control Center application">E-OPS Control Center</a>, you can manage your broadband network efficiently and easily.
+												<br/>
+												A rich GUI client provides all variety of operations on sites and NEs,
+												inventory, configuration, health monitoring and more.
+												<br/><br/>
+												Read more on <a href="WebHelp/E-OPS.htm#TopologyTree.htm" target="_blank" class="portalLink" title="Click here to launch the help">Control Center</a>
+											</div>
+										</td>
+										<td class="portletContentColumnLeft">
+											<a href="controlcenter/ConCent.jsf" target="_top" >
+												<img src="resources/images/controlCenter.png" title="Click here to launch the Control Center application" style="border:none;"/>
+											</a>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					<div class="activePortlet">
+						<div id="portlet2" class="portlet" state="expanded">
+							<div class="portlet-header">
+								<div style="" class="portletHeader" title="Portlet 2 Tooltip">
+									<table class="portletHeaderContainer" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td class="portletHeaderIconTd"><img class="portletHeaderIcon" src="resources/images/portletIcon.png" /></td>
+											<td class="portletHeaderTitle">Fault Management</td>
+											<td class="portletHeaderButtons">
+												<button class="portletHeaderButtonCollapse" style="" title="click here to Collapse/Expand me..." buttonCollapseDisabled="false" buttonCollapseStyleClass="portletHeaderButtonCollapse" buttonCollapseStyleClassDisabled="portletHeaderButtonCollapseDisabled" buttonCollapseStyleClassHover="portletHeaderButtonCollapseHover" onBeforeCollapse=";" onAfterCollapse=";" ></button><button class="portletHeaderButtonExpand" style="display:none;" buttonExpandDisabled="false" buttonExpandStyleClass="portletHeaderButtonExpand" buttonExpandStyleClassDisabled="portletHeaderButtonExpandDisabled" buttonExpandStyleClassHover="portletHeaderButtonExpandHover" onBeforeExpand=";" onAfterExpand=";" ></button><button class="portletHeaderButtonClose" style="" title="click here to Close me..." buttonCloseDisabled="false" buttonCloseStyleClass="portletHeaderButtonClose" buttonCloseStyleClassDisabled="portletHeaderButtonCloseDisabled" buttonCloseStyleClassHover="portletHeaderButtonCloseHover" onBeforeClose=";" onAfterClose=";" ></button>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div class="portlet-content">
+								<table>
+									<tr>
+										<td class="portletContentColumnRight">
+											<div>
+												Use <a href="fault/fmFrames.jsf" target="_top" class="portalLink" title="Click here to launch the FM application">E-OPS Fault Manager</a> for real time monitoring of the network and 
+												the subscriber services.<br/> 
+												Fault Manager alerts you with alarms and events 
+												analysis and historical information of occurrences.<br/> 
+												With Fault Manager 
+												you can also set your preferences for severities, alarms descriptions and more.
+												<br/><br/>
+												Read more on <a href="WebHelp/E-OPS.htm#Fault_Manager.htm" target="_blank" class="portalLink" title="Click here to launch the help">Fault Manager</a>
+											</div>
+										</td>
+										<td class="portletContentColumnLeft">
+											 <a href="fault/fmFrames.jsf" target="_top" >
+												<img src="resources/images/fm.png" title="Click here to launch the FM application" style="border:none;cursor:pointer;"/>
+											</a>
+										</td>
+									</tr>
+									
+									<tr>
+										<td colspan="2">
+											<div style="border:1px solid #000000;bacgkground-color:#cccccc;height:30px;">
+												<iframe src="http://a431114:8080/EOPS/fault/frames/portalSummary.jsf" width="100%" height="30px" frameborder="0" scrolling="no" style="background-color:#cccccc;" marginheight="2px"></iframe>
+											</div>
+										</td>
+									</tr>
+									
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					<div class="activePortlet">
+						<div id="portlet3" class="portlet" state="expanded">
+							<div class="portlet-header">
+								<div style="" class="portletHeader" title="Portlet 3 Tooltip">
+									<table class="portletHeaderContainer" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td class="portletHeaderIconTd"><img class="portletHeaderIcon" src="resources/images/portletIcon.png" /></td>
+											<td class="portletHeaderTitle">Octopus</td>
+											<td class="portletHeaderButtons">
+												<button class="portletHeaderButtonCollapse" style="" title="click here to Collapse/Expand me..." buttonCollapseDisabled="false" buttonCollapseStyleClass="portletHeaderButtonCollapse" buttonCollapseStyleClassDisabled="portletHeaderButtonCollapseDisabled" buttonCollapseStyleClassHover="portletHeaderButtonCollapseHover" onBeforeCollapse=";" onAfterCollapse=";" ></button><button class="portletHeaderButtonExpand" style="display:none;" buttonExpandDisabled="false" buttonExpandStyleClass="portletHeaderButtonExpand" buttonExpandStyleClassDisabled="portletHeaderButtonExpandDisabled" buttonExpandStyleClassHover="portletHeaderButtonExpandHover" onBeforeExpand=";" onAfterExpand=";" ></button><button class="portletHeaderButtonClose" style="" title="click here to Close me..." buttonCloseDisabled="false" buttonCloseStyleClass="portletHeaderButtonClose" buttonCloseStyleClassDisabled="portletHeaderButtonCloseDisabled" buttonCloseStyleClassHover="portletHeaderButtonCloseHover" onBeforeClose=";" onAfterClose=";" ></button>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div class="portlet-content">
+								<table>
+									<tr>
+										<td class="portletContentColumnRight">
+											<div>
+												<a href="octopus/task-list.jsf" target="_top" class="portalLink" title="Click here to launch the Octopus application">E-OPS Octopus</a> is the application to manage mass operation tasks on group of 
+												resources such as NE, cards and port.<br/>
+												With Fault Manager you can create and schedule various configuration tasks for
+												a selected group of resources.<br/> 
+												Configuration tasks can be tracked for results analysis.
+												<br/><br/>
+												Read more on <a href="WebHelp/E-OPS.htm#OCTOPUS_Multi_Target_Configuration_Tool.htm" target="_blank" class="portalLink" title="Click here to launch the help">Octopus</a>
+												<br/><br/>
+											</div>
+										</td>
+										<td class="portletContentColumnLeft">
+											<a href="octopus/task-list.jsf" target="_top" >
+												<img src="resources/images/octopus.png" title="Click here to launch the Octopus application" style="border:none;"/>
+											</a>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				</td>
+				
+				<td class="portletContainerColumn">
+				<div class="column">
+					<div class="inactivePortlet">
+						<div id="portlet4" class="portlet" state="expanded">
+							<div class="portlet-header">
+								<div style="" class="portletHeader-disabled" title="Portlet 4 Tooltip">
+									<table class="portletHeaderContainer" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td class="portletHeaderIconTd"><img class="portletHeaderIcon" src="resources/images/portletIcon.png" /></td>
+											<td class="portletHeaderTitle">Hi-Care</td>
+											<td class="portletHeaderButtons">
+												<button class="portletHeaderButtonCollapse" style="" title="click here to Collapse/Expand me..." buttonCollapseDisabled="false" buttonCollapseStyleClass="portletHeaderButtonCollapse" buttonCollapseStyleClassDisabled="portletHeaderButtonCollapseDisabled" buttonCollapseStyleClassHover="portletHeaderButtonCollapseHover" onBeforeCollapse=";" onAfterCollapse=";" ></button><button class="portletHeaderButtonExpand" style="display:none;" buttonExpandDisabled="false" buttonExpandStyleClass="portletHeaderButtonExpand" buttonExpandStyleClassDisabled="portletHeaderButtonExpandDisabled" buttonExpandStyleClassHover="portletHeaderButtonExpandHover" onBeforeExpand=";" onAfterExpand=";" ></button><button class="portletHeaderButtonClose" style="" title="click here to Close me..." buttonCloseDisabled="false" buttonCloseStyleClass="portletHeaderButtonClose" buttonCloseStyleClassDisabled="portletHeaderButtonCloseDisabled" buttonCloseStyleClassHover="portletHeaderButtonCloseHover" onBeforeClose=";" onAfterClose=";" ></button>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div class="portlet-content">
+								<table>
+									<tr>
+										<td class="portletContentColumnRight">
+											<div>
+												<a href="hicare/hicareMain.jsf" target="_top" class="portalLink" title="Click here to launch the HiCare application">E-OPS Hi-Care</a> provide full and comprehensive look on customer configuration, 
+												real time status, recovery tools, diagnostics and more.<br/>
+												The Hi-Care all-in-one approach helps to accelerate the time spent on 
+												troubleshooting and ease the deployment of new services.
+												<br/><br/>
+												Read more on <a href="WebHelp/E-OPS.htm#Hi_Care.htm" target="_blank" class="portalLink" title="Click here to launch the help">Hi-Care</a>
+												<br/><br/>
+											</div>
+										</td>
+										<td class="portletContentColumnLeft">
+											<a href="hicare/hicareMain.jsf" target="_top" >
+												<img src="resources/images/hicare.png" title="Click here to launch the HiCare application" style="border:none;"/>
+											</a>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					<div class="activePortlet">
+						<div id="portlet5" class="portlet" state="expanded">
+							<div class="portlet-header">
+								<div style="" class="portletHeader" title="Portlet 5 Tooltip">
+									<table class="portletHeaderContainer" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td class="portletHeaderIconTd"><img class="portletHeaderIcon" src="resources/images/portletIcon.png" /></td>
+											<td class="portletHeaderTitle">Reports</td>
+											<td class="portletHeaderButtons">
+												<button class="portletHeaderButtonCollapse" style="" title="click here to Collapse/Expand me..." buttonCollapseDisabled="false" buttonCollapseStyleClass="portletHeaderButtonCollapse" buttonCollapseStyleClassDisabled="portletHeaderButtonCollapseDisabled" buttonCollapseStyleClassHover="portletHeaderButtonCollapseHover" onBeforeCollapse=";" onAfterCollapse=";" ></button><button class="portletHeaderButtonExpand" style="display:none;" buttonExpandDisabled="false" buttonExpandStyleClass="portletHeaderButtonExpand" buttonExpandStyleClassDisabled="portletHeaderButtonExpandDisabled" buttonExpandStyleClassHover="portletHeaderButtonExpandHover" onBeforeExpand=";" onAfterExpand=";" ></button><button class="portletHeaderButtonClose" style="" title="click here to Close me..." buttonCloseDisabled="false" buttonCloseStyleClass="portletHeaderButtonClose" buttonCloseStyleClassDisabled="portletHeaderButtonCloseDisabled" buttonCloseStyleClassHover="portletHeaderButtonCloseHover" onBeforeClose=";" onAfterClose=";" ></button>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div class="portlet-content">
+								<table>
+									<tr>
+										<td class="portletContentColumnRight">
+											<div>
+												<a href="reports/reports.jsf" target="_top" class="portalLink" title="Click here to launch the Reports application">E-OPS Report Generator</a> allows you to generate reports from various types, inventory, 
+												audit trail and alarms.
+												Reports can be filtered per specific network segment or subject and can also be exported to CSV, HTML or XML files. <br/>
+												Report Generator is powered by Oracle.
+												<br/><br/>
+												Read more on <a href="WebHelp/E-OPS.htm#Keeping_Track_of_E_OPS_Operator_Activity.htm" target="_blank" class="portalLink" title="Click here to launch the help">Report Generator</a>
+												<br/><br/>
+											</div>
+										</td>
+										<td class="portletContentColumnLeft">
+											<a href="reports/reports.jsf" target="_top" >
+												<img src="resources/images/reports.png" title="Click here to launch the Reports application" style="border:none;"/>
+											</a>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					<div class="activePortlet">
+						<div id="portlet6" class="portlet" state="expanded">
+							<div class="portlet-header">
+								<div style="" class="portletHeader" title="Portlet 6 Tooltip">
+									<table class="portletHeaderContainer" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td class="portletHeaderIconTd"><img class="portletHeaderIcon" src="resources/images/portletIcon.png" /></td>
+											<td class="portletHeaderTitle">EMS Management</td>
+											<td class="portletHeaderButtons">
+												<button class="portletHeaderButtonCollapse" style="" title="click here to Collapse/Expand me..." buttonCollapseDisabled="false" buttonCollapseStyleClass="portletHeaderButtonCollapse" buttonCollapseStyleClassDisabled="portletHeaderButtonCollapseDisabled" buttonCollapseStyleClassHover="portletHeaderButtonCollapseHover" onBeforeCollapse=";" onAfterCollapse=";" ></button><button class="portletHeaderButtonExpand" style="display:none;" buttonExpandDisabled="false" buttonExpandStyleClass="portletHeaderButtonExpand" buttonExpandStyleClassDisabled="portletHeaderButtonExpandDisabled" buttonExpandStyleClassHover="portletHeaderButtonExpandHover" onBeforeExpand=";" onAfterExpand=";" ></button><button class="portletHeaderButtonClose" style="" title="click here to Close me..." buttonCloseDisabled="false" buttonCloseStyleClass="portletHeaderButtonClose" buttonCloseStyleClassDisabled="portletHeaderButtonCloseDisabled" buttonCloseStyleClassHover="portletHeaderButtonCloseHover" onBeforeClose=";" onAfterClose=";" ></button>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div class="portlet-content">
+								<table>
+									<tr>
+										<td class="portletContentColumnRight">
+											<div>
+												<a href="security/dmMain.jsf" target="_top" class="portalLink" title="Click here to launch the EMS Management application">E-OPS EMS Manager</a> is the application for EMS IT and system administrators.<br/>
+												It provides security management, servers monitoring, deployment settings and more.
+												<br/><br/>
+												Read more on <a href="WebHelp/E-OPS.htm#Managing_the_End_User.htm" target="_blank" class="portalLink" title="Click here to launch the help">EMS Manager</a>
+											</div>
+										</td>
+										<td class="portletContentColumnLeft">
+											<a href="security/dmMain.jsf" target="_top" >
+												<img src="resources/images/emsManagement.png" title="Click here to launch the EMS Management application" style="border:none;"/>
+											</a>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				</td>
+				</tr>
+				</table>
+			</div><!-- End demo -->
+			
+			<script type="text/javascript" src="../../../_shared/scripts/jquery/jquery.js"></script>
+			<script type="text/javascript" src="../../../_shared/scripts/jquery/jquery.ui.full.js"></script>
+			<script type="text/javascript" src="resources/scripts/configPortlets.js"></script>
+			<script type="text/javascript" src="resources/scripts/configSlider.js"></script>
+			<script type="text/javascript">
+				initPortlets();
+				initSlidingMenu();
+			</script>
+		</form>
+	</body>
+</html>

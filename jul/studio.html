@@ -1,0 +1,1564 @@
+
+<!DOCTYPE html>
+<html id="htmlPageTag" lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta content="IE=11" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1">
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <title id="pageTitle"></title>
+    <link rel="icon" href="https://github.githubassets.com/favicons/favicon.svg" />
+    <script type="text/javascript" src="assets/scripts/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="assets/scripts/axios.min.js"></script>
+    <script type="text/javascript" src="assets/scripts/jul-infra.js"></script>
+    <script type="text/javascript" src="assets/scripts/ui-components.js"></script>
+    <script id="sharedJs" type="text/javascript">
+        function getLoaderId() {
+            return "loader";
+        }
+
+        function getUiBlockerId() {
+            return "uiBlocker";
+        }
+    </script>
+    <script id="pageJs" type="text/javascript">
+        let _loader;
+        let _studioPage;
+
+        let languagesList = [
+            {label: "English", value: "en", description: "English",icon:""},
+            {label: "Hebrew", value: "he", description: "Hebrew",icon:""},
+            {label: "Spanish", value: "es", description: "'Spanish",icon:""},
+        ];
+
+        function getAttributeNameDataAlignment() {
+            let attName = "data-alignment";
+            return attName;
+        }
+
+        function getAttributeNameDataHeight() {
+            let attName = "data-compHeight";
+            return attName;
+        }
+
+        function getAttributeNameDataWidth() {
+            let attName = "data-compWidth";
+            return attName;
+        }
+
+        function getAttributeNameDataState() {
+            let attName = "data-compState";
+            return attName;
+        }
+
+        function getStudioPageId() {
+            let elemId = "studioPage";
+            return elemId;
+        }
+
+        function getStudioHeaderId() {
+            let elemId = "studioHeader";
+            return elemId;
+        }
+
+        function getStudioHeaderTextId() {
+            let elemId = "studioHeaderText";
+            return elemId;
+        }
+
+        function getStudioFooterId() {
+            let elemId = "studioFooter";
+            return elemId;
+        }
+
+        function getStudioBodyId() {
+            let elemId = "studioBody";
+            return elemId;
+        }
+
+        function getStudioBodyLeftPanelId() {
+            let elemId = "studioBodyLeft";
+            return elemId;
+        }
+
+        function getStudioBodyMainPanelId() {
+            let elemId = "studioBodyMain";
+            return elemId;
+        }
+
+        function getStudioBodyRightPanelId() {
+            let elemId = "studioBodyRight";
+            return elemId;
+        }
+
+        function getDefaultAttributeType() {
+            let attName = "attribute";
+            return attName;
+        }
+
+        function getPropertyTypeName() {
+            let attName = "property";
+            return attName;
+        }
+
+        function getStudioTagsId() {
+            let elemId = "studioTags";
+            return elemId;
+        }
+
+        function getStudioComponentsId() {
+            let elemId = "studioComponents";
+            return elemId;
+        }
+
+        function getStudioHtmlAttributesId() {
+            let elemId = "studioHtmlAttributes";
+            return elemId;
+        }
+
+        function getStudioCssPropertiesId() {
+            let elemId = "studioCssProperties";
+            return elemId;
+        }
+
+        function changeFont() {
+            document.getElementsByTagName("body")[0].style.fontFamily = utils.getFromDom("cmbFonts").value;
+        }
+
+        function changeTheme() {
+            let selectId = "cmbThemes";
+            let styleTagId = "cssTheme";
+            let selectedTheme = utils.getFromDom(selectId).value;
+            let currItem;
+            let currItemTheme;
+            let jsonCss = null;
+
+            //loop through the themes
+            for (let i=0; i<studioCss.length; i++) {
+                //get the current item
+                currItem = studioCss[i];
+
+                //check for valid values
+                if (!jsonUtils.hasField(currItem,"theme") || !jsonUtils.hasField(currItem,"css")) {
+                    continue;
+                }
+                currItemTheme = currItem.theme;
+
+                //compare the themes names
+                if (!utils.isString(selectedTheme) || !utils.isString(currItemTheme)) {
+                    continue;
+                }
+                if (currItemTheme.toLowerCase()==selectedTheme.toLowerCase()) {
+                    jsonCss = currItem.css;
+                    break;
+                }
+            }
+
+            //check for valid values
+            if (jsonCss==null) {
+                alert("theme=[" + selectedTheme + "] was NOT found !!");
+                return;
+            }
+
+            //remove the previous tag
+            if (utils.isInDom(styleTagId)) {
+                let childNode = utils.getFromDom(styleTagId);
+                let parentNode = childNode.parentNode;
+                parentNode.removeChild(childNode);
+            }
+
+            //apply the theme
+            html5Utils.renderCss(jsonCss, styleTagId, true);
+        }
+
+        function onLanguageChange() {
+            i18n.translateAll();
+            centerUi();
+        }
+
+        function translateVertical(translation) {
+            //declare locals
+            let htmlText = "";
+            let currChar = "";
+
+            //check for valid values
+            if (utils.isString(translation)) {
+                for (let i=0; i<translation.length; i++) {
+                    currChar = translation[i];
+                    if (currChar==" ") {
+                        currChar = "<br/>";
+                    }
+                    htmlText += '<div class="handleVerticalChar">' + currChar + '</div>';
+                }
+            }
+
+            //return the method's value
+            return htmlText;
+        }
+
+        function handlePanelCollapsed(collapsiblePanelId, newState) {
+            let bodySuffix = "_body";
+            domUtils.setAttributeValue(collapsiblePanelId, getAttributeNameDataState(), newState);
+            utils.getFromDom(collapsiblePanelId+bodySuffix).style.display = "none";
+
+            centerUi();
+        }
+
+        function handlePanelExpanded(collapsiblePanelId, newState) {
+            let bodySuffix = "_body";
+            domUtils.setAttributeValue(collapsiblePanelId, getAttributeNameDataState(), newState);
+            utils.getFromDom(collapsiblePanelId+bodySuffix).style.display = "block";
+
+            centerUi();
+        }
+
+        function renderGrid() {
+            //declare locals
+            let panelId = getStudioBodyMainPanelId();
+            let height = 0;
+            let width = 0;
+            let panelNode;
+            let html = "";
+
+            //check for valid values
+            if (utils.isInDom(panelId)) {
+                panelNode = utils.getFromDom(panelId);
+                height = parseInt(domUtils.getHeight(panelId));
+                width = parseInt(domUtils.getWidth(panelId));
+
+                //loop through the items
+                html += '<table rules="all">';
+                /*
+                for (let i=0; i<height; i++) {
+                    html += '<tr style="line-height: 1px;">';
+                    for (let j=0; j<width; j++) {
+                        html += '<td style="width:2px;">&nbsp;</td>';
+                    }
+                    html += '</tr>';
+                }
+                html += '</table>';
+                //panelNode.innerHTML = html;
+
+                 */
+            }
+
+            let iframeNode = document.getElementById("mainBodyIframe");
+            iframeNode = (iframeNode.contentWindow || iframeNode.contentDocument);
+            if (iframeNode.document) {
+                iframeNode = iframeNode.document;
+            }
+            //iframeNode.body.innerHTML = html;
+
+        }
+
+        function centerUi() {
+            //center the dialog
+            let loaderId = getLoaderId();
+            domUtils.centerComponent(loaderId);
+
+            //declare locals
+            let units = "px";
+            let clientHeight;
+            let clientWidth;
+            let htmlNode;
+            let headerId;
+            let headerHeight;
+            let footerId;
+            let footerHeight;
+            let bodyId;
+            let bodyHeight;
+            let bodyMainId;
+            let bodyMainWidth;
+            let bodyPanelIdLeft;
+            let bodyPanelLeftWidth;
+            let bodyPanelIdRight;
+            let bodyPanelRightWidth;
+            let headerTextId;
+            let headerTextWidth;
+            let headerCompsWidth = 450;
+            let headerMargin = 30;
+
+            //create a new config object
+            let collapsibleFooter = new CollapsiblePanel(studioUi[0].children[2]);
+            let collapsibleLeft = new CollapsiblePanel(studioUi[0].children[1].children[0]);
+            let collapsibleRight = new CollapsiblePanel(studioUi[0].children[1].children[2]);
+
+            //get the window's height and width
+            clientHeight = window.innerHeight;
+            clientWidth = window.innerWidth;
+
+            //get the header and the footer's height
+            headerId = getStudioHeaderId();
+            headerHeight = domUtils.getHeight(headerId);
+            footerId = uiCompsUtils.getCollapsibleBodyId(getStudioFooterId());
+            if (utils.isInDom(footerId)) {
+                htmlNode = utils.getFromDom(footerId);
+                htmlNode.style.width = clientWidth + units;
+                domUtils.setAttributeValue(getStudioFooterId(), collapsibleFooter.getConfig().dataAttributes.panelWidth, clientWidth);
+            }
+            footerHeight = domUtils.getHeight(footerId);
+            if (domUtils.getAttributeValue(footerId, getAttributeNameDataState())=="collapsed") {
+                footerHeight = 0;
+            }
+            headerTextId = getStudioHeaderTextId();
+            headerTextWidth = (clientWidth - headerCompsWidth)-(headerMargin*2);
+            htmlNode = utils.getFromDom(headerTextId);
+            htmlNode.style.width = headerTextWidth + units;
+
+            htmlNode = utils.getFromDom(headerId);
+            htmlNode.style.width = clientWidth + units;
+
+            //re-calculate the body height
+            bodyId = getStudioBodyId();
+            htmlNode = utils.getFromDom(bodyId);
+            bodyHeight = (clientHeight - (headerHeight + footerHeight));
+            htmlNode.style.height = bodyHeight + units;
+
+            //re-calculate the body's main
+            bodyPanelIdLeft = uiCompsUtils.getCollapsibleBodyId(getStudioBodyLeftPanelId());
+            bodyPanelIdRight = uiCompsUtils.getCollapsibleBodyId(getStudioBodyRightPanelId());
+            bodyPanelLeftWidth = domUtils.getWidth(bodyPanelIdLeft);
+            bodyPanelRightWidth = domUtils.getWidth(bodyPanelIdRight);
+            if (domUtils.getAttributeValue(bodyPanelIdLeft, getAttributeNameDataState())=="collapsed") {
+                bodyPanelLeftWidth = 0;
+            }
+            if (domUtils.getAttributeValue(bodyPanelIdRight, getAttributeNameDataState())=="collapsed") {
+                bodyPanelRightWidth = 0;
+            }
+            if (utils.isInDom(bodyPanelIdLeft)) {
+                htmlNode = utils.getFromDom(bodyPanelIdLeft);
+                htmlNode.style.height = bodyHeight + units;
+                domUtils.setAttributeValue(getStudioBodyLeftPanelId(), collapsibleLeft.getConfig().dataAttributes.panelHeight, bodyHeight);
+            }
+            if (utils.isInDom(bodyPanelIdRight)) {
+                htmlNode = utils.getFromDom(bodyPanelIdRight);
+                htmlNode.style.height = bodyHeight + units;
+                domUtils.setAttributeValue(getStudioBodyRightPanelId(), collapsibleRight.getConfig().dataAttributes.panelHeight, bodyHeight);
+            }
+            bodyMainId = getStudioBodyMainPanelId();
+            if (utils.isInDom(bodyMainId)) {
+                htmlNode = utils.getFromDom(bodyMainId);
+                bodyMainWidth = (clientWidth - (bodyPanelLeftWidth + bodyPanelRightWidth));
+                htmlNode.style.height = bodyHeight + units;
+                htmlNode.style.width = bodyMainWidth + units;
+                htmlNode.style.left = bodyPanelLeftWidth + units;
+            }
+
+            //render the main panel's grid
+            renderGrid();
+
+            uiCompsUtils.setCollapsibleHandlePosition(getStudioBodyLeftPanelId(),headerId);
+            uiCompsUtils.setCollapsibleHandlePosition(getStudioBodyRightPanelId(),headerId);
+            uiCompsUtils.setCollapsibleHandlePosition(getStudioFooterId(),headerId);
+
+            //calculate the inner panels body
+            let attributesTagId = "attributesRowBody";
+            let attsContainerId = "studioBodyLeft";
+            let containerHeight = domUtils.getHeight(attsContainerId);
+            let containerWidth = domUtils.getWidth(attsContainerId);
+            let tagsRowHeight = 190;
+            let attDescHeight = 100;
+            let attNameWidth = 155;
+            utils.getFromDom(attributesTagId).style.height = (containerHeight-(tagsRowHeight+attDescHeight)) + "px";
+            $(".attributeValueCol").css("width",(containerWidth-attNameWidth)+"px");
+
+            let cssPropsTagId = "cssPropertiesRowBody";
+            let cssPropsContainerId = "studioRightPanel";
+            let cssPropsContainerHeight = domUtils.getHeight(cssPropsContainerId);
+            let cssPropsContainerWidth = domUtils.getWidth(cssPropsContainerId);
+            let propsRowHeight = 30;
+            let propDescHeight = 100;
+            let propNameWidth = 155;
+            utils.getFromDom(cssPropsTagId).style.height = (cssPropsContainerHeight-(propsRowHeight+propDescHeight)) + "px";
+            //$(".propValueCol").css("width",(cssPropsContainerWidth-propNameWidth)+"px");
+        }
+
+        function handlePageOnLoad() {
+            //create a Loader
+            let loaderId = getLoaderId();
+            let uiBlockerId = getUiBlockerId();
+            let errorContainerId = getStudioFooterId();
+            _loader = new Loader({ loader: { id: loaderId }, uiBlocker: { id: uiBlockerId } });
+            _loader.render();
+            domUtils.centerComponent(loaderId);
+            _loader.show();
+
+            //set ajax.js configuration
+            ajaxUtils.setLoader(_loader);
+            ajaxUtils.setErrorId(errorContainerId);
+
+            //set a language change callback
+            i18n.loadBundle(studioBundle);
+            i18n.setChangeLanguageCallback(onLanguageChange);
+
+            //load the UI
+            loadUi();
+        }
+
+        function loadUi() {
+            let uiConfig = studioUi;
+
+            //render the login UI
+            renderUi(uiConfig);
+            centerUi();
+
+            //set the language which will invoke the callback
+            i18n.changeLanguage("en");
+            changeTheme();
+
+            //render the tags, attributes and properties UI
+            changeTag();
+            renderAttributesUI(getPropertyTypeName());
+
+            //hide the loader
+            _loader.hide();
+        }
+
+        function renderUi(uiConfig) {
+            //declare locals
+            let jsonUi;
+
+            //check for valid values
+            if (!utils.isArray(uiConfig) || uiConfig.length<1) {
+                return;
+            }
+            if (!utils.isJson(uiConfig[0])) {
+                return;
+            }
+
+            //check if the item is already in the DOM
+            jsonUi = uiConfig[0];
+            if (utils.isInDom(jsonUi.id)) {
+                return;
+            }
+
+            //create a new Dialog
+            _studioPage = new Tag(jsonUi);
+
+            //render the login dialog
+            _studioPage.render();
+        }
+
+        function getTagsSelectId() {
+            //declare locals
+            let elementId = "cmbTags";
+
+            //return the method's value
+            return elementId;
+        }
+
+        function changeTag() {
+            let selectId = getTagsSelectId();
+            let selectNode = utils.getFromDom(selectId);
+            let tagName = selectNode.value;
+            let descTagId = "tagDescriptionText";
+            let descTagNode = utils.getFromDom(descTagId);
+            descTagNode.innerText = selectNode.options[selectNode.selectedIndex].title;
+
+            //render the attributes UI
+            renderAttributesUI(getDefaultAttributeType(), tagName);
+        }
+
+        function renderAttributesUI(attributeType, tagName) {
+            //declare locals
+            let containerId;
+            let containerNode;
+            let data;
+            let isValidItem;
+            let rowHeight;
+            let padding;
+            let html = "";
+            let currItem;
+            let disabled;
+            let counter = 0;
+            let currItemType;
+            let defaultValue;
+
+            //check for valid values
+            if (utils.isEmpty(attributeType)) {
+                attributeType = getDefaultAttributeType();
+            }
+            if (attributeType==getDefaultAttributeType()) {
+                data = html5Utils.getAttributes();
+                containerId = "attributesRowBody";
+                rowHeight = 24;
+                padding = "";
+                padding = "padding-top:6px;";
+            }
+            else if (attributeType==getPropertyTypeName()) {
+                data = html5Utils.getCssProperties();
+                containerId = "cssPropertiesRowBody";
+                rowHeight = 24;
+                padding = "padding-top:6px;";
+            }
+            else {
+                return;
+            }
+
+            //get the html node by its id
+            containerNode = utils.getFromDom(containerId);
+
+            //loop through the items
+            for (let i=0; i<data.length; i++) {
+                //get the current item
+                currItem = data[i]
+                isValidItem = false;
+                disabled = "";
+                defaultValue = null;
+
+                //check for a valid item
+                if (attributeType==getPropertyTypeName() || (attributeType==getDefaultAttributeType() && html5Utils.isValidAttribute(tagName, currItem.attName, null))) {
+                    isValidItem = true;
+                }
+                if (isValidItem) {
+                    //check for a delimiter
+                    if (counter>0) {
+                        html += '<div style="height:1px;width:100%;"></div>';
+                    }
+                    if (currItem.attName.indexOf("color")!=-1) {
+                        html += '<div class="'+attributeType+'Row" style="height:28px;width:100%;padding-top:2px;">';
+                    }
+                    else {
+                        html += '<div class="'+attributeType+'Row" style="height:'+rowHeight+'px;width:100%;'+padding+'">';
+                    }
+                    html += '<div class="'+attributeType+'NameCol" style="direction:ltr;border-left:1px solid transparent;border-right:1px solid transparent;width:110px;float:left;white-space:nowrap;padding-left:5px;" title="' + currItem.description + '">';
+                    html += '<label for="'+ currItem.attName +'">' + currItem.attName  +'</label>';
+                    html += '</div>';
+                    html += '<div class="'+attributeType+'ColSpacer" style="width:5px;height:'+rowHeight+'px;float:left"></div>';
+                    html += '<div class="'+attributeType+'ValueCol" style="border-left:1px solid transparent;border-right:1px solid transparent;float:left;margin-left:5px">';
+
+                    //set the disabled property
+                    if (attributeType==getDefaultAttributeType() && !html5Utils.isValidAttribute(tagName, currItem.attName, null)) {
+                        disabled = ' disabled="disabled"';
+                    }
+
+                    //set the default value property
+                    if (currItem.hasOwnProperty("default") && !utils.isEmpty(currItem.default)) {
+                        defaultValue = currItem.default;
+                    }
+                    if (defaultValue===true) {
+                        defaultValue = ' checked="checked"';
+                    }
+                    else {
+                        if (utils.isEmpty(defaultValue)) {
+                            defaultValue = '';
+                        }
+                        else {
+                            defaultValue = ' value="' + defaultValue + '"';
+                        }
+                    }
+
+                    if (currItem.attName.indexOf("color")!=-1) {
+                        html += '<input id="' + currItem.attName + '" type="color" style=""' + disabled + ' onfocus="updateAttributeDescription(\''+attributeType+'\',\''+currItem.attName+'\');"' + defaultValue + ' />';
+                    }
+                    else {
+                        if (currItem.type.indexOf("List")!=-1) {
+                            html += '<select id="' + currItem.attName + '" size="1" style="width:100%;"' + disabled + ' onfocus="updateAttributeDescription(\''+attributeType+'\',\''+currItem.attName+'\');" >';
+                            html += selectUtils.generateOptionsHtml(listUtils.getList(currItem.type), defaultValue);
+                            html += '</select>';
+                        }
+                        else {
+                            currItemType = currItem.type.toLowerCase();
+                            switch (currItemType) {
+                                case "bool":
+                                case "boolean":
+                                case "empty":
+                                    html += '<input id="' + currItem.attName + '" type="checkbox"' + disabled + ' onfocus="updateAttributeDescription(\''+attributeType+'\',\''+currItem.attName+'\');"' + defaultValue + ' />';
+                                    break;
+                                case "number":
+                                case "numeric":
+                                    html += '<input id="' + currItem.attName + '" type="number" style="width:100%;"' + disabled + ' onfocus="updateAttributeDescription(\''+attributeType+'\',\''+currItem.attName+'\');"' + defaultValue + ' />';
+                                    break;
+                                case "script":
+                                    html += '<textarea id="' + currItem.attName + '" class="textarea" style="height:12px;width:100%;"' + disabled + ' onfocus="updateAttributeDescription(\''+attributeType+'\',\''+currItem.attName+'\');" >' + defaultValue + '</textarea>';
+                                    break;
+                                default:
+                                    html += '<input id="' + currItem.attName + '" type="text" style="width:100%;"' + disabled + ' onfocus="updateAttributeDescription(\''+attributeType+'\',\''+currItem.attName+'\');"' + defaultValue + ' />';
+                                    break;
+                            }
+                        }
+                    }
+                    html += '</div>';
+                    html += '</div>';
+                    counter++;
+                }
+            }
+            containerNode.innerHTML = html;
+
+            centerUi();
+        }
+
+        function updateAttributeDescription(attributeType,attributeName) {
+            //declare locals
+            let data;
+            let currItem;
+            let elemId;
+            let elemNode;
+
+            //check for valid values
+            if (utils.isEmpty(attributeName)) {
+                return;
+            }
+            if (utils.isEmpty(attributeType)) {
+                attributeType = getDefaultAttributeType();
+            }
+            if (attributeType==getDefaultAttributeType()) {
+                data = html5Utils.getAttributes();
+                elemId = "attDescriptionText";
+            }
+            else if (attributeType==getPropertyTypeName()) {
+                data = html5Utils.getCssProperties();
+                elemId = "cssPropertyDescriptionText";
+            }
+            else {
+                return;
+            }
+
+            //get the html node by its id
+            elemNode = utils.getFromDom(elemId);
+
+            //loop through the attributes
+            for (let i=0; i<data.length; i++) {
+                //get the current item
+                currItem = data[i]
+
+                //check if the ui element exists in the DOM
+                if (currItem.attName==attributeName) {
+                    //display the attribute's description
+                    elemNode.innerText = currItem.description;
+                    break;
+                }
+            }
+        }
+
+        function attributes2Config() {
+            let selectId = getTagsSelectId();
+            let selectNode = utils.getFromDom(selectId);
+            let tagName = selectNode.value;
+            let allAtts = html5Utils.getAttributes();
+            let currItem;
+            let config = {};
+            let uiAttValue = null;
+
+            //loop through the attributes
+            for (let i=0; i<allAtts.length; i++) {
+                //get the current item
+                currItem = allAtts[i]
+
+                //check if the ui element exists in the DOM
+                if (utils.isInDom(currItem.attName)) {
+                    //get the ui element's value
+                    uiAttValue = utils.getFromDom(currItem.attName).value;
+
+                    //check for a valid value
+                    if (!utils.isEmpty(uiAttValue)) {
+                        //check for a valid attribute
+                        if (html5Utils.isValidAttribute(tagName, currItem.attName, uiAttValue)) {
+                            config[currItem.attName] = uiAttValue;
+                        }
+                    }
+                }
+            }
+
+            //return the method's value
+            return config;
+        }
+
+        function config2Attributes(config) {
+            let currFieldValue = null;
+
+            //check for valid values
+            if (!utils.isJson(config)) {
+                return;
+            }
+
+            //loop through the JSON config's fields
+            for (let field in config) {
+                if (config.hasOwnProperty(field)) {
+
+                    //check if the ui element exists in the DOM
+                    if (utils.isInDom(field)) {
+                        //get the field's value
+                        currFieldValue = config[field];
+
+                        //check for a valid value
+                        if (!utils.isEmpty(currFieldValue)) {
+                            //update the ui item
+                            utils.getFromDom(field).value = currFieldValue;
+                        }
+                    }
+                }
+            }
+        }
+
+        function getIframeNode() {
+            //declare locals
+            let iframeId = "mainBodyIframe";
+            let iframeNode = document.getElementById(iframeId);
+
+            //get a cross-browser reference to the DOM node
+            iframeNode = (iframeNode.contentWindow || iframeNode.contentDocument);
+            if (iframeNode.document) {
+                iframeNode = iframeNode.document;
+            }
+
+            //return the method's value
+            return iframeNode;
+        }
+
+        function createTag() {
+            let selectId = getTagsSelectId();
+            let selectNode = utils.getFromDom(selectId);
+            let tagValue = selectNode.value;
+            let iframeNode = getIframeNode();
+            let tagConfig = attributes2Config();
+            tagConfig.tagName = tagValue;
+            let childNode = new Tag(tagConfig);
+            let idElem = document.getElementById("id");
+
+            //generate an id if necessary
+            if (utils.isEmpty(idElem.value)) {
+                idElem.value = utils.generateId(tagValue, tagValue);
+            }
+
+            //append the new tag to the iframe
+            //alert("inside createTag()...");
+            //iframeNode.getElementsByTagName("body")[0].appendChild(childNode);
+
+            let container = utils.getFromDom("cssPropertyDescriptionText");
+            container.innerHTML = renderIconsList();
+
+        }
+
+        function deleteTag(tagId) {
+            let iframeNode = getIframeNode();
+            let tagNode;
+            let parentNode;
+
+            //get the tag node from the iframe's DOM
+            alert("inside deleteTag()...");
+            /*
+            tagNode = iframeNode.getElementById(tagId);
+            if (!utils.isEmpty(tagNode)) {
+                //remove the te tag node from the DOM
+                parentNode = tagNode.parentNode;
+                parentNode.removeChild(tagNode);
+            }
+
+             */
+        }
+
+        function updateTag(tagId) {
+            let iframeNode = getIframeNode();
+            let tagNode;
+            let parentNode;
+
+            //get the tag node from the iframe's DOM
+            alert("inside updateTag()...");
+            /*
+            tagNode = iframeNode.getElementById(tagId);
+            if (!utils.isEmpty(tagNode)) {
+                //remove the te tag node from the DOM
+                parentNode = tagNode.parentNode;
+                parentNode.removeChild(tagNode);
+            }
+
+             */
+        }
+
+        function showIcon(elemId) {
+            //declare locals
+            let container = utils.getFromDom("studioFooter_body");
+            let iconName;
+            let iconHtml;
+            let colorsNode;
+            let iconNode;
+            let color = null;
+            let bgColor = null;
+
+            //check for valid values
+            if (utils.isInDom(elemId)) {
+                //get the icon's name
+                iconName = utils.getFromDom(elemId).value;
+
+                //check for valid values
+                if (utils.isEmpty(iconName)) {
+                    return;
+                }
+
+                //get the icon's html
+                iconHtml = getIconByName(iconName);
+
+                //check for valid values
+                if (utils.isEmpty(iconHtml)) {
+                    return;
+                }
+
+                //render the icon
+                container.innerHTML = iconHtml
+                colorsNode = utils.getFromDom("cssPropertyDescriptionText");
+                iconNode = container.firstChild.firstChild;
+                color = getComputedStyle(colorsNode).color;
+                bgColor = getComputedStyle(colorsNode).backgroundColor;
+                iconNode.setAttribute("stroke-width","1");
+                if (!utils.isEmpty(color)) {
+                    iconNode.setAttribute("stroke",color);
+                }
+                if (!utils.isEmpty(bgColor)) {
+                    iconNode.setAttribute("fill",bgColor);
+                }
+            }
+        }
+
+        function renderIconsList() {
+            //declare locals
+            let arrData = ["adjust","air-freshener"];
+            let elemId = "cmbIcons";
+            let html = "";
+
+            //render the html
+            html += '<label for="' + elemId + '">Icon:</label>';
+            html += '<input list="icons" name="' + elemId + '" id="' + elemId + '" onchange="showIcon(this.id);">';
+            html += '<datalist id="icons">';
+
+            //loop through the items
+            for (let i=0; i<arrData.length; i++) {
+                html += '<option value="' + arrData[i] + '">';
+            }
+            html += '</datalist>';
+            //return the method's value
+            return html;
+        }
+
+        function getIconByName(iconName) {
+            //declare locals
+            let html = "";
+            let icon = "";
+
+            //check for valid values
+            if (!utils.isString(iconName)) {
+                return "";
+            }
+
+            //check the icon's name
+            switch(iconName) {
+                case "adjust":
+                    icon = '<svg viewBox="0 0 512 512" class="svgIcon" title="adjust">' +
+                        '<path d="M8 256c0 136.966 111.033 248 248 248s248-111.034 248-248S392.966 8 256 8 8 119.033 8 256zm248 184V72c101.705 0 184 82.311 184 184 0 101.705-82.311 184-184 184z" />' +
+                        '</svg>';
+                    break;
+                case "air-freshener":
+                    icon = '<svg viewBox="0 0 512 512" class="svgIcon" title="air-freshener">' +
+                        '<path d="M224 160H96C43 160 0 203 0 256V480C0 497.625 14.375 512 32 512H288C305.625 512 320 497.625 320 480V256C320 203 277 160 224 160ZM160 416C115.875 416 80 380.125 80 336S115.875 256 160 256S240 291.875 240 336S204.125 416 160 416ZM224 32C224 14.375 209.625 0 192 0H128C110.375 0 96 14.375 96 32V128H224V32ZM381.781 51.578C383 50.969 384 49.359 384 48C384 46.625 383 45.031 381.781 44.422L352 32L339.562 2.219C338.969 1 337.375 0 336 0S333.031 1 332.406 2.219L320 32L290.219 44.422C289 45.031 288 46.625 288 48C288 49.359 289 50.969 290.219 51.578L320 64L332.406 93.781C333.031 95 334.625 96 336 96S338.969 95 339.562 93.781L352 64L381.781 51.578ZM448 64L460.406 93.781C461.031 95 462.625 96 464 96S466.969 95 467.562 93.781L480 64L509.781 51.578C511 50.969 512 49.359 512 48C512 46.625 511 45.031 509.781 44.422L480 32L467.562 2.219C466.969 1 465.375 0 464 0S461.031 1 460.406 2.219L448 32L418.219 44.422C417 45.031 416 46.625 416 48C416 49.359 417 50.969 418.219 51.578L448 64ZM480 224L467.562 194.219C466.969 193 465.375 192 464 192S461.031 193 460.406 194.219L448 224L418.219 236.422C417 237.031 416 238.625 416 240C416 241.359 417 242.969 418.219 243.578L448 256L460.406 285.781C461.031 287 462.625 288 464 288S466.969 287 467.562 285.781L480 256L509.781 243.578C511 242.969 512 241.359 512 240C512 238.625 511 237.031 509.781 236.422L480 224ZM445.781 147.578C447 146.969 448 145.359 448 144C448 142.625 447 141.031 445.781 140.422L416 128L403.562 98.219C402.969 97 401.375 96 400 96S397.031 97 396.406 98.219L384 128L354.219 140.422C353 141.031 352 142.625 352 144C352 145.359 353 146.969 354.219 147.578L384 160L396.406 189.781C397.031 191 398.625 192 400 192S402.969 191 403.562 189.781L416 160L445.781 147.578Z" />' +
+                        '</svg>';
+                    break;
+            }
+
+            //wrap the icon inside a div
+            //html = '<div class="svgIcon">' + icon + '</div>';
+            html = icon;
+
+            //return the method's value
+            return html;
+        }
+
+    </script>
+    <script id="cssJson" type="text/javascript">
+        let studioCss = [
+            {
+                "theme": "normal",
+                "css": [
+                    {
+                        "cssSelector": ".body",
+                        "height": "100%",
+                        "width": "100%",
+                        "overflow-y": "hidden",
+                        "overflow-x": "hidden",
+                        "margin-top": "0px",
+                        "margin-left": "0px",
+                        "font-family": "Arial, sans-serif",
+                        "background-color": "#ffffff",
+                    },
+                    {
+                        "cssSelector": ".select",
+                        "color": "#303030",
+                        "background-color": "rgba(0,0,0,0.06)",
+                        "border-bottom": "1px solid #303030",
+                    },
+                    {
+                        "cssSelector": ".select:focus",
+                        "outline": "1px solid transparent",
+                        "box-shadow": "5px 5px 10px #000000",
+                        "border-bottom": "2px solid #00000",
+                    },
+                    {
+                        "cssSelector": ".selectWide",
+                        "font-size": "20px",
+                        "color": "#303030",
+                        "background-color": "rgba(0,0,0,0.06)",
+                        "border-bottom": "1px solid #303030",
+                    },
+                    {
+                        "cssSelector": ".selectWide:focus",
+                        "outline": "1px solid transparent",
+                        "box-shadow": "5px 5px 10px #000000",
+                        "border-bottom": "2px solid #00000",
+                    },
+                    {
+                        "cssSelector": ".optionIcon",
+                    },
+                    {
+                        "cssSelector": ".optionLabel",
+                    },
+                    {
+                        "cssSelector": ".studioPage",
+                        "color": "#303030",
+                    },
+                    {
+                        "cssSelector": ".studioHeaderText",
+                        "font-weight": "bold",
+                        "font-size": "30px",
+                        "text-align": "left",
+                    },
+                    {
+                        "cssSelector": ".collapsibleHandle",
+                        "background-color": "rgba(0,0,0,0.2)",
+                        "color": "#303030",
+                    },
+                    {
+                        "cssSelector": ".handleVerticalChar",
+                        "font-size": "14px",
+                    },
+                    {
+                        "cssSelector": ".collapsibleHandleButton",
+                        "direction": "ltr",
+                        "background-color": "#0288d1",
+                        "color": "#ffffff",
+                        "font-size": "15px",
+                    },
+                    {
+                        "cssSelector": ".collapsibleHandleButton:focus",
+                        "outline": "1px solid #666666",
+                        "box-shadow": "5px 5px 10px #666666",
+                    },
+                    {
+                        "cssSelector": ".spacerRow",
+                        "background-color": "transparent",
+                    },
+                    {
+                        "cssSelector": ".tagsRowHeader",
+                        "background-color": "#0288d1",
+                        "color":"#ffffff",
+                        "font-size": "18px",
+                        "font-weight": "bold",
+                    },
+                    {
+                        "cssSelector": ".tagDescriptionText",
+                        "background-color": "#0288d1",
+                        "color": "#ffffff",
+                        "border": "1px solid #000000",
+                        "border-radius": "15px",
+                        "font-size": "16px",
+                    },
+                    {
+                        "cssSelector": ".attributesRowHeader",
+                        "background-color": "#0288d1",
+                        "color":"#ffffff",
+                        "font-size": "18px",
+                        "font-weight": "bold",
+                    },
+                    {
+                        "cssSelector": ".attDescriptionText",
+                        "background-color": "#0288d1",
+                        "color": "#ffffff",
+                        "border": "1px solid #000000",
+                        "border-radius": "15px",
+                        "font-size": "16px",
+                    },
+                    {
+                        "cssSelector": ".cssPropertiesRowHeader",
+                        "background-color": "#0288d1",
+                        "color":"#ffffff",
+                        "font-size": "18px",
+                        "font-weight": "bold",
+                    },
+                    {
+                        "cssSelector": ".cssPropertyDescriptionText",
+                        "background-color": "#0288d1",
+                        "color": "#ffffff",
+                        "border": "1px solid #000000",
+                        "border-radius": "15px",
+                        "font-size": "16px",
+                    },
+                    {
+                        "cssSelector": ".attributeRow",
+                        "border-bottom": "1px solid #000000",
+                        "background-color": "#0288d1",
+                        "color": "#ffffff",
+                        "font-size": "16px",
+                    },
+                    {
+                        "cssSelector": ".propertyRow",
+                        "border-bottom": "1px solid #000000",
+                        "background-color": "#0288d1",
+                        "color": "#ffffff",
+                        "font-size": "16px",
+                    },
+                    {
+                        "cssSelector": ".button",
+                        "border": "1px solid transparent",
+                        "background-color": "transparent",
+                        "outline": "1px solid #666666",
+                        "color": "#0288d1",
+                        "border-radius":"10px",
+                        "font-weight": "bold",
+                        "font-size": "16px",
+                        "cursor":"pointer",
+                    },
+                    {
+                        "cssSelector": ".button:focus",
+                        "outline": "2px solid #0288d1",
+                        "box-shadow": "5px 5px 10px #666666"
+                    },
+                    {
+                        "cssSelector": ".button:hover",
+                        "box-shadow": "5px 5px 10px #666666",
+                    },
+                    {
+                        "cssSelector": ".svgIcon",
+                        "width":"30px",
+                        "height":"30px",
+                    },
+                ]
+            },
+            {
+                "theme": "summer",
+                "css": [
+                    {
+                        "cssSelector": ".body",
+                        "height": "100%",
+                        "width": "100%",
+                        "overflow-y": "hidden",
+                        "overflow-x": "hidden",
+                        "margin-top": "0px",
+                        "margin-left": "0px",
+                        "font-family": "Arial, sans-serif",
+                        "background-color": "lightyellow",
+                    },
+                    {
+                        "cssSelector": ".select",
+                        "color": "#666666",
+                        "background-color": "rgba(0,0,0,0.06)",
+                        "border-bottom": "1px solid #303030",
+                    },
+                    {
+                        "cssSelector": ".select:focus",
+                        "outline": "1px solid transparent",
+                        "box-shadow": "5px 5px 10px #000000",
+                        "border-bottom": "2px solid forestgreen",
+                    },
+                    {
+                        "cssSelector": ".selectWide",
+                        "font-size": "20px",
+                        "color": "#666666",
+                        "background-color": "rgba(0,0,0,0.06)",
+                        "border-bottom": "1px solid #303030",
+                        "width": "100%",
+                    },
+                    {
+                        "cssSelector": ".selectWide:focus",
+                        "outline": "1px solid transparent",
+                        "box-shadow": "5px 5px 10px #000000",
+                        "border-bottom": "2px solid forestgreen",
+                    },
+                    {
+                        "cssSelector": ".studioPage",
+                        "background-color": "lightyellow",
+                        "color": "#666666",
+                    },
+                    {
+                        "cssSelector": ".studioHeaderText",
+                        "font-weight": "bold",
+                        "font-size": "30px",
+                        "text-align": "left",
+                    },
+                    {
+                        "cssSelector": ".collapsibleHandle",
+                        "background-color": "rgba(0,0,0,0.2)",
+                        "color": "#666666",
+                    },
+                    {
+                        "cssSelector": ".handleVerticalChar",
+                        "font-size": "14px",
+                    },
+                    {
+                        "cssSelector": ".collapsibleHandleButton",
+                        "direction": "ltr",
+                        "background-color": "forestgreen",
+                        "color": "lightyellow",
+                        "font-size": "15px",
+                    },
+                    {
+                        "cssSelector": ".collapsibleHandleButton:focus",
+                        "outline": "1px solid #303030",
+                        "box-shadow": "5px 5px 10px #000000",
+                    },
+                    {
+                        "cssSelector": ".spacerRow",
+                        "background-color": "transparent",
+                    },
+                    {
+                        "cssSelector": ".tagsRowHeader",
+                        "background-color": "forestgreen",
+                        "color": "lightyellow",
+                        "font-size": "18px",
+                        "font-weight": "bold",
+                    },
+                    {
+                        "cssSelector": ".tagDescriptionText",
+                        "background-color": "forestgreen",
+                        "color": "lightyellow",
+                        "border": "1px solid #000000",
+                        "border-radius": "15px",
+                        "font-size": "16px",
+                    },
+                    {
+                        "cssSelector": ".attributesRowHeader",
+                        "background-color": "forestgreen",
+                        "color": "lightyellow",
+                        "font-size": "18px",
+                        "font-weight": "bold",
+                    },
+                    {
+                        "cssSelector": ".attDescriptionText",
+                        "background-color": "forestgreen",
+                        "color": "lightyellow",
+                        "border": "1px solid #000000",
+                        "border-radius": "15px",
+                        "font-size": "16px",
+                    },
+                    {
+                        "cssSelector": ".cssPropertiesRowHeader",
+                        "background-color": "forestgreen",
+                        "color": "lightyellow",
+                        "font-size": "18px",
+                        "font-weight": "bold",
+                    },
+                    {
+                        "cssSelector": ".cssPropertyDescriptionText",
+                        "background-color": "forestgreen",
+                        "color": "lightyellow",
+                        "border": "1px solid #000000",
+                        "border-radius": "15px",
+                        "font-size": "16px",
+                    },
+                    {
+                        "cssSelector": ".attributeRow",
+                        "border-bottom": "1px solid #000000",
+                        "background-color": "forestgreen",
+                        "color": "lightyellow",
+                        "font-size": "16px",
+                    },
+                    {
+                        "cssSelector": ".propertyRow",
+                        "border-bottom": "1px solid #000000",
+                        "background-color": "forestgreen",
+                        "color": "lightyellow",
+                        "font-size": "16px",
+                    },
+                    {
+                        "cssSelector": ".button",
+                        "border": "1px solid transparent",
+                        "background-color": "transparent",
+                        "outline": "1px solid #666666",
+                        "color": "forestgreen",
+                        "border-radius":"10px",
+                        "font-weight": "bold",
+                        "font-size": "16px",
+                        "cursor":"pointer",
+                    },
+                    {
+                        "cssSelector": ".button:focus",
+                        "outline": "2px solid forestgreen",
+                        "box-shadow": "5px 5px 10px #666666"
+                    },
+                    {
+                        "cssSelector": ".button:hover",
+                        "box-shadow": "5px 5px 10px #666666",
+                    },
+                    {
+                        "cssSelector": ".svgIcon",
+                        "width":"30px",
+                        "height":"30px",
+                    },
+                ]
+            },
+            {
+                "theme": "dark",
+                "css": [
+                    {
+                        "cssSelector": ".body",
+                        "height": "100%",
+                        "width": "100%",
+                        "overflow-y": "hidden",
+                        "overflow-x": "hidden",
+                        "margin-top": "0px",
+                        "margin-left": "0px",
+                        "font-family": "Arial, sans-serif",
+                        "background-color": "#303030",
+                    },
+                    {
+                        "cssSelector": ".select",
+                        "color": "#ffffff",
+                        "background-color": "#303030",
+                    },
+                    {
+                        "cssSelector": ".select:focus",
+                        "outline": "1px solid transparent",
+                        "box-shadow": "5px 5px 10px #000000",
+                        "border-bottom": "2px solid #ffffff",
+                    },
+                    {
+                        "cssSelector": ".selectWide",
+                        "font-size": "20px",
+                        "color": "#ffffff",
+                        "background-color": "#303030",
+                        "width": "100%",
+                    },
+                    {
+                        "cssSelector": ".selectWide:focus",
+                        "outline": "1px solid transparent",
+                        "box-shadow": "5px 5px 10px #000000",
+                        "border-bottom": "2px solid #ffffff",
+                    },
+                    {
+                        "cssSelector": ".studioPage",
+                        "background-color": "#303030",
+                        "color": "#ffffff",
+                    },
+                    {
+                        "cssSelector": ".studioHeaderText",
+                        "font-weight": "bold",
+                        "font-size": "30px",
+                        "text-align": "left",
+                    },
+                    {
+                        "cssSelector": ".collapsibleHandle",
+                        "background-color": "#424242",
+                        "color": "#ffffff",
+                    },
+                    {
+                        "cssSelector": ".handleVerticalChar",
+                        "font-size": "14px",
+                    },
+                    {
+                        "cssSelector": ".collapsibleHandleButton",
+                        "direction": "ltr",
+                        "background-color": "#ffffff",
+                        "color": "#303030",
+                        "font-size": "15px",
+                    },
+                    {
+                        "cssSelector": ".collapsibleHandleButton:focus",
+                        "outline": "1px solid #303030",
+                        "box-shadow": "5px 5px 10px #000000",
+                    },
+                    {
+                        "cssSelector": ".spacerRow",
+                        "background-color": "transparent",
+                    },
+                    {
+                        "cssSelector": ".tagsRowHeader",
+                        "background-color": "#424242",
+                        "font-size": "18px",
+                        "font-weight": "bold",
+                    },
+                    {
+                        "cssSelector": ".tagDescriptionText",
+                        "background-color": "#424242",
+                        "border": "1px solid #000000",
+                        "border-radius": "15px",
+                        "font-size": "16px",
+                    },
+                    {
+                        "cssSelector": ".attributesRowHeader",
+                        "background-color": "#424242",
+                        "font-size": "18px",
+                        "font-weight": "bold",
+                    },
+                    {
+                        "cssSelector": ".attDescriptionText",
+                        "background-color": "#424242",
+                        "border": "1px solid #000000",
+                        "border-radius": "15px",
+                        "font-size": "16px",
+                    },
+                    {
+                        "cssSelector": ".cssPropertiesRowHeader",
+                        "background-color": "#424242",
+                        "font-size": "18px",
+                        "font-weight": "bold",
+                    },
+                    {
+                        "cssSelector": ".cssPropertyDescriptionText",
+                        "background-color": "#424242",
+                        "border": "1px solid #000000",
+                        "border-radius": "15px",
+                        "font-size": "16px",
+                    },
+                    {
+                        "cssSelector": ".attributeRow",
+                        "border-bottom": "1px solid #000000",
+                        "background-color": "#424242",
+                        "color": "#ffffff",
+                        "font-size": "16px",
+                    },
+                    {
+                        "cssSelector": ".propertyRow",
+                        "border-bottom": "1px solid #000000",
+                        "background-color": "#424242",
+                        "color": "#ffffff",
+                        "font-size": "16px",
+                    },
+                    {
+                        "cssSelector": ".button",
+                        "border": "1px solid transparent",
+                        "background-color": "transparent",
+                        "outline": "1px solid #666666",
+                        "color": "#ffffff",
+                        "border-radius":"10px",
+                        "font-weight": "bold",
+                        "font-size": "16px",
+                        "cursor":"pointer",
+                    },
+                    {
+                        "cssSelector": ".button:focus",
+                        "outline": "2px solid #ffffff",
+                        "box-shadow": "5px 5px 10px #666666"
+                    },
+                    {
+                        "cssSelector": ".button:hover",
+                        "box-shadow": "5px 5px 10px #666666",
+                    },
+                    {
+                        "cssSelector": ".svgIcon",
+                        "width":"30px",
+                        "height":"30px",
+                    },
+                ]
+            },
+        ];
+    </script>
+
+    <script id="i18nJson" type="text/javascript">
+        let studioBundle = [
+            { "lang": "en", "key": "studio.htmlPageTag.lang", "value": "en", "id": "htmlPageTag", "attName": "lang" },
+            { "lang": "en", "key": "studio.pageTitle.text", "value": "HTML Studio", "id": "pageTitle", "attName": "text" },
+            { "lang": "en", "key": "studio.pageBody.dir", "value": "ltr", "id": "pageBody", "attName": "dir" },
+            { "lang": "en", "key": "studio.cmbLanguages.tooltip", "value": "Click here to change the current language", "id": "cmbLanguages", "attName": "tooltip" },
+            { "lang": "en", "key": "studio.cmbLanguages.options", "value": [{"label":"English","value":"en","description":"English language","icon":""},{"label": "Hebrew", "value": "he","description":"Hebrew language","icon":""},{"label": "Spanish", "value": "es","description":"Spanish language","icon":""}], "id": "cmbLanguages", "attName": "options" },
+            { "lang": "en", "key": "studio.cmbFonts.tooltip", "value": "Click here to change the current font", "id": "cmbFonts", "attName": "tooltip" },
+            { "lang": "en", "key": "studio.cmbFonts.options", "list": "fontFamilyList", "id": "cmbFonts", "attName": "options" },
+            { "lang": "en", "key": "studio.cmbThemes.tooltip", "value": "Click here to change the current theme", "id": "cmbThemes", "attName": "tooltip" },
+            { "lang": "en", "key": "studio.cmbThemes.options", "value": [{"label": "normal", "value": "normal"},{"label": "summer", "value": "summer"},{"label": "dark", "value": "dark"}], "id": "cmbThemes", "attName": "options" },
+            { "lang": "en", "key": "studio.studioHeaderText.text", "value": "HTML Studio", "id": "studioHeaderText", "attName": "text" },
+            { "lang": "en", "key": "studio.handleLeftTop.height", "value": "height:210px", "id": "handleLeftTop", "attName": "style" },
+            { "lang": "en", "key": "studio.handleRightBottom.height", "value": "height:150px", "id": "handleRightBottom", "attName": "style" },
+            { "lang": "en", "key": "studio.handleBottomRight.width", "value": "width:150px", "id": "handleBottomRight", "attName": "style" },
+            { "lang": "en", "key": "studio.handleLeftTopText.text", "value": "HTML Tags", "id": "handleLeftTopText", "attName": "text", "callback":"translateVertical" },
+            { "lang": "en", "key": "studio.handleRightBottomText.text", "value": "CSS", "id": "handleRightBottomText", "attName": "text", "callback":"translateVertical" },
+            { "lang": "en", "key": "studio.handleBottomRightText.text", "value": "Footer", "id": "handleBottomRightText", "attName": "text" },
+            { "lang": "en", "key": "studio.handleLeftTopButton.tooltip", "value": "Click here to collapse/expand this panel", "id": "handleLeftTopButton", "attName": "tooltip" },
+            { "lang": "en", "key": "studio.handleRightBottomButton.tooltip", "value": "Click here to collapse/expand this panel", "id": "handleRightBottomButton", "attName": "tooltip" },
+            { "lang": "en", "key": "studio.handleBottomRightButton.tooltip", "value": "Click here to collapse/expand this panel", "id": "handleBottomRightButton", "attName": "tooltip" },
+            { "lang": "en", "key": "studio.tagsRowHeaderText.text", "value": "Tags", "id": "tagsRowHeaderText", "attName": "text" },
+            { "lang": "en", "key": "studio.attributesRowHeaderText.text", "value": "Attributes", "id": "attributesRowHeaderText", "attName": "text" },
+            { "lang": "en", "key": "studio.tagsRowHeaderText.padding", "value": "padding-left:10px;padding-right:0px;", "id": "tagsRowHeaderText", "attName": "style" },
+            { "lang": "en", "key": "studio.attributesRowHeaderText.padding", "value": "padding-left:10px;padding-right:0px;", "id": "attributesRowHeaderText", "attName": "style" },
+            { "lang": "en", "key": "studio.cmbTags.tooltip", "value": "Click here to select a tag", "id": "cmbTags", "attName": "tooltip" },
+            { "lang": "en", "key": "studio.cmbTags.options", "list": "html5Tags", "id": "cmbTags", "attName": "options","listConfig": {"labelField":"tagName","valueField":"tagName"} },
+            { "lang": "en", "key": "studio.cssPropertiesRowHeaderText.text", "value": "Properties", "id": "cssPropertiesRowHeaderText", "attName": "text" },
+            { "lang": "en", "key": "studio.cssPropertiesRowHeaderText.padding", "value": "padding-left:10px;padding-right:0px;", "id": "cssPropertiesRowHeaderText", "attName": "style" },
+
+            { "lang": "es", "key": "studio.htmlPageTag.lang", "value": "es", "id": "htmlPageTag", "attName": "lang" },
+            { "lang": "es", "key": "studio.pageTitle.text", "value": "HTML Studio", "id": "pageTitle", "attName": "text" },
+            { "lang": "es", "key": "studio.pageBody.dir", "value": "ltr", "id": "pageBody", "attName": "dir" },
+            { "lang": "es", "key": "studio.cmbLanguages.tooltip", "value": "Haga clic aquí para cambiar la idioma", "id": "cmbLanguages", "attName": "tooltip" },
+            { "lang": "es", "key": "studio.cmbLanguages.options", "value": [{"label": "Ingles", "value": "en","description":"la idioma Ingles","icon":""},{"label": "Hebrea", "value": "he","description":"la idioma Hebrea","icon":""},{"label": "Espanol", "value": "es","description":"la idioma Espanol","icon":""}], "id": "cmbLanguages", "attName": "options" },
+            { "lang": "es", "key": "studio.cmbFonts.tooltip", "value": "Haga clic aquí para cambiar el tipo de letra", "id": "cmbFonts", "attName": "tooltip" },
+            { "lang": "es", "key": "studio.cmbFonts.options", "list": "fontFamilyList", "id": "cmbFonts", "attName": "options" },
+            { "lang": "es", "key": "studio.cmbThemes.tooltip", "value": "Haga clic aquí para cambiar la thema", "id": "cmbThemes", "attName": "tooltip" },
+            { "lang": "es", "key": "studio.cmbThemes.options", "value": [{"label": "normal", "value": "normal"},{"label": "verano", "value": "summer"},{"label": "oscura", "value": "dark"}], "id": "cmbThemes", "attName": "options" },
+            { "lang": "es", "key": "studio.studioHeaderText.text", "value": "HTML Studio", "id": "studioHeaderText", "attName": "text" },
+            { "lang": "es", "key": "studio.handleLeftTop.height", "value": "height:210px", "id": "handleLeftTop", "attName": "style" },
+            { "lang": "es", "key": "studio.handleRightBottom.height", "value": "height:150px", "id": "handleRightBottom", "attName": "style" },
+            { "lang": "es", "key": "studio.handleBottomRight.width", "value": "width:180px", "id": "handleBottomRight", "attName": "style" },
+            { "lang": "es", "key": "studio.handleLeftTopText.text", "value": "HTML Tags", "id": "handleLeftTopText", "attName": "text", "callback":"translateVertical" },
+            { "lang": "es", "key": "studio.handleRightBottomText.text", "value": "CSS", "id": "handleRightBottomText", "attName": "text", "callback":"translateVertical" },
+            { "lang": "es", "key": "studio.handleBottomRightText.text", "value": "Pie de página", "id": "handleBottomRightText", "attName": "text" },
+            { "lang": "es", "key": "studio.handleLeftTopButton.tooltip", "value": "Haga clic aquí para colapsar/expandir este panel", "id": "handleLeftTopButton", "attName": "tooltip" },
+            { "lang": "es", "key": "studio.handleRightBottomButton.tooltip", "value": "Haga clic aquí para colapsar/expandir este panel", "id": "handleRightBottomButton", "attName": "tooltip" },
+            { "lang": "es", "key": "studio.handleBottomRightButton.tooltip", "value": "Haga clic aquí para colapsar/expandir este panel", "id": "handleBottomRightButton", "attName": "tooltip" },
+            { "lang": "es", "key": "studio.tagsRowHeaderText.text", "value": "Etiquetas", "id": "tagsRowHeaderText", "attName": "text" },
+            { "lang": "es", "key": "studio.attributesRowHeaderText.text", "value": "Atributos", "id": "attributesRowHeaderText", "attName": "text" },
+            { "lang": "es", "key": "studio.tagsRowHeaderText.padding", "value": "padding-left:10px;padding-right:0px;", "id": "tagsRowHeaderText", "attName": "style" },
+            { "lang": "es", "key": "studio.attributesRowHeaderText.padding", "value": "padding-left:10px;padding-right:0px;", "id": "attributesRowHeaderText", "attName": "style" },
+            { "lang": "es", "key": "studio.cmbTags.tooltip", "value": "Haga clic aquí para seleccionar una etiqueta", "id": "cmbTags", "attName": "tooltip" },
+            { "lang": "es", "key": "studio.cmbTags.options", "list": "html5Tags", "id": "cmbTags", "attName": "options","listConfig": {"labelField":"tagName","valueField":"tagName"} },
+            { "lang": "es", "key": "studio.cssPropertiesRowHeaderText.text", "value": "Propiedades", "id": "cssPropertiesRowHeaderText", "attName": "text" },
+            { "lang": "es", "key": "studio.cssPropertiesRowHeaderText.padding", "value": "padding-left:10px;padding-right:0px;", "id": "cssPropertiesRowHeaderText", "attName": "style" },
+
+            { "lang": "he", "key": "studio.htmlPageTag.lang", "value": "he", "id": "htmlPageTag", "attName": "lang" },
+            { "lang": "he", "key": "studio.pageTitle.text", "value": "Html Studio", "id": "pageTitle", "attName": "text" },
+            { "lang": "he", "key": "studio.pageBody.dir", "value": "rtl", "id": "pageBody", "attName": "dir" },
+            { "lang": "he", "key": "studio.cmbLanguages.tooltip", "value": "לחצ/י כאן בכדי לשנות את השפה", "id": "cmbLanguages", "attName": "tooltip" },
+            { "lang": "he", "key": "studio.cmbLanguages.options", "value": [{"label": "אנגלית", "value": "en","description":"השפה האנגלית","icon":""},{"label": "עברית", "value": "he","description":"השפה העברית","icon":""},{"label": "ספרדית", "value": "es","description":"השפה הספרדית","icon":""}], "id": "cmbLanguages", "attName": "options" },
+            { "lang": "he", "key": "studio.cmbFonts.tooltip", "value": "לחצ/י כאן בכדי חשנות את הגופן", "id": "cmbFonts", "attName": "tooltip" },
+            { "lang": "he", "key": "studio.cmbFonts.options", "list": "fontFamilyList", "id": "cmbFonts", "attName": "options" },
+            { "lang": "he", "key": "studio.cmbThemes.tooltip", "value": "לחצ/י כאן בכדי לשנות את התצוגה", "id": "cmbThemes", "attName": "tooltip" },
+            { "lang": "he", "key": "studio.cmbThemes.options", "value": [{"label": "רגילה", "value": "normal"},{"label": "קיץ", "value": "summer"},{"label": "כהה", "value": "dark"}], "id": "cmbThemes", "attName": "options" },
+            { "lang": "he", "key": "studio.studioHeaderText.text", "value": "HTML Studio", "id": "studioHeaderText", "attName": "text" },
+            { "lang": "he", "key": "studio.handleLeftTop.height", "value": "height:210px", "id": "handleLeftTop", "attName": "style" },
+            { "lang": "he", "key": "studio.handleRightBottom.height", "value": "height:150px", "id": "handleRightBottom", "attName": "style" },
+            { "lang": "he", "key": "studio.handleBottomRight.width", "value": "width:150px", "id": "handleBottomRight", "attName": "style" },
+            { "lang": "he", "key": "studio.handleLeftTopText.text", "value": "HTML Tags", "id": "handleLeftTopText", "attName": "text", "callback":"translateVertical" },
+            { "lang": "he", "key": "studio.handleRightBottomText.text", "value": "CSS", "id": "handleRightBottomText", "attName": "text", "callback":"translateVertical" },
+            { "lang": "he", "key": "studio.handleBottomRightText.text", "value": "פאנל תחתון", "id": "handleBottomRightText", "attName": "text" },
+            { "lang": "he", "key": "studio.handleLeftTopButton.tooltip", "value": "לחצ/י כאן בכדי לסגור/לפתוח את הפאנל הזה", "id": "handleLeftTopButton", "attName": "tooltip" },
+            { "lang": "he", "key": "studio.handleRightBottomButton.tooltip", "value": "לחצ/י כאן בכדי לסגור/לפתוח את הפאנל הזה", "id": "handleRightBottomButton", "attName": "tooltip" },
+            { "lang": "he", "key": "studio.handleBottomRightButton.tooltip", "value": "לחצ/י כאן בכדי לסגור/לפתוח את הפאנל הזה", "id": "handleBottomRightButton", "attName": "tooltip" },
+            { "lang": "he", "key": "studio.tagsRowHeaderText.text", "value": "תגיות", "id": "tagsRowHeaderText", "attName": "text" },
+            { "lang": "he", "key": "studio.attributesRowHeaderText.text", "value": "מאפיינים", "id": "attributesRowHeaderText", "attName": "text" },
+            { "lang": "he", "key": "studio.tagsRowHeaderText.padding", "value": "padding-right:10px;padding-left:0px;", "id": "tagsRowHeaderText", "attName": "style" },
+            { "lang": "he", "key": "studio.attributesRowHeaderText.padding", "value": "padding-right:10px;padding-left:0px;", "id": "attributesRowHeaderText", "attName": "style" },
+            { "lang": "he", "key": "studio.cmbTags.tooltip", "value": "לחצ/י כאן בכדי לבחור תגית", "id": "cmbTags", "attName": "tooltip" },
+            { "lang": "he", "key": "studio.cmbTags.options", "list": "html5Tags", "id": "cmbTags", "attName": "options","listConfig": {"labelField":"tagName","valueField":"tagName"} },
+            { "lang": "he", "key": "studio.cssPropertiesRowHeaderText.text", "value": "מאפייני תצוגה", "id": "cssPropertiesRowHeaderText", "attName": "text" },
+            { "lang": "he", "key": "studio.cssPropertiesRowHeaderText.padding", "value": "padding-right:10px;padding-left:0px;", "id": "cssPropertiesRowHeaderText", "attName": "style" },
+        ];
+    </script>
+
+    <script id="uiJson" type="text/javascript">
+        let studioUi = [
+            {
+                "compType": "tag",
+                "tagName": "div",
+                "id": "studioPage",
+                "cssTagId": "studioCss",
+                "class": "studioPage",
+                "css": { "height": "100%", "width": "100%","border":"1px solid #000000" },
+                "children": [
+                    {"compType": "row","id": "studioHeader","class": "studioHeader","css": { "height":"50px","min-height":"50px","width":"100%","min-width":"660px","border":"1px solid #000000" },"children":[
+                        {"compType": "col","class": "headerColIcon","css": {"width": "100px","min-width":"100px","height": "30px","float": "right","margin-top": "10px","margin-right": "25px","margin-left": "10px"},"children": [
+                            //{"compType": "tag","tagName": "img","class": "headerIcon","css": {"width":"100px","height":"30px","float":"left"},"src": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE1LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiCgkgd2lkdGg9IjUwNy4wMjVweCIgaGVpZ2h0PSIxODIuMzM1cHgiIHZpZXdCb3g9IjAgMCA1MDcuMDI1IDE4Mi4zMzUiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDUwNy4wMjUgMTgyLjMzNSIKCSB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IkJhY2tncm91bmQiPgo8L2c+CjxnIGlkPSJGb3JlZ3JvdW5kIj4KCTxnPgoJCTxnPgoJCQk8cG9seWdvbiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iIzU5NUY1RSIgcG9pbnRzPSI2Ni42OTksMzcuNjgxIDI2LjksMzcuNjgxIDI2LjksMTAuNTU0IDAsMTAuNTU0IAoJCQkJMCw1NS43NjYgMzkuMDYzLDU1Ljc2NiAxNC43NCwxMjcuMjUgNDEuODI1LDEyNy4yNSA2Ni42OTksNTUuNDI0IAkJCSIvPgoJCQk8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iIzU5NUY1RSIgZD0iTTE2Mi40OSwxMjcuMjVjMCwwLTE1LjY2Mi0yNS43NjItMjQuMzIyLTM3Ljg3NQoJCQkJYzEwLjEzNS0zLjI0MSwyMS4xODgtOS41NTUsMjEuMzcyLTI2Ljc4NVYzNy42ODFoLTI3LjQ1MnYzNC42MzNjMCw0Ljk0OC0yLjAyOCw0LjI2Ni0yLjAyOCw0LjI2NmwtMjMuMjE2LTM4Ljg5OGgtMzIuOTgKCQkJCWwyNC44NzUsMzIuMjQ2Yy0xMC41MDMsNS4xMTctMjEuMDA2LDkuMzgzLTIxLjAwNiwzMy4wOTd2MjQuMjI3aDI3LjQ1M1Y4Ni45ODdjMC00LjYwNiwyLjk0OS00LjI2NiwyLjk0OS00LjI2NmwyNC4xMzcsNDQuNTI4CgkJCQlIMTYyLjQ5eiIvPgoJCQk8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iIzU5NUY1RSIgZD0iTTIyNi43OSwxMjcuMjVWNjUuODMxYzAtMjIuMDA4LTguNjU5LTI4LjE1LTI5LjExMS0yOC4xNQoJCQkJaC0yOC41NTd2MTguMDg1aDE4LjYwNmM5LjU4MS0wLjE3MiwxMS40MjUsMi44OTksMTEuNDI1LDExLjYwMnY1OS44ODNIMjI2Ljc5eiIvPgoJCQk8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iIzU5NUY1RSIgZD0iTTMxOC4xNTYsMTI3LjI1VjY1LjgzMWMwLTIyLjAwOC04Ljg0NC0yOC4xNS0yOS4yOTYtMjguMTUKCQkJCWgtNDQuNTl2MTguMDg1aDM0LjgyNGM5LjM5NiwwLDExLjQyMiwzLjA3MSwxMS40MjIsMTEuNzcxdjU5LjcxM0gzMTguMTU2eiBNMjcxLjM1NCw3My41MDlsLTI3LjA4NCw1LjgwMXY0Ny45NGgyNy4wODRWNzMuNTA5eiIKCQkJCS8+CgkJPC9nPgoJCTxnPgoJCQk8Zz4KCQkJCTxnPgoJCQkJCTxyYWRpYWxHcmFkaWVudCBpZD0iU1ZHSURfMV8iIGN4PSI0NTEuMjY2NiIgY3k9IjkyLjc2NDYiIHI9IjEyNC41NTI0IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CgkJCQkJCTxzdG9wICBvZmZzZXQ9IjAiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkZGRkYiLz4KCQkJCQkJPHN0b3AgIG9mZnNldD0iMC4yNzI3IiBzdHlsZT0ic3RvcC1jb2xvcjojMDA5NURBIi8+CgkJCQkJCTxzdG9wICBvZmZzZXQ9IjAuNjgxOCIgc3R5bGU9InN0b3AtY29sb3I6IzAwNzdDMCIvPgoJCQkJCQk8c3RvcCAgb2Zmc2V0PSIwLjkzMTgiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkZGRkYiLz4KCQkJCQkJPHN0b3AgIG9mZnNldD0iMSIgc3R5bGU9InN0b3AtY29sb3I6I0ZGRkZGRiIvPgoJCQkJCTwvcmFkaWFsR3JhZGllbnQ+CgkJCQkJPHBhdGggZmlsbD0idXJsKCNTVkdJRF8xXykiIGQ9Ik00NDUuNDQ0LDI3LjcwNGMyNC44MTYsMTguNTI2LDE5LjQ3Nyw1MC4wNzEtMC4wNTcsNjkuMzIxCgkJCQkJCWMtMS42NjYtMTMuNDY3LTkuMDk0LTIxLjg5NC0xNy43OTktMjcuMTI1Yy0xNy41OTItMTAuNTcxLTUzLjgyLTkuMzg3LTgwLjc4MywxOS41MjUKCQkJCQkJYy02LjMxOCw2Ljc3Ni0xMS40ODgsMTcuNDg5LTE1LjM5MSwyNC45NjJjLTEwLjYwNS0yNC4zNTYtMi44ODEtNTEuMDIsMTkuMjg5LTc0Ljc5NQoJCQkJCQlDMzc5LjA5NSw5LjE0Niw0MTkuNDU4LDguMzAzLDQ0NS40NDQsMjcuNzA0eiIvPgoJCQkJPC9nPgoJCQkJPGc+CgkJCQkJPGc+CgkJCQkJCTxyYWRpYWxHcmFkaWVudCBpZD0iU1ZHSURfMl8iIGN4PSI0MDYuOTMyNiIgY3k9IjEwNC43ODAzIiByPSIxMDQuNzgwMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgoJCQkJCQkJPHN0b3AgIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6I0ZGRkZGRiIvPgoJCQkJCQkJPHN0b3AgIG9mZnNldD0iMC4yNzg0IiBzdHlsZT0ic3RvcC1jb2xvcjojOERDNjNGIi8+CgkJCQkJCQk8c3RvcCAgb2Zmc2V0PSIwLjY3MDUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MEI4NDgiLz4KCQkJCQkJCTxzdG9wICBvZmZzZXQ9IjAuODkyIiBzdHlsZT0ic3RvcC1jb2xvcjojRkZGRkZGIi8+CgkJCQkJCQk8c3RvcCAgb2Zmc2V0PSIxIiBzdHlsZT0ic3RvcC1jb2xvcjojRkZGRkZGIi8+CgkJCQkJCTwvcmFkaWFsR3JhZGllbnQ+CgkJCQkJCTxwYXRoIGZpbGw9InVybCgjU1ZHSURfMl8pIiBkPSJNNDY2LjI2NywxNDIuMDk4Yy0yOC40NTMsMTIuMjI5LTY2LjczOC0xMy43MDktNjMuODkzLTQ0LjcxNQoJCQkJCQkJYzguMTkxLDEwLjYzLDI0LjEsMTUuMDk3LDM2LjI3Nyw4LjE1M2MxNy44MzItMTAuMTY2LDM1LjA0My00MS45MiwyMy40ODItNzkuNzI2Yy0yLjcwOS04Ljg2LTkuMzk4LTE4LjY5Ni0xMy45Mi0yNS44MTEKCQkJCQkJCWMyNi4zOTYsMi45OTEsNDUuNjI1LDIzLjAxNCw1NS4xMjksNTQuMTA0QzUxNS41MTUsOTMuOTE1LDQ5Ni4wNjMsMTI5LjI5MSw0NjYuMjY3LDE0Mi4wOTh6Ii8+CgkJCQkJPC9nPgoJCQkJPC9nPgoJCQkJPGc+CgkJCQkJPHJhZGlhbEdyYWRpZW50IGlkPSJTVkdJRF8zXyIgY3g9IjQyNC4zOTA2IiBjeT0iNjYuNjAxMSIgcj0iMTE1LjczMzUiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KCQkJCQkJPHN0b3AgIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6I0ZGRkZGRiIvPgoJCQkJCQk8c3RvcCAgb2Zmc2V0PSIwLjA3OTUiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkZGRkYiLz4KCQkJCQkJPHN0b3AgIG9mZnNldD0iMC4zMjM5IiBzdHlsZT0ic3RvcC1jb2xvcjojRkZENDAwIi8+CgkJCQkJCTxzdG9wICBvZmZzZXQ9IjAuNjcwNSIgc3R5bGU9InN0b3AtY29sb3I6I0ZGQzIwRSIvPgoJCQkJCQk8c3RvcCAgb2Zmc2V0PSIwLjkwMzQiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkZGRkYiLz4KCQkJCQkJPHN0b3AgIG9mZnNldD0iMSIgc3R5bGU9InN0b3AtY29sb3I6I0ZGRkZGRiIvPgoJCQkJCTwvcmFkaWFsR3JhZGllbnQ+CgkJCQkJPHBhdGggZmlsbD0idXJsKCNTVkdJRF8zXykiIGQ9Ik0zNTMuOTExLDEwMy4zNjZjMy42MzctMzAuNzU3LDMzLjYyMy00MS45MDMsNjAuMDYxLTM0LjYxMQoJCQkJCQljLTEwLjgzMiw4LjE3Ny0xNC40MTYsMTguODIzLTE0LjU5MiwyOC45NzdjLTAuMzU5LDIwLjUyMywxOC43ODEsNTEuMzA4LDU3LjMwMSw2MC4yMDJjOS4wMjMsMi4wODQsMjAuODg5LDEuMjA1LDI5LjMxNCwwLjg0OAoJCQkJCQljLTE1Ljc4OSwyMS4zNjMtNDIuNzQ0LDI4LjAwNi03NC40MiwyMC42OTNDMzcxLjAxNSwxNzAuMTA5LDM1MC4xMDQsMTM1LjU3NiwzNTMuOTExLDEwMy4zNjZ6Ii8+CgkJCQk8L2c+CgkJCTwvZz4KCQk8L2c+Cgk8L2c+CjwvZz4KPGcgaWQ9Ikd1aWRlcyI+CjwvZz4KPGcgaWQ9IkxheWVyLTEiPgo8L2c+Cjwvc3ZnPgo="}
+                        ]},
+                        {"compType": "col","class": "headerColToolbar","css": {"width": "350px","min-width":"350px","height": "30px","float": "right","padding-top":"12px"},"children": [
+                            {"compType": "col","class": "languageWrapper","css": {"width":"100px","float":"right"},"children": [
+                                {"compType": "tag","tagName": "select","id": "cmbLanguages","size": 1,"class": "select",
+                                    "css": [
+                                        {"width":"100px","height":"30px","float":"right","outline": "0px none","border-top":"none","border-left":"none","border-right":"none","background-color":"rgba(0,0,0,0.06)","border-bottom":"1px solid #303030","border-top-left-radius": "10px","border-top-right-radius": "10px"},
+                                        {"cssSelector":".select:focus","border-bottom":"1px solid transparent","border-bottom": "2px solid #0000ff","box-shadow": "5px 5px 10px #000000"}
+                                    ],
+                                "onchange": "i18n.changeLanguage"}
+                            ]},
+                            {"compType": "col","class": "colsSpacer","css": {"width":"10px","height":"10px","float":"right"}},
+                            {"compType": "col","class": "fontsWrapper","css": {"width":"100px","float":"right"},"children": [
+                                {"compType": "tag","tagName": "select","id": "cmbFonts","size": 1,"class": "select",
+                                "onchange": "changeFont"}
+                            ]},
+                            {"compType": "col","class": "colsSpacer","css": {"width":"10px","height":"10px","float":"right"}},
+                            {"compType": "col","class": "themesWrapper","css": {"width":"100px","float":"right"},"children": [
+                                {"compType": "tag","tagName": "select","id": "cmbThemes","size": 1,"class": "select",
+                                    "onchange": "changeTheme"}
+                            ]}
+                        ]},
+                        {"compType": "col","id":"studioHeaderText","class": "studioHeaderText","css": {"height": "40px","width":"210px","min-width":"210px","margin-top": "5px","margin-left": "25px"},"text":""},
+                    ]},
+                    {"compType": "row","id": "studioBody","class": "studioBody","css": { "height":"200px","width":"100%","border":"1px solid #00ff00" },"children":[
+                        { "compType":"collapsiblePanel","class":"collapsiblePanelLeft","css": { "float":"left","width":"300px","min-width":"300px","height":"100%" },
+                            "alignment": "left",
+                            "onCollapseCallback": "handlePanelCollapsed",
+                            "onExpandCallback": "handlePanelExpanded",
+                            "siblingNodeId": "studioHeader",
+                            "handle": { "id":"handleLeftTop","class":"handleLeft","css": { "height":"150px","width":"30px" },"position":"top","button": { "id":"handleLeftTopButton" },"children":[
+                                {"compType": "tag","tagName":"div","id":"handleLeftTopText"},
+                            ] },
+                            "body": { "id":"studioBodyLeft","class":"studioBodyLeft","css": { "border":"1px solid #ff0000" },"children": [
+                                {"compType": "row","id":"tagsRow","class":"tagsRow","css": {"height":"160px","min-height":"160px","width":"100%"},"children":[
+                                    {"compType": "row","id":"tagsRowHeader","class":"tagsRowHeader","css": {"height":"25px","min-height":"25px","width":"100%"},"children":[
+                                        {"compType": "row","id":"tagsRowHeaderText","class":"tagsRowHeaderText","css":{"padding-top":"1px"}},
+                                    ]},
+                                    {"compType": "row","id":"tagsRowBody","class":"tagsRowBody","css": {"width":"100%"},"children":[
+                                        {"compType": "row","class": "tagsWrapper","css": {"height":"30px","width":"100%","margin-top":"5px"},"children": [
+                                            {"compType": "col","class": "tagsCol","css": {"width": "110px","min-width":"110px"},"children": [
+                                                {"compType": "tag","tagName": "select","id": "cmbTags","size": 1,"class": "select","onchange": "changeTag"},
+                                            ]},
+                                            {"compType": "col","class": "columnsSpacer","css": {"height":"10px","width":"10px"}},
+                                            {"compType": "col","class": "buttonsCol","css": {},"children": [
+                                                {"compType":"tag","tagName":"button","id":"btnCreateTag","text":"&#10010","class":"button","css":{"direction":"ltr","margin-left":"10px","width":"26px","height":"26px"},"onclick":"createTag"},
+                                                {"compType":"tag","tagName":"button","id":"btnUpdateTag","text":"&#9998","class":"button","onclick":"updateTag"},
+                                                {"compType":"tag","tagName":"button","id":"btnDeleteTag","text":"&#10008","class":"button","onclick":"deleteTag"},
+                                            ]},
+                                        ]},
+                                        {"compType": "row","id":"tagDescription","class":"tagDescription","css":{"height":"100px","width":"100%","padding-top":"5px"},"children":[
+                                            {"compType": "row","id":"tagDescriptionText","class":"tagDescriptionText","css":{"direction":"ltr","height":"80px","min-height":"80px","width":"95%","min-width":"280px","overflow":"hidden","padding-left":"10px","padding-top":"10px"}},
+                                        ]},
+                                    ]},
+                                ]},
+                                {"compType": "row","id":"spacerRow","class":"spacerRow","css": {"height":"2px","min-height":"2px","width":"100%"},"children":[] },
+                                {"compType": "row","id":"attributesRow","class":"attributesRow","css": {"height":"72%","min-height":"200px","width":"100%"},"children":[
+                                    {"compType": "row","id":"attributesRowHeader","class":"attributesRowHeader","css": {"height":"25px","min-height":"25px","width":"100%"},"children":[
+                                        {"compType": "row","id":"attributesRowHeaderText","class":"attributesRowHeaderText","css":{"padding-top":"1px"}}
+                                    ]},
+                                    {"compType": "row","id":"attributesRowBody","class":"attributesRowBody","css": {"padding-top":"2px","overflow-x":"hidden","overflow-y":"scroll","width":"100%"}},
+                                    {"compType": "row","id":"attDescription","class":"attDescription","css":{"height":"100px","width":"100%","padding-top":"5px"},"children":[
+                                        {"compType": "row","id":"attDescriptionText","class":"attDescriptionText","css":{"direction":"ltr","height":"80px","min-height":"80px","width":"95%","min-width":"280px","overflow":"hidden","padding-left":"10px","padding-top":"10px"}},
+                                    ]},
+                                ]},
+                            ] }
+                        },
+                        {"compType": "col","id":"studioBodyMain","class": "studioBodyMain","css": { "height":"100%","width":"300px","border-radius":"0px","border":"1px solid #0000ff","position":"absolute" },"children": [
+                            {"compType": "tag","tagName":"iframe","id":"mainBodyIframe","class":"mainBodyIframe","css":{"height":"100%","width":"100%"},"sandbox":"allow-same-origin"},
+                        ]},
+                        { "compType":"collapsiblePanel","class":"studioRightPanel","css": { "float":"left","width":"300px","min-width":"300px","height":"100%" },
+                            "alignment": "right",
+                            "onCollapseCallback": "handlePanelCollapsed",
+                            "onExpandCallback": "handlePanelExpanded",
+                            "siblingNodeId": "studioHeader",
+                            "handle": { "id":"handleRightBottom","class":"handleRight","css": { "height":"150px","width":"30px" },"position":"top","button": { "id":"handleRightBottomButton" },"children":[
+                                {"compType": "tag","tagName":"div","id":"handleRightBottomText"},
+                            ] },
+                            "body": { "id":"studioBodyRight","class":"studioBodyRight","css": { "border":"1px solid #00ff00" },"children": [
+                                {"compType": "row","id":"cssPropertiesRow","class":"cssPropertiesRow","css": {"height":"72%","min-height":"200px","width":"100%"},"children":[
+                                    {"compType": "row","id":"cssPropertiesRowHeader","class":"cssPropertiesRowHeader","css": {"height":"25px","min-height":"25px","width":"100%"},"children":[
+                                        {"compType": "row","id":"cssPropertiesRowHeaderText","class":"cssPropertiesRowHeaderText","css":{"padding-top":"1px"}}
+                                    ]},
+                                    {"compType": "row","id":"cssPropertiesRowBody","class":"cssPropertiesRowBody","css": {"padding-top":"2px","overflow-x":"hidden","overflow-y":"scroll","width":"100%"}},
+                                    {"compType": "row","id":"cssPropertyDescription","class":"cssPropertyDescription","css":{"height":"100px","width":"100%","padding-top":"5px"},"children":[
+                                            {"compType": "row","id":"cssPropertyDescriptionText","class":"cssPropertyDescriptionText","css":{"direction":"ltr","height":"80px","min-height":"80px","width":"95%","min-width":"280px","overflow":"hidden","padding-left":"10px","padding-top":"10px"}},
+                                    ]},
+                                ]},
+                            ]}
+                        }
+                    ]},
+                    { "compType":"collapsiblePanel","class":"collapsiblePanelBottom","css": { "height":"200px","min-height":"200px","width":"100%","min-width":"660px" },
+                        "alignment": "bottom",
+                        "onCollapseCallback": "handlePanelCollapsed",
+                        "onExpandCallback": "handlePanelExpanded",
+                        "handle": { "id":"handleBottomRight","class":"handleBottomRight","css": { "height":"30px","width":"150px" },"position":"right","button": { "id":"handleBottomRightButton" },"children":[
+                            {"compType": "tag","tagName":"div","id":"handleBottomRightText"},
+                        ] },
+                        "body": { "id":"studioFooter","class":"studioFooterBody","css": { "border":"1px solid #000000" },"children": [] },
+                    }
+                ]
+            }
+        ];
+    </script>
+</head>
+
+<body id="pageBody" dir="ltr" class="body" onresize="centerUi();" onload="handlePageOnLoad();">
+<style id="cssTheme" type="text/css"></style>
+</body>
+</html>

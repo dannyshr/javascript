@@ -1,0 +1,143 @@
+
+body {
+	overflow: auto;
+}
+
+.slidingPanel {
+	background-color: transparent;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+}
+
+.slidingPanelHandlerContainer {
+	border-bottom: 0px solid #000000;
+	border-top: 0px solid #000000;
+	border-left: 0px solid #000000;
+	border-right: 0px solid #000000;
+	background-color: transparent;
+	width: 44px;
+	position: relative;
+	left: 0px;
+	top: 0px;
+}
+
+.slidingPanelHandlerContainerTable {
+	background-color: transparent;
+	width: 100%;
+	height: 100%;
+}
+
+.slidingPanelHandlerImage {
+	margin-top: -2px;
+	height: 27px;
+	cursor: pointer;
+}
+
+.slidingPanelHandlerPre {
+	background-image: url('../images/handlerBackgroundLeft.gif');
+	background-repeat: no-repeat;
+	background-color: transparent;
+	display: block;
+	height: 27px;
+}
+
+.slidingPanelHandler {
+	background-image: url('../images/handlerBackground.gif');
+	background-repeat: repeat-x;
+	background-color: transparent;
+	display: block;
+	height: 27px;
+	text-align: center;
+}
+
+.slidingPanelHandlerPost {
+	background-image: url('../images/handlerBackgroundRight.gif');
+	background-repeat: no-repeat;
+	background-color: transparent;
+	display: block;
+	height: 27px;
+}
+
+.slidingPanelHandlerPreTd {
+	width: 6px;
+}
+
+.slidingPanelHandlerPostTd {
+	width: 6px;
+}
+
+.slidingMenu {
+	border-bottom: 0px solid #000000;
+	border-top: 0px solid #000000;
+	border-left: 1px solid #000000;
+	border-right: 1px solid #000000;
+	width: 250px;
+	height: 110px;
+	background-color: #aaaaaa;
+	overflow: hidden;
+}
+
+.slidingMenuItems {
+	height: 100%;
+}
+
+.linkButton {
+}
+
+.imageButton {
+	border: 5px solid transparent;
+	width: 80px;
+}
+
+.imageButtonHover {
+	border: 5px solid #000000;
+	width: 80px;
+}
+
+.navButtonPrev {
+	width: 40px;
+	cursor: pointer;
+}
+
+.navButtonNext {
+	width: 40px;
+	cursor: pointer;
+}
+
+.topAlignedPanel {
+	vertical-align: top;
+}
+
+.middleAlignedPanel {
+	vertical-align: middle;
+}
+
+.spacerColumn {
+	width: 15px;
+}
+
+/* horizontal panel */
+.slidingPanelContentsDiv {
+	border: 1px solid #000000;
+	background-color: #b4cfec;
+	display: none;
+	width: 335px;
+	height: 110px;
+}
+
+/* vertical panel */
+.slidingPanelContentsV {
+	display: none;
+	height: 200px;
+	width: 130px;
+	border: 1px solid #000000;
+	background-color: #eefcaa;
+}
+
+/* UI manipulation panel */
+.interfaceDiv {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}

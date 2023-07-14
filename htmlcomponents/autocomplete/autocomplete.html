@@ -1,0 +1,84 @@
+
+<html>
+	<head>
+		<title>Autocomplete tests</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
+		<link rel="stylesheet" type="text/css" href="resources/css/autocomplete.css">
+		<script type="text/javascript" src="resources/scripts/autocomplete.js"></script>
+	</head>
+
+	<body>
+		<form action method="post" name="form1">
+			<table border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td colspan="2">Autocomplete text box</td>
+				</tr>
+				<tr>
+					<td width="180px">									
+						<div id="cmbOptions" class="comboDivBorder comboDiv" >
+							<table border="1" cellpadding="0" cellspacing="0" class="comboDivBorder" >
+								<tr>
+									<td>
+										<div style="width:180px;height:100px;overflow-y:auto;" class="comboDivText" >
+											<table id="comboTable" style="width:100%;">
+												<tr class="comboDivOption" onmouseover="this.className='comboDivOptionHover';" onmouseout="this.className='comboDivOption';" >
+													<td onclick="setComboValue('txtCombo',this);setComboDisplay('cmbOptions',false);">Value 1</td>
+												</tr>
+												<tr class="comboDivOption" onmouseover="this.className='comboDivOptionHover';" onmouseout="this.className='comboDivOption';" >
+													<td onclick="setComboValue('txtCombo',this);setComboDisplay('cmbOptions',false);">Value 2</td>
+												</tr>
+												<tr class="comboDivOption" onmouseover="this.className='comboDivOptionHover';" onmouseout="this.className='comboDivOption';" >
+													<td onclick="setComboValue('txtCombo',this);setComboDisplay('cmbOptions',false);">Value 3</td>
+												</tr>
+												<tr class="comboDivOption" onmouseover="this.className='comboDivOptionHover';" onmouseout="this.className='comboDivOption';" >
+													<td onclick="setComboValue('txtCombo',this);setComboDisplay('cmbOptions',false);">Vjhkjh</td>
+												</tr>
+												<tr class="comboDivOption" onmouseover="this.className='comboDivOptionHover';" onmouseout="this.className='comboDivOption';" >
+													<td onclick="setComboValue('txtCombo',this);setComboDisplay('cmbOptions',false);">weruyqweoiyr</td>
+												</tr>
+												<tr class="comboDivOption" onmouseover="this.className='comboDivOptionHover';" onmouseout="this.className='comboDivOption';" >
+													<td onclick="setComboValue('txtCombo',this);setComboDisplay('cmbOptions',false);">dsgfdfgsdf</td>
+												</tr>
+												<tr class="comboDivOption" onmouseover="this.className='comboDivOptionHover';" onmouseout="this.className='comboDivOption';" >
+													<td onclick="setComboValue('txtCombo',this);setComboDisplay('cmbOptions',false);">dsgfdfgwere</td>
+												</tr>
+												<tr class="comboDivOption" onmouseover="this.className='comboDivOptionHover';" onmouseout="this.className='comboDivOption';" >
+													<td onclick="setComboValue('txtCombo',this);setComboDisplay('cmbOptions',false);">dsgfdfg34</td>
+												</tr>
+												<tr class="comboDivOption" onmouseover="this.className='comboDivOptionHover';" onmouseout="this.className='comboDivOption';" >
+													<td onclick="setComboValue('txtCombo',this);setComboDisplay('cmbOptions',false);">dsgfddfgs</td>
+												</tr>
+												<tr class="comboDivOption" onmouseover="this.className='comboDivOptionHover';" onmouseout="this.className='comboDivOption';" >
+													<td onclick="setComboValue('txtCombo',this);setComboDisplay('cmbOptions',false);">dsgfdfnmb</td>
+												</tr>
+												<tr class="comboDivOption" onmouseover="this.className='comboDivOptionHover';" onmouseout="this.className='comboDivOption';" >
+													<td onclick="setComboValue('txtCombo',this);setComboDisplay('cmbOptions',false);">sdfgsdfg</td>
+												</tr>
+												<tr class="comboDivOption" onmouseover="this.className='comboDivOptionHover';" onmouseout="this.className='comboDivOption';" >
+													<td onclick="setComboValue('txtCombo',this);setComboDisplay('cmbOptions',false);">sdfgsdwer</td>
+												</tr>
+												<tr class="comboDivOption" onmouseover="this.className='comboDivOptionHover';" onmouseout="this.className='comboDivOption';" >
+													<td onclick="setComboValue('txtCombo',this);setComboDisplay('cmbOptions',false);">sdfg345ertr</td>
+												</tr>
+												<tr class="comboDivOption" onmouseover="this.className='comboDivOptionHover';" onmouseout="this.className='comboDivOption';" >
+													<td onclick="setComboValue('txtCombo',this);setComboDisplay('cmbOptions',false);">sdfgsddfgs</td>
+												</tr>
+												<tr class="comboDivOption" onmouseover="this.className='comboDivOptionHover';" onmouseout="this.className='comboDivOption';" >
+													<td onclick="setComboValue('txtCombo',this);setComboDisplay('cmbOptions',false);">sdfgsert</td>
+												</tr>
+											</table>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<input type="text" id="txtCombo" value="Search..." class="comboDivInput comboDivTextInput" onfocus="handleTextBoxFocus(this)" onkeyup="setComboDisplay('cmbOptions',true);filterValues('txtCombo','comboTable');" />
+					</td>
+					<td>									
+						<img class="comboButton" onclick="setComboDisplay('cmbOptions');" src="resources/images/comboButton.jpg" onmouseover="this.src='resources/images/comboButton_hover.jpg'" onmouseout="this.src='resources/images/comboButton.jpg'" title="click here to open the options" align="right" />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</html>

@@ -1,0 +1,42 @@
+
+.windowConfig {
+	border: 2px solid #000000;
+	position: absolute;
+	top: 40px;
+	left:300px;
+}
+
+.rowLineHeader {
+	text-align: center;
+	background-color: #cccccc;
+}
+
+.rowLine {
+	text-align: left;
+}
+
+
+.uiLockerConfig {
+	border: 2px solid #000000;
+	position: absolute;
+	top: 170px;
+	left: 0px;
+	width: 250px;
+}
+
+.uiLockerSample {
+	height: 150px;
+	width: 250px;
+	border: 2px solid #000000;
+	background-color: #ffffff;
+	position: absolute;
+	top: 290px;
+	left: 0px;
+}
+
+.headerLabelText,.headerLabelTextHover {
+	color: #ffffff;
+	font-family: Arial, Verdana, Tahoma;
+	font-weight: bold;
+	font-size: 12px;
+}

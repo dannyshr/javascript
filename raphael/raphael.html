@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-language" content="en" charset="utf-8">
+		<title>Raphael Tests</title>
+		<link rel="stylesheet" type="text/css" href="css/raphael.css" />
+		<script type="text/javascript" src="scripts/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="scripts/json2.js"></script>
+		<script type="text/javascript" src="scripts/raphael.2.1.0.min.js"></script>
+		<script type="text/javascript" src="scripts/popup.js"></script>
+		<script type="text/javascript" src="scripts/grid.js"></script>
+		<script type="text/javascript" src="scripts/pie.js"></script>
+		<script type="text/javascript" src="scripts/bars.js"></script>
+		<script type="text/javascript" src="scripts/utils.js"></script>
+		<script language="javascript">
+			//declare globals
+			var _data1 = '{';
+			_data1 += '"dataSource": "W3Techs.com"';
+			_data1 += ',"dataDate": "15/12/2012"';
+			_data1 += ',"data": [';
+			_data1 += '{"JavaScript": ["JavaScript","78.3%","data2.js"]}';
+			_data1 += ',{"Flash": ["Flash","21.3%"]}';
+			_data1 += ',{"Siverlight": ["Silverlight","2%"]}';
+			_data1 += ',{"Java": ["Java","2%"]}';
+			_data1 += ']}';
+			var _data2 = '{';
+			_data2 += '"dataSource": "W3Techs.com"';
+			_data2 += ',"dataDate": "15/12/2012" ';
+			_data2 += ',"data": [';
+			_data2 += '{"JQuery": ["JQuery","83.2%","data1.js"]}';
+			_data2 += ',{"MooTools": ["MooTools","4.9%"]}';
+			_data2 += ',{"Prototype": ["Prototype","3.7%"]}';
+			_data2 += ',{"ASP_NETAjax": ["ASP.NET Ajax","3.0%"]}';
+			_data2 += ',{"Script_aculo_us": ["Script.aculo.us","2.8%"]}';
+			_data2 += ',{"YUI_Library": ["YUI Library","1.5%"]}';
+			_data2 += ',{"Spry": ["Spry","0.6%"]}';
+			_data2 += ',{"Dojo": ["Dojo","0.2%"]}';
+			_data2 += ',{"ExtJS": ["ExtJS","0.1%"]}';
+			_data2 += ']}';
+			var _filePath = "file:///saloon/g/danny/projects/java/javaweb/showcase/WebContent/apps/javascript/raphael/data/";
+			var _itemsToSkip = ["dataSource","dataDate"];
+			var _containerId = "widgetCanvas";
+
+			$(document).ready(function() {
+				//declare locals
+				var fileName = "data1.js";
+				var fileUrl = _filePath + fileName;
+				var onloadHandler = loadData;
+				
+				//resize the main component
+				handleResize();
+				
+				//render buttons
+				renderButtons();
+				
+				//attach events
+				attachClickEvents();
+				
+				//load the data file (works only with a web server through http protocol)
+				//Utils.loadFile(fileUrl, onloadHandler);
+				reloadData(fileName)
+			});
+			
+			function loadData(_data) {
+				//declare locals
+				var compId = "txtData";
+				
+				//render the data
+				$("#" + compId).html(_data);
+			}
+			
+			function getData() {
+				//declare locals
+				var compId = "txtData";
+				var _data = null;
+				
+				//render the data
+				_data = document.getElementById(compId).value;
+				
+				//clear any new line char
+				_data = Utils.trim(_data);
+				_data = _data.replace(/^\r|\n|\r\n$/g,"");
+				
+				//return the method's value
+				return _data;
+			}
+			
+			function renderButtons() {
+				var arrButtons = [
+					{id: "btnRenderPie", label: "Pie", title: "Click here to render a pie chart"}
+					,{id: "btnRenderBar", label: "Bars", title: "Click here to render a bars chart"}
+					,{id: "btnRenderBarGrid", label: "Bars (with grid)", title: "Click here to render a bars chart width grid"}
+				];
+				var html = "";
+				var buttonsContainerId = "buttonsContainer";
+				var currItem = null;
+				var style = null;
+				
+				//loop through the array
+				for (var i=0;i<arrButtons.length;i++) {
+					//get the current item
+					currItem = arrButtons[i];
+					if (currItem.atts) {
+						style = currItem.atts;
+					}
+					else {
+						style = null;
+					}
+					if (style==null) {
+						style = "";
+					}
+					else {
+						style = 'style="' + style + '"';
+					}
+					//build the item's html
+					html += '<input id="' + currItem.id + '" type="button" value="' + currItem.label + '" title="' + currItem.title + '" ' + style + '/>';					
+				}
+				
+				//render the item inside the container
+				$("#"+buttonsContainerId).html(html);
+			}
+			
+			function attachClickEvents() {
+				//declare locals
+				var arrButtonsIds = [
+					"btnRenderPie"
+					,"btnRenderBar"
+					,"btnRenderBarGrid"
+				];
+				
+				//loop through the array
+				for (var i=0;i<arrButtonsIds.length;i++) {
+					//attach an event for the current button
+					attachClickEvent(arrButtonsIds[i]);
+				}
+			}
+			
+			function attachClickEvent(buttonId) {
+				//declare locals
+				var buttonComp = null;
+				
+				//get elements by their ids
+				buttonComp = document.getElementById(buttonId);
+				
+				//checking for nulls
+				if (buttonComp==null) {
+					return;
+				}
+				
+				//check the button's id
+				switch (buttonId) {
+					case "btnRenderPie":
+						//attach the event
+						buttonComp.onclick = function() {
+							renderPie();
+						};
+						break;
+					case "btnRenderBar":
+						//attach the event
+						buttonComp.onclick = function() {
+							renderBars(false);
+						};
+						break;
+					case "btnRenderBarGrid":
+						//attach the event
+						buttonComp.onclick = function() {
+							renderBars(true);
+						};
+						break;
+				}
+			}
+			
+			function reloadData(_dataName,_type) {
+				//declare locals
+				var _data = null;
+				
+				//check for nulls
+				if (Utils.isEmpty(_dataName)) {
+					return;
+				}
+				
+				//check the data name
+				if (_dataName=="data1.js") {
+					_data = _data1;
+				}
+				else if (_dataName=="data2.js") {
+					_data = _data2;
+				}
+				else {
+					return;
+				}
+				
+				//reload the data
+				loadData(_data);
+				
+				//check for nulls
+				if (Utils.isEmpty(_type)) {
+					return;
+				}
+				
+				//re-render the chart
+				switch (_type.toLowerCase()) {
+					case "pie":
+						renderPie();
+						break;
+					case "bars":
+						renderBars(false);
+						break;
+					case "barsgrid":
+						renderBars(true);
+						break;
+				}
+			}
+			
+			function renderPie() {
+				//declare locals
+				var _data = null;
+				var dataObj = null;
+				var values = [];
+				var labels = [];
+				var labelsClickHandlers = [];
+				var paper = null;
+				var currItem = null;
+				var numChilds = 0;
+				var labelText = null;
+				var dataName = null;
+				
+				//get the data
+				_data = getData();
+				
+				//turn the data into an object
+				dataObj = JSON.parse(_data);
+				
+				//loop through the object's children
+				for (var item in dataObj) {
+					//check for items to skip
+					if (Utils.isInArray(item,_itemsToSkip)) {
+						continue;
+					}
+					
+					//check for an array
+					if (Utils.isArray(dataObj[item])) {
+						//loop through the item's sub-items
+						for (var j=0;j<dataObj[item].length;j++) {
+							currItem = dataObj[item][j];
+							
+							//loop through the item's children
+							for (var child in currItem) {
+								//populate the chart's dataset
+								values.push(parseInt(currItem[child][1], 10));
+								labelText = currItem[child][0];
+								labels.push(labelText);
+								
+								//check for a click handler
+								numChilds = currItem[child].length;
+								//dataName = null;
+								if (numChilds>2) {
+									dataName = currItem[child][2];
+									labelsClickHandlers.push({"key": labelText
+															,"eventHandler": function () {
+																reloadData(dataName,"pie");
+															}
+									});
+								}
+							}
+						}
+					}
+				}
+				
+				//clean previous child elements
+				$('#' + _containerId).children().remove();
+				
+				//render the pie
+				paper = Raphael(_containerId, 700, 600);
+				paper.pieChart(250, 250, 150, values, labels, "#000000", labelsClickHandlers);
+				renderChartHeader(paper,dataObj[_itemsToSkip[0]] + ": " + dataObj[_itemsToSkip[1]]);
+   			}
+			
+			function renderBars(_showGrid) {
+				//declare locals
+				var _data = null;
+				var dataObj = null;
+				var values = [];
+				var labels = [];
+				var labelsClickHandlers = [];
+				var paper = null;
+				var header = null;
+				var currItem = null;
+				var numChilds = 0;
+				var labelText = null;
+				var dataName = null;
+				
+				//get the data
+				_data = getData();
+				
+				//turn the data into an object
+				dataObj = JSON.parse(_data);
+				
+				//loop through the object's children
+				for (var item in dataObj) {
+					//check for items to skip
+					if (Utils.isInArray(item,_itemsToSkip)) {
+						continue;
+					}
+					
+					//check for an array
+					if (Utils.isArray(dataObj[item])) {
+						//loop through the item's sub-items
+						for (var j=0;j<dataObj[item].length;j++) {
+							currItem = dataObj[item][j];
+							
+							//loop through the item's children
+							for (var child in currItem) {
+								//populate the chart's dataset
+								values.push(parseInt(currItem[child][1], 10));
+								labelText = currItem[child][0];
+								labels.push(labelText);
+								
+								//check for a click handler
+								numChilds = currItem[child].length;
+								//dataName = null;
+								if (numChilds>2) {
+									dataName = currItem[child][2];
+									labelsClickHandlers.push({"key": labelText
+															,"eventHandler": function () {
+																var _type = "bars";
+																if (_showGrid==true) {
+																	_type = "barsgrid";
+																}
+																reloadData(dataName,_type);
+															}
+									});
+								}
+							}
+						}
+					}
+				}
+				
+				//clean previous child elements
+				$('#' + _containerId).children().remove();
+				
+				//render the pie
+				paper = Raphael(_containerId, 700, 600);
+				paper.barChart(250, 400, 700, 300, values, labels, labels, _showGrid, "#000000", labelsClickHandlers);
+				renderChartHeader(paper,dataObj[_itemsToSkip[0]] + ": " + dataObj[_itemsToSkip[1]]);
+			}
+			
+			function renderChartHeader(paper,headerText) {
+				//declare locals
+				var header = null;
+				
+				//render the header
+				header = paper.text(300,60,headerText)
+						.attr({"font-size": "28px", "font-weight": "400", fill: "#000000", stroke:"#000000", "stroke-width": "2px"});
+				$(header.node).css({
+					"-webkit-touch-callout": "none",
+					"-webkit-user-select": "none",
+					"-khtml-user-select": "none",
+					"-moz-user-select": "none",
+					"-ms-user-select": "none",
+					"user-select": "none",
+				})
+				
+				//return the object
+				return header;
+			}
+			
+			function handleResize() {
+				//declare locals
+				var compId = "mainPage";
+				var _topDelta = 40;
+				
+				//resize the component
+				Utils.resizeComponentHeight(compId,_topDelta);
+				Utils.resizeComponentWidth(compId);
+			}
+		</script>
+	</head>
+	<body onresize="handleResize();">
+		<div class="header">
+            <span class="headerText">
+				Raphael Tests
+			</span>
+		</div>
+		<div id="mainPage" class="mainPage">
+			<textarea id="txtData" rows="5" style="width:99%;"></textarea>
+			<div id="buttonsContainer" class="buttonsContainer"></div>
+			<div id="widgetCanvas" class="widgetCanvas"></div>
+		</div>
+		<div class="footer">
+            <span class="footerText">
+				Copyright &#169; 2012 <a href="mailto:danny.shraga@gmail.com">Danny Shraga</a>. 
+				Use of Raphael is done through the <a href="raphael_license.html" target="_blank">MIT License</a>.
+			</span>
+		</div>
+	</body>
+</html>

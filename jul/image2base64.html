@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to Base64</title>
+    <link rel="icon" href="https://github.githubassets.com/favicons/favicon.svg" />
+    <style>
+        .myDiv {
+            position: absolute;
+            top: 300px;
+            left: 100px;
+            height: 100px;
+            width: 100px;
+            background-color: #3c763d;
+        }
+    </style>
+</head>
+<body>
+<input type="file" id="inputImage" accept="image/*">
+<textarea id="outputBase64" rows="10" cols="80" readonly></textarea>
+
+<script>
+    document.getElementById('inputImage').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = function() {
+            const base64 = reader.result;
+            document.getElementById('outputBase64').value = base64;
+        };
+
+        reader.readAsDataURL(file);
+    });
+
+    function animateDiv(nodeId) {
+        let elem = document.getElementById(nodeId);
+        elem.animate([
+            {
+                transform: "rotate(180deg) translateY(-1000px) scaleY(2.5) scaleX(.2)",
+                transformOrigin: "50% 0",
+                filter: "blur(40px)",
+                opacity: 0
+            },
+            {
+                transform: "rotate(90deg) translateY(0) scaleY(1) scaleX(1)",
+                transformOrigin: "50% 50%",
+                filter: "blur(0)",
+                opacity: 1
+            }
+        ], 1000);
+    }
+</script>
+<br/>
+<br/>
+<br/>
+    <div id="myDiv" class="myDiv">text</div>
+    <button type="button" id="btnAnimate" onclick="animateDiv('myDiv');">Animate</button>
+</body>
+</html>

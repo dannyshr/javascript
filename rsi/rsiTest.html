@@ -1,0 +1,387 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<title>Remote Script Injection (RSI)</title>
+		<style>
+			.container {
+				width:950px;
+				height:500px;
+				overflow:auto;
+				border:1px solid #000000;
+			}
+		</style>
+		<script src="scripts/rsi/rsi.min.js" type="text/javascript"></script>
+		<script language="javascript" type="text/javascript">
+			var interval = 1000;
+			var urlsMap = new Utils.Map();
+			var requestTimeout = 500;
+			var sleepTime = requestTimeout;
+			RSI.setRequestTimeout(requestTimeout);
+			
+			function Url(id,url) {
+				this.id = id;
+				this.url = url;
+			}
+			
+			function generateClients() {
+				//declare locals
+				var txtUrlId = "txtUrl";
+				var txtColsId = "txtCols";
+				var txtRowsId = "txtRows";
+				var txtUrlObj = null;
+				var txtColsObj = null;
+				var txtRowsObj = null;
+				var txtUrlValue = null;
+				var txtColsValue = null;
+				var txtRowsValue = null;
+				var numCols = 0;
+				var numRows = 0;
+				var numTotal = 0;
+				var doc = document;
+				var startPrefixId = "rsiStart";
+				var stopPrefixId = "rsiStop";
+				var removePrefixId = "rsiRemove";
+				var currUrl = null;
+				var html = "";
+				var mainDiv = null;
+				var requestObj = null;
+				
+				//get elements by their ids
+				txtUrlObj = doc.getElementById(txtUrlId);
+				txtColsObj = doc.getElementById(txtColsId);
+				txtRowsObj = doc.getElementById(txtRowsId);
+				
+				//check for nulls
+				if (txtUrlObj==null || txtColsObj==null || txtRowsObj==null) {
+					return;
+				}
+				
+				//get their values
+				txtUrlValue = txtUrlObj.value;
+				txtColsValue = txtColsObj.value;
+				txtRowsValue = txtRowsObj.value;
+				
+				//check for nulls
+				if (Utils.isEmpty(txtUrlValue) || Utils.isEmpty(txtColsValue) || Utils.isEmpty(txtRowsValue)) {
+					return;
+				}
+				
+				//convert values to numbers
+				numRows = parseInt(txtRowsValue,0);
+				numCols = parseInt(txtColsValue,0);
+				numTotal = numRows*numCols;
+				
+				//remove any previously generated objects
+				clickAll(removePrefixId,numTotal);
+				
+				//render a table container
+				html += "<table border=\"1\" style=\"\">";
+				//render a menu row
+				html += "<tr>";
+				html += "<td colspan=\""+numCols+"\">";
+				html += "<input type=\"button\" value=\"Remove All\" onclick=\"clickAll('"+removePrefixId+"',"+numTotal+");\" />";
+				html += "&nbsp;&nbsp;";
+				html += "<input type=\"button\" value=\"Start All\" onclick=\"clickAll('"+startPrefixId+"',"+numTotal+");\" />";
+				html += "&nbsp;&nbsp;";
+				html += "<input type=\"button\" value=\"Stop All\" onclick=\"clickAll('"+stopPrefixId+"',"+numTotal+");\" />";
+				html += "</td>";
+				html += "</tr>";
+				//loop through the rows
+				for (var i=0;i<numRows;i++) {
+					//render a table row
+					html += "<tr>";
+					//loop through the columns
+					for (var j=0;j<numCols;j++) {
+						//render a table column
+						html += "<td>";
+						//render a new RSI component
+						currUrl = txtUrlValue+"&id=r"+i+"c"+j;
+						html += addClient(currUrl);
+						requestObj = {	url:currUrl,onsuccess:"requestSuccess",onfailure:"requestFailure" };
+						RSI.add(requestObj);
+						html += "</td>";
+					}
+					html += "</tr>";
+				}
+				html += "</table>";
+				mainDiv = doc.getElementById("mainDiv");
+				mainDiv.innerHTML = html;
+			}
+			
+			function addClient(url) {
+				//declare locals
+				var doc = document;
+				var currId = 0;
+				var urlObj = null;
+				var _lastObj = null;
+				var html = "";
+				
+				//check for nulls
+				if (Utils.isEmpty(url)) {
+					alert("you must enter a url first...");
+					return;
+				}
+				
+				//check if the url exists
+				if (urlsMap.contains(url)) {
+					alert("The url you entered already exists\n["+url+"]");
+					return;
+				}
+				
+				//create a new url object
+				_lastObj = urlsMap.getLastValue();
+				if (_lastObj==null) {
+					currId = 1;
+				}
+				else {
+					currId = _lastObj.id+1;
+				}
+				urlObj = new Url(currId,url);
+				urlsMap.put(url,urlObj);
+				
+				//create a new div for a new request
+				html += "<div id=\"rsi"+currId+"\">";
+				html += "<table border=\"0\" style=\"\">";
+				html += "<tr>";
+				html += "<td>";
+				html += "<input id=\"rsiUrl"+currId+"\" type=\"text\" value=\""+url+"\" readonly=\"readonly\" >";
+				html += "</td>";
+				html += "</tr>";
+				html += "<tr>";
+				html += "<td>";
+				html += "<div id=\"rsiMenu"+currId+"\">";
+				html += "<input id=\"rsiRemove"+currId+"\" type=\"button\" value=\"Remove\" onclick=\"removeRsi('"+url+"',"+currId+");\">";
+				html += "<input id=\"rsiStart"+currId+"\" type=\"button\" value=\"Start\" onclick=\"startMonitor('"+url+"');\">";
+				html += "<input id=\"rsiStop"+currId+"\" type=\"button\" value=\"Stop\" disabled=\"disabled\" onclick=\"stopMonitor('"+url+"');\">";
+				html += "<input id=\"rsiDo"+currId+"\" type=\"button\" value=\"Do Once\" onclick=\"doOnce('"+url+"');\">";
+				html += "</div>";
+				html += "</td>";
+				html += "</tr>";
+				html += "<tr>";
+				html += "<td align=\"center\">";
+				html += "<div id=\"rsiWait"+currId+"\" style=\"text-align:center;width:50px;height:30px;border:1px solid transparent;z-index:1;display:none;\">";
+				html += "<img src=\"resources/icons/loading.gif\" />";
+				html += "</div>";
+				html += "</td>";
+				html += "</tr>";
+				html += "<tr>";
+				html += "<td>";
+				html += "<div id=\"rsiData"+currId+"\" style=\"height:70px;overflow:auto;\">";
+				html += "</div>";
+				html += "</td>";
+				html += "</tr>";
+				html += "</table>";
+				html += "</div>";
+				
+				//return the method's value
+				return html;
+			}
+			
+			function clickAll(buttonIdPrefix,numTotal) {
+				//declare locals
+				var buttonId = null;
+				var buttonObj = null;
+				
+				//loop
+				for (var i=0;i<numTotal;i++) {
+					//get the button by its id
+					buttonId = buttonIdPrefix+(i+1);
+					buttonObj = document.getElementById(buttonId);
+					
+					//check for nulls
+					if (buttonObj!=null) {
+						buttonObj.click();
+					}
+				}
+			}
+			
+			function removeRsi(url,index) {
+				//stop the thread first
+				RSI.stopThread(url);
+				var objId = "rsi"+index;
+				var obj = document.getElementById(objId);
+				RSI.remove(url);
+				urlsMap.remove(url);
+				if (obj!=null) {
+					var parent = obj.parentNode;
+					if (parent!=null && parent!="undefined") {
+						parent.removeChild(obj);				
+					}
+				}
+			}
+			
+			function showPleaseWait(url,show) {
+				var urlObj = urlsMap.get(url);
+				var obj = null;
+				if (urlObj==null) {
+					return;
+				}
+				
+				//get the element by its id
+				obj = document.getElementById("rsiWait"+urlObj.id);
+				var dataHolder = document.getElementById("rsiData"+urlObj.id);
+				
+				//check for nulls
+				if (obj==null) {
+					return;
+				}
+				
+				//check the show flag
+				if (show) {
+					//show an animated gif
+					//obj.style.visibility = "visible";
+					dataHolder.style.display = "none";
+					obj.style.display = "block";
+				}
+				else {
+					//hide the animated gif
+					//obj.style.visibility = "hidden";
+					obj.style.display = "none";
+					dataHolder.style.display = "block";
+				}
+			}
+			
+			function showRequestTimeoutMessage(url) {
+				alert("Request for url: ["+url+"] has timed out (after "+(requestTimeout/1000)+" seconds)");
+			}
+			
+			function doServerAction(_url) {
+				var requestObj = {	url:_url,onsuccess:"requestSuccess",onfailure:"requestFailure" };
+				RSI.add(requestObj);
+				var urlObj = urlsMap.get(_url);
+				var dataHolder = document.getElementById("rsiData"+urlObj.id);
+				dataHolder.innerHTML = "";
+				RSI.doGet(requestObj.url);
+			}
+			
+			function doOnce(url,_afterSleep) {
+				var urlObj = urlsMap.get(url);
+				if (urlObj==null) {
+					return;
+				}
+				if (Utils.isEmpty(_afterSleep)) {
+					showPleaseWait(url,true);
+					document.getElementById("rsiDo"+urlObj.id).disabled = true;
+					doServerAction(url);
+					RSI.sleep(sleepTime,'doOnce("'+url+'","_afterSleep")');
+				}
+				else {
+					//check if a response has arrived
+					if (RSI.requestTimedout(url)) {
+						showRequestTimeoutMessage(url);
+					}
+					showPleaseWait(url,false);
+					document.getElementById("rsiDo"+urlObj.id).disabled = false;
+				}
+			}
+			
+			function monitor(url,_afterSleep) {
+				if (Utils.isEmpty(_afterSleep)) {
+					doServerAction(url);
+					RSI.sleep(sleepTime,'monitor("'+url+'","_afterSleep")');
+				}
+				else {
+					//check if a response has arrived
+					if (RSI.requestTimedout(url)) {
+						if (RSI.threadIsAlive(url)) {
+							showPleaseWait(url,true);
+						}
+					}
+					else {
+						showPleaseWait(url,false);
+					}
+				}
+			}
+			
+			function startMonitor(url) {
+				var threadConfig = {
+					request: {
+						url:url
+						,onsuccess:"requestSuccess"
+						,onfailure:"requestFailure" 
+					}
+					,threadAction: "monitor('"+url+"')"
+					,interval: interval
+				};
+				RSI.startThread(threadConfig);
+				var urlObj = urlsMap.get(url);
+				if (urlObj==null) {
+					return;
+				}
+				document.getElementById("rsiStart"+urlObj.id).disabled = true;
+				document.getElementById("rsiStop"+urlObj.id).disabled = false;
+			}
+			
+			function stopMonitor(url) {
+				RSI.stopThread(url);
+				showPleaseWait(url,false);
+				var urlObj = urlsMap.get(url);
+				if (urlObj==null) {
+					return;
+				}
+				document.getElementById("rsiStart"+urlObj.id).disabled = false;
+				document.getElementById("rsiStop"+urlObj.id).disabled = true;
+			}
+			
+			function requestFailure(requestUrl,response) {
+				//stop the monitor
+				RSI.stopThread(requestUrl);
+				//show the message
+				alert("A failure occured while trying to fetch ["+requestUrl+"]:\n"+response);
+			}
+			
+			function requestSuccess(requestUrl,response) {
+				//var jsonObj = JSON.parse(response);
+				showPleaseWait(requestUrl,false);
+				var jsonObj = eval(" ("+response+") ");
+				var time = parseInt(jsonObj.heap.time);
+				time = "time="+formatDateTime(new Date(time));
+				var serverDuration = "serverDuration="+jsonObj.heap.duration+" (nanoseconds)";
+				var maxMem = "max="+jsonObj.heap.max;
+				var freeMem = "free="+jsonObj.heap.free;
+				var urlObj = urlsMap.get(requestUrl);
+				if (urlObj==null) {
+					return;
+				}
+				var dataHolder = document.getElementById("rsiData"+urlObj.id);
+				if (dataHolder==null) {
+					return;
+				}
+				dataHolder.innerHTML = time+"<br/>"+serverDuration+"<br/>"+maxMem+"<br/>"+freeMem;
+			}
+		</script>
+	</head>
+	<body>
+		<table border="0" style="width:99%;height:98%;">
+			<tr>
+				<td>
+					<label for="txtUrl">url</label>
+				</td>
+				<td>
+					<input id="txtUrl" type="text" size="80" value="http://localhost:9090/nit/agents/heapAgent.jsp?action=getHeap"/>
+				</td>
+				<td>
+					<label for="txtCols">cols</label>
+				</td>
+				<td>
+					<input id="txtCols" type="text" size="5" value="4"/>
+				</td>
+				<td>
+					<label for="txtRows">rows</label>
+				</td>
+				<td>
+					<input id="txtRows" type="text" size="5" value="10"/>
+				</td>
+				<td>
+					<input type="button" value="Generate Clients" onclick="generateClients();" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="7">
+					<div id="mainDiv" class="container"></div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

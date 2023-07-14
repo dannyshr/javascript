@@ -1,0 +1,291 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0029)http://www.wizzud.com/jqDock/ -->
+<HTML lang=en xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+	<HEAD>
+		<TITLE>jqDock : a jQuery plugin</TITLE>
+		<META http-equiv=Content-Type content="text/html; charset=ISO-8859-1">
+		<LINK href="resources/css/jqDock.css" type=text/css rel=stylesheet>
+	</HEAD>
+	<BODY>
+		<form id="frmTest" action="">
+		<DIV>
+			<H2 class=inset200 id=pagetitle>jqDock<SPAN id=jqDockVersion></SPAN> ... a jQuery plugin</H2>
+			<H3 class="inset200 grey">DOCTYPE : XHTML 1.0 Transitional</H3>
+			<DIV class=inset200>
+				<EM>
+					Transform a set of images into a Mac-like Dock menu, 
+					<BR>horizontal or vertical, with icons that expand on rollover!
+				</EM>
+			</DIV>
+			<DIV class="inset200 grey small">
+				(Minimum requirement : jQuery v1.2.3)
+				<table border="0" cellspacing="0" cellpadding="0" style="color:black">
+					<tr>
+						<td>Menu Name</td>
+						<td>
+							<select size="1" id="cmbMenuNames" >
+								<option value="menu1" selected>menu1</option>
+								<option value="menu2">menu2</option>
+								<option value="menu3">menu3</option>
+								<option value="menu4">menu4</option>
+							</select>
+						</td>
+						<td>Alignment</td>
+						<td>
+							<select size="1" id="cmbAlign" >
+								<option value="top" selected>Top</option>
+								<option value="middle">Middle</option>
+								<option value="bottom">Bottom</option>
+								<option value="left">Left</option>
+								<option value="center">Center</option>
+								<option value="right">Right</option>
+							</select>
+						</td>
+						<td>Effect Duration (seconds)</td>
+						<td>
+							<select size="1" id="cmbDuration" >
+								<option value="500" selected>0.5</option>
+								<option value="1000">1</option>
+								<option value="1500">1.5</option>
+								<option value="2000">2</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" id="cbLabels" onclick="document.getElementById('cmbAlignLabels').disabled=!this.checked;"><label for="cbLabels">Lables</label></td>
+						<td>
+							<select size="1" id="cmbAlignLabels" disabled>
+								<option value="tl" selected>TopLeft</option>
+								<option value="tc">TopCenter</option>
+								<option value="tr">TopRight</option>
+								<option value="ml">MiddleLeft</option>
+								<option value="mc">MiddleCenter</option>
+								<option value="mr">MiddleRight</option>
+								<option value="bl">BottomLeft</option>
+								<option value="bc">BottomCenter</option>
+								<option value="br">BottomRight</option>
+							</select>
+						</td>
+						<td>Max Image Size (pixels)</td>
+						<td>
+							<select size="1" id="cmbMaxSize" >
+								<option value="10">10</option>
+								<option value="15">15</option>
+								<option value="20">20</option>
+								<option value="25">25</option>
+								<option value="30">30</option>
+								<option value="35">35</option>
+								<option value="40">40</option>
+								<option value="45">45</option>
+								<option value="50" selected>50</option>
+								<option value="55">55</option>
+								<option value="60">60</option>
+								<option value="65">65</option>
+								<option value="70">70</option>
+								<option value="75">75</option>
+							</select>
+						</td>
+						<td>
+							<input type=button value="Apply" onclick="resetJqDock(document.getElementById('cmbMenuNames').value);">
+						</td>
+					</tr>
+				</table>
+				<!--<div id="helpContents" style="position:relative;top:0px;left0px;border:1px solid black;height:260px;width:500px;overflow:auto;"></div>-->
+			</DIV>
+			<DIV bgcolor="lightgrey" class="dockMenu" id="menu1" title="menu1">
+				<A href="#" onclick="alert('Camera.png');" >
+					<IMG title=Camera src="resources/images/Camera.png"> 
+				</A>
+				<A  href="#" onclick="alert('iMac.png');" >
+					<IMG title=iMac src="resources/images/iMac.png"> 
+				</A>
+				<A  href="#" onclick="alert('Notebook.png');" >
+					<IMG title=Notebook src="resources/images/Notebook.png"> 
+				</A>
+				<A  href="#" onclick="alert('Printer.png');" >
+					<IMG title=Printer src="resources/images/Printer.png"> 
+				</A>
+			</DIV>
+			<div distance="60" showlabels="true" labelsposition="bc" imagesmaxsize="50" effectduration="500" effectalignment="top" class="dockMenu" id="menu2" title="menu2">
+				<a href="/EOPS/fault/fmMain.jsf" target="_blank" class="dockMenuItemLink">
+					<img title="Click here for FM" 
+						src="resources/images/fmButton.gif" 
+						class="dockMenuItemImage"/>
+				</a>
+				<a href="/EOPS/hicare/hicareMain.jsf" target="_blank" class="dockMenuItemLink">
+					<img title="Click here for HiCare" 
+						src="resources/images/hicareButton.gif" 
+						class="dockMenuItemImage"/>
+				</a>
+				<a href="/EOPS/security/serverIdentity.jsf" target="_blank" class="dockMenuItemLink">
+					<img title="Click here for Server info" 
+						src="resources/images/mgButton.gif" 
+						class="dockMenuItemImage"/>
+				</a>
+			</div>
+			<DIV class="dockMenu" id="menu3" title="menu3">
+				<A title=Forbidden href="#">
+					<IMG alt="" src="resources/images/Forbidden.png"> 
+				</A>
+				<IMG title=Games alt=Games src="resources/images/Games.png"> 
+				<A title=Library href="#">
+					<IMG alt="" src="resources/images/Library.png"> 
+				</A>
+				<IMG title=Private alt=Private src="resources/images/Private.png"> 
+				<A title=Records href="#">
+					<IMG alt="" src="resources/images/Records.png"> 
+				</A>
+				<A title=Stuff href="#">
+					<IMG alt="" src="resources/images/Stuff.png"> 
+				</A>
+				<IMG title=Windows alt=Windows src="resources/images/Windows.png"> 
+				<IMG title=Floppy alt=Floppy src="resources/images/Floppy.png"> 
+				<IMG title=iPod alt=iPod src="resources/images/iPod.png"> 
+				<IMG title=Speakerbox alt=Speakerbox src="resources/images/Speakerbox.png"> 
+			</DIV>
+			<!-- menu5 can use png32 images that have a black background -->
+			<DIV class="dockMenu" id="menu4" title="menu4">
+				<A title=Doc href="#">
+					<IMG alt="" src="resources/images/doc.png"> 
+				</A>
+				<IMG title=Htm alt=Htm src="resources/images/htm.png"> 
+				<A title=Ini href="#">
+					<IMG alt="" src="resources/images/ini.png"> 
+				</A>
+				<IMG title=MP3 alt=MP3 src="resources/images/mp3.png"> 
+				<A title=PDF href="#">
+					<IMG alt="" src="resources/images/pdf.png"> 
+				</A>
+				<A title=SWF href="#">
+					<IMG alt="" src="resources/images/swf.png"> 
+				</A>
+				<IMG title=Zip alt=Zip src="resources/images/zip.png"> 
+			</DIV>
+		</DIV>
+		<SCRIPT src="resources/scripts/jquery-1.3.2.min.js" type=text/javascript></SCRIPT>
+		<SCRIPT src="resources/scripts/jquery.jqDock.min.js" type=text/javascript></SCRIPT>
+		<SCRIPT type=text/javascript>
+			jQuery(function($){
+				/*********************
+				** JQDOCK SETUPS... **
+				*********************/
+				//make images that are not enclosed in anchors clickable...
+				//(some will simply reload the current page, but then some of the links will do that anyway, so...)
+				/*
+				$('div.dockMenu>img').each(function(i) {
+					$(this).one('click', function(){ location.href = '#'; return false; });
+				});
+				*/
+				//apply jqDock to each of the demo menus, setting varying options for each one...
+				/*
+				$('div.dockMenu').each(function(i){ //opts updated so as not to use null as 'don't override default' - jQuery v1.2.5 changed extend() to not ignore nulls!
+					var opts = { align:        [ 'right', 'middle', 'left', 'center' ][i] || 'bottom' //default
+							   , size:         [ 48    	,  48     ,  48   ,  48      ][i] || 36       //default
+							   , distance:     [ 60    	,  60     ,  60   ,  60      ][i] || 54       //default
+							   , coefficient : [ 1.5   	,  1.5    ,  1.5  ,  1.5     ][i] || 1.5      //default
+							   , labels:       [ 'mc'  	,  'br'   ,  true ,  false   ][i] || false    //default
+							   , duration:     500 //default
+								 //for menu1 and menu7, set a function to use the 'alt' attribute if present, else construct a PNG path from the 'src'...
+							   , source:       (i==0 || i==6) ? function(i){ return (this.alt) ? false : this.src.replace(/(jpg|gif)$/,'png'); } : false //default
+							   };
+					$(this).jqDock(opts);
+				});
+				*/
+				//handle clicking label for images within links :
+				//if labels are enabled, and you have images within links, clicking on the label
+				//will do nothing!
+				//in order to get the link to activate you will need to provide some sort of click
+				//handler on the image (which jqDock will trigger) - if there is not one already?
+				//for example, on everything except #menu1, I will apply the following click handler
+				//to all my images-within-links...
+				//(ie. clicking a label on an image-within-a-link on #menu1 will still do nothing!)
+				/*
+				$('div.dockMenu a>img').not($('#menu1 a>img')).bind('click', function(){
+					var Href = $(this).parent().get(0).href;
+					//I don't have any hrefs that are not straightforward links, but for the sake of completeness,
+					//one could take this as being indicative of the likelihood that there is no click handler...
+					if(Href && !/^javascript:/i.test(Href)){ //change location...
+					  location.href = Href;
+					}
+					else{ //trigger a click handler?...
+					  $(this).parent().trigger('click');
+					}
+					return false;
+				});
+				*/
+			});
+			
+			function resetJqDock(menuId) {
+				//declare locals
+				var alignment,effectDuration,showLabels,labelsAlign,imageSize = null;
+				var objIds = new Array ("cmbAlign","cmbDuration","cbLabels","cmbAlignLabels","cmbMaxSize");
+				var cmbAlignObj,cmbDurationObj,cbLabelsObj,cmbLabelsAlignObj,cmbMaxSizeObj = null;
+				var optsMenu = null;
+				
+				//get elements by their ids
+				cmbAlignObj = document.getElementById(objIds[0]);
+				cmbDurationObj = document.getElementById(objIds[1]);
+				cbLabelsObj = document.getElementById(objIds[2]);
+				cmbLabelsAlignObj = document.getElementById(objIds[3]);
+				cmbMaxSizeObj = document.getElementById(objIds[4]);
+				
+				//check for nulls
+				if (menuId==null || cmbAlignObj==null || cmbDurationObj==null || cbLabelsObj==null || cmbLabelsAlignObj==null || cmbMaxSizeObj==null) {
+					return;
+				}
+				
+				//get values
+				alignment = cmbAlignObj.value;
+				effectDuration = cmbDurationObj.value;
+				showLabels = cbLabelsObj.checked;
+				imageSize = parseInt(cmbMaxSizeObj.value);
+				if (!showLabels) {
+					labelsAlign = false;
+				}
+				else {
+					labelsAlign = cmbLabelsAlignObj.value;
+				}
+				
+				//invoke the jquery script
+				jQuery(function($){
+					optsMenu = {align:alignment,size:imageSize,distance:60,coefficient:1.5,labels:labelsAlign,duration:effectDuration};
+					//alert("jqDock options for menu: " + menuId + "\n" + "optsMenu.align: " + optsMenu.align + "\n" + "optsMenu.labels: " + optsMenu.labels + "\n" + "optsMenu.duration: " + optsMenu.duration);
+					//$('#'+menuId.replace(/\:/,'\\:')).jqDock("destroy");
+					$('#'+menuId.replace(/\:/,'\\:')).jqDock(optsMenu);
+					
+				});
+			}
+			
+			function toggleDiv(divId) {
+				//declare locals
+				var contentsDivId = "helpContents";
+				var contentsDivObj = null;
+				var divObj = null;
+				
+				//check for nulls
+				if (divId==null) {
+					return;
+				}
+				
+				//get elements by their ids
+				contentsDivObj = document.getElementById(contentsDivId);
+				
+				//check for nulls
+				if (contentsDivObj==null) {
+					return;
+				}
+				
+				//hide the previous contents
+				contentsDivObj.innerHTML = "";
+				
+				//display the requested div
+				divObj = document.getElementById(divId);
+				if (divObj!=null) {
+					divObj.style.display = "block";
+					contentsDivObj.innerHTML = divObj.innerHTML;
+				}
+			}
+		</SCRIPT>
+		</form>
+	</BODY>
+</HTML>

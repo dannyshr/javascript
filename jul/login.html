@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<html id="htmlPageTag" lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta content="IE=11" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1">
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <title id="pageTitle"></title>
+    <link rel="icon" href="https://github.githubassets.com/favicons/favicon.svg" />
+    <script type="text/javascript" src="assets/scripts/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="assets/scripts/axios.min.js"></script>
+    <script type="text/javascript" src="assets/scripts/jul-infra.js"></script>
+    <script type="text/javascript" src="assets/scripts/ui-components.js"></script>
+
+    <script id="i18nJson" type="text/javascript">
+        let loginBundle = [
+            { "lang": "en", "key": "wfeman.index.htmlPageTag.lang", "value": "en", "id": "htmlPageTag", "attName": "lang" },
+            { "lang": "en", "key": "wfeman.index.pageTitle.text", "value": "Workflow Manager - Login", "id": "pageTitle", "attName": "text" },
+            { "lang": "en", "key": "wfeman.index.pageBody.dir", "value": "ltr", "id": "pageBody", "attName": "dir" },
+            { "lang": "en", "key": "wfeman.index._loginDialog.width", "value": "width: 550px", "id": "_loginDialog", "attName": "style" },
+            { "lang": "en", "key": "wfeman.index.cmbLanguages.tooltip", "value": "Click here to change the current language", "id": "cmbLanguages", "attName": "tooltip" },
+            { "lang": "en", "key": "wfeman.index.cmbThemes.tooltip", "value": "Click here to change the current theme", "id": "cmbThemes", "attName": "tooltip" },
+            { "lang": "en", "key": "wfeman.index.cmbLanguages.options", "value": [{"label": "English", "value": "en"},{"label": "Hebrew", "value": "he"},{"label": "Spanish", "value": "es"}], "id": "cmbLanguages", "attName": "options" },
+            { "lang": "en", "key": "wfeman.index.cmbThemes.options", "value": [{"label": "normal", "value": "normal.css"},{"label": "summer", "value": "summer.css"},{"label": "dark", "value": "dark.css"}], "id": "cmbThemes", "attName": "options" },
+            { "lang": "en", "key": "wfeman.index.loginHeaderText.text", "value": "Workflow Manager", "id": "loginHeaderText", "attName": "text" },
+            { "lang": "en", "key": "wfeman.index.username.textAlign", "value": "text-align: left", "id": "username", "attName": "style" },
+            { "lang": "en", "key": "wfeman.index.username.paddingRight", "value": "padding-right: 0px", "id": "username", "attName": "style" },
+            { "lang": "en", "key": "wfeman.index.username.placeholder", "value": "username", "id": "username", "attName": "placeholder" },
+            { "lang": "en", "key": "wfeman.index.username.tooltip", "value": "Username field is required", "id": "username", "attName": "tooltip" },
+            { "lang": "en", "key": "wfeman.index.password.textAlign", "value": "text-align: left", "id": "password", "attName": "style" },
+            { "lang": "en", "key": "wfeman.index.password.paddingRight", "value": "padding-right: 0px", "id": "password", "attName": "style" },
+            { "lang": "en", "key": "wfeman.index.password.placeholder", "value": "password", "id": "password", "attName": "placeholder" },
+            { "lang": "en", "key": "wfeman.index.password.tooltip", "value": "Password field is required", "id": "password", "attName": "tooltip" },
+            { "lang": "en", "key": "wfeman.index.btnLogin.text", "value": "Login", "id": "btnLogin", "attName": "text" },
+            { "lang": "en", "key": "wfeman.index.btnLogin.tooltip", "value": "Click here to login", "id": "btnLogin", "attName": "tooltip" },
+            { "lang": "en", "key": "wfeman.index.btnClear.text", "value": "Clear", "id": "btnClear", "attName": "text" },
+            { "lang": "en", "key": "wfeman.index.btnClear.tooltip", "value": "Click here to clear the fields", "id": "btnClear", "attName": "tooltip" },
+            { "lang": "en", "key": "wfeman.index.username_Error.validationErrorRequired", "value": "username is required !!", "id": "username_Error" },
+            { "lang": "en", "key": "wfeman.index.username_Error.validationErrorLength", "value": "username must be between {min} and {max} characters long !!", "id": "username_Error" },
+            { "lang": "en", "key": "wfeman.index.password_Error.validationErrorRequired", "value": "password is required !!", "id": "password_Error" },
+            { "lang": "en", "key": "wfeman.index.password_Error.validationErrorLength", "value": "password must be between {min} and {max} characters long !!", "id": "password_Error" },
+            { "lang": "en", "key": "wfeman.index.loginErrors.responseEmpty", "value": "Response is empty !!", "id": "loginErrors", "attName": "text" },
+            { "lang": "es", "key": "wfeman.index.htmlPageTag.lang", "value": "es", "id": "htmlPageTag", "attName": "lang" },
+            { "lang": "es", "key": "wfeman.index.pageTitle.text", "value": "Administración de Flujo de Trabajo - Acceso", "id": "pageTitle", "attName": "text" },
+            { "lang": "es", "key": "wfeman.index.pageBody.dir", "value": "ltr", "id": "pageBody", "attName": "dir" },
+            { "lang": "es", "key": "wfeman.index._loginDialog.width", "value": "width: 550px", "id": "_loginDialog", "attName": "style" },
+            { "lang": "es", "key": "wfeman.index.cmbLanguages.tooltip", "value": "Haga clic aquí para cambiar el lenguaje", "id": "cmbLanguages", "attName": "tooltip" },
+            { "lang": "es", "key": "wfeman.index.cmbThemes.tooltip", "value": "Haga clic aquí para cambiar la thema", "id": "cmbThemes", "attName": "tooltip" },
+            { "lang": "es", "key": "wfeman.index.cmbLanguages.options", "value": [{"label": "Ingles", "value": "en"},{"label": "Hebreo", "value": "he"},{"label": "Espanol", "value": "es"}], "id": "cmbLanguages", "attName": "options" },
+            { "lang": "es", "key": "wfeman.index.cmbThemes.options", "value": [{"label": "normal", "value": "normal.css"},{"label": "verano", "value": "summer.css"},{"label": "oscura", "value": "dark.css"}], "id": "cmbThemes", "attName": "options" },
+            { "lang": "es", "key": "wfeman.index.loginHeaderText.text", "value": "Administración de Flujo de Trabajo", "id": "loginHeaderText", "attName": "text" },
+            { "lang": "es", "key": "wfeman.index.username.textAlign", "value": "text-align: left", "id": "username", "attName": "style" },
+            { "lang": "es", "key": "wfeman.index.username.paddingRight", "value": "padding-right: 0px", "id": "username", "attName": "style" },
+            { "lang": "es", "key": "wfeman.index.username.placeholder", "value": "nombre de usuario", "id": "username", "attName": "placeholder" },
+            { "lang": "es", "key": "wfeman.index.username.tooltip", "value": "El nombre de usuario es obligado", "id": "username", "attName": "tooltip" },
+            { "lang": "es", "key": "wfeman.index.password.textAlign", "value": "text-align: left", "id": "password", "attName": "style" },
+            { "lang": "es", "key": "wfeman.index.password.paddingRight", "value": "padding-right: 0px", "id": "password", "attName": "style" },
+            { "lang": "es", "key": "wfeman.index.password.placeholder", "value": "secreto", "id": "password", "attName": "placeholder" },
+            { "lang": "es", "key": "wfeman.index.password.tooltip", "value": "El secreto es obligado", "id": "password", "attName": "tooltip" },
+            { "lang": "es", "key": "wfeman.index.btnLogin.text", "value": "Acceso", "id": "btnLogin", "attName": "text" },
+            { "lang": "es", "key": "wfeman.index.btnLogin.tooltip", "value": "Haga clic aquí para entrar", "id": "btnLogin", "attName": "tooltip" },
+            { "lang": "es", "key": "wfeman.index.btnClear.text", "value": "Limpiar", "id": "btnClear", "attName": "text" },
+            { "lang": "es", "key": "wfeman.index.btnClear.tooltip", "value": "Haga clic aquí para limpiar los datos", "id": "btnClear", "attName": "tooltip" },
+            { "lang": "es", "key": "wfeman.index.username_Error.validationErrorRequired", "value": "El nombre de usuario es obligado !!", "id": "username_Error" },
+            { "lang": "es", "key": "wfeman.index.username_Error.validationErrorLength", "value": "El nombre de usuario debe tener entre {min} y {max} caracteres !!", "id": "username_Error" },
+            { "lang": "es", "key": "wfeman.index.password_Error.validationErrorRequired", "value": "El secreto es obligado !!", "id": "password_Error" },
+            { "lang": "es", "key": "wfeman.index.password_Error.validationErrorLength", "value": "El secreto debe tener entre {min} y {max} caracteres !!", "id": "password_Error" },
+            { "lang": "es", "key": "wfeman.index.loginErrors.responseEmpty", "value": "La Respuesta esta vacia !!", "id": "loginErrors", "attName": "text" },
+            { "lang": "he", "key": "wfeman.index.htmlPageTag.lang", "value": "he", "id": "htmlPageTag", "attName": "lang" },
+            { "lang": "he", "key": "wfeman.index.pageTitle.text", "value": "ניהול תהליכים - כניסה", "id": "pageTitle", "attName": "text" },
+            { "lang": "he", "key": "wfeman.index.pageBody.dir", "value": "rtl", "id": "pageBody", "attName": "dir" },
+            { "lang": "he", "key": "wfeman.index._loginDialog.width", "value": "width: 550px", "id": "_loginDialog", "attName": "style" },
+            { "lang": "he", "key": "wfeman.index.cmbLanguages.tooltip", "value": "לחצ/י כאן בכדי לשנות את השפה", "id": "cmbLanguages", "attName": "tooltip" },
+            { "lang": "he", "key": "wfeman.index.cmbThemes.tooltip", "value": "לחצ/י כאן בכדי לשנות את התצוגה", "id": "cmbThemes", "attName": "tooltip" },
+            { "lang": "he", "key": "wfeman.index.cmbLanguages.options", "value": [{"label": "אנגלית", "value": "en"},{"label": "עברית", "value": "he"},{"label": "ספרדית", "value": "es"}], "id": "cmbLanguages", "attName": "options" },
+            { "lang": "he", "key": "wfeman.index.cmbThemes.options", "value": [{"label": "רגילה", "value": "normal.css"},{"label": "קיץ", "value": "summer.css"},{"label": "כהה", "value": "dark.css"}], "id": "cmbThemes", "attName": "options" },
+            { "lang": "he", "key": "wfeman.index.loginHeaderText.text", "value": "ניהול תהליכים", "id": "loginHeaderText", "attName": "text" },
+            { "lang": "he", "key": "wfeman.index.username.textAlign", "value": "text-align: right", "id": "username", "attName": "style" },
+            { "lang": "he", "key": "wfeman.index.username.paddingRight", "value": "padding-right: 10px", "id": "username", "attName": "style" },
+            { "lang": "he", "key": "wfeman.index.username.placeholder", "value": "שם משתמש/ת", "id": "username", "attName": "placeholder" },
+            { "lang": "he", "key": "wfeman.index.username.tooltip", "value": "שדה שם משתמש/ת הינו שדה חובה", "id": "username", "attName": "tooltip" },
+            { "lang": "he", "key": "wfeman.index.password.textAlign", "value": "text-align: right", "id": "password", "attName": "style" },
+            { "lang": "he", "key": "wfeman.index.password.paddingRight", "value": "padding-right: 10px", "id": "password", "attName": "style" },
+            { "lang": "he", "key": "wfeman.index.password.placeholder", "value": "סיסמה", "id": "password", "attName": "placeholder" },
+            { "lang": "he", "key": "wfeman.index.password.tooltip", "value": "שדה סיסמה הינו שדה חובה", "id": "password", "attName": "tooltip" },
+            { "lang": "he", "key": "wfeman.index.btnLogin.text", "value": "כניסה", "id": "btnLogin", "attName": "text" },
+            { "lang": "he", "key": "wfeman.index.btnLogin.tooltip", "value": "לחצ/י כאן בכדי להיכנס", "id": "btnLogin", "attName": "tooltip" },
+            { "lang": "he", "key": "wfeman.index.btnClear.text", "value": "ניקוי", "id": "btnClear", "attName": "text" },
+            { "lang": "he", "key": "wfeman.index.btnClear.tooltip", "value": "לחצ/י כאן בכדי לנקות את השדות", "id": "btnClear", "attName": "tooltip" },
+            { "lang": "he", "key": "wfeman.index.username_Error.validationErrorRequired", "value": "שדה שם המשתמש/ת ריק והוא שדה חובה !!", "id": "username_Error" },
+            { "lang": "he", "key": "wfeman.index.username_Error.validationErrorLength", "value": "שדה שם המשתמש/ת חייב להכיל בין {min} לבין {max} תווים !!", "id": "username_Error" },
+            { "lang": "he", "key": "wfeman.index.password_Error.validationErrorRequired", "value": "שדה סיסמה ריק והוא שדה חובה !!", "id": "password_Error" },
+            { "lang": "he", "key": "wfeman.index.password_Error.validationErrorLength", "value": "שדה סיסמה חייב להכיל בין {min} לבין {max} תווים !!", "id": "password_Error" },
+            { "lang": "he", "key": "wfeman.index.loginErrors.responseEmpty", "value": "לא התקבלה תשובה מהשרת !!", "id": "loginErrors", "attName": "text" }
+        ];
+    </script>
+
+    <script id="uiJson" type="text/javascript">
+        let loginUi = [
+            {
+                "cssTagId": "loginCss",
+                "id": "_loginDialog",
+                "class": "loginDialog",
+                "css": { "height": "460px", "width": "550px", "min-width": "550px" },
+                "movable": false,
+                "closeable": false,
+                "header": { "id": "loginDialogHeader","children": [
+                        {"compType": "row","id": "loginHeaderToolbar","class": "loginHeaderToolbar","css": {"text-align": "right"},"children":[
+                                {"compType": "col","class": "loginHeaderColIcon","css": {"width": "100px","height": "30px","float": "right","padding-top": "5px","padding-right": "25px","padding-left": "5px"},"children": [
+                                    //{"compType": "tag","tagName": "img","class": "headerIcon","css": {"width":"100px","height":"30px","float":"left"},"src": "assets/images/harel-logo.svg"}
+                                ]},
+                                {"compType": "col","class": "loginHeaderColToolbar","css": {"width": "250px","height": "30px","float": "right","padding-top":"3px"},"children": [
+                                    {"compType": "col","class": "languageWrapper","css": {"width":"100px","float":"right"},"children": [
+                                        {"compType": "tag","tagName": "select","id": "cmbLanguages","size": 1,"class": "select",
+                                            "css": [
+                                                {"width":"100px","height":"30px","float":"right","outline": "0px none","border-top":"none","border-left":"none","border-right":"none","background-color":"rgba(0,0,0,0.06)","border-bottom":"1px solid #303030","border-top-left-radius": "10px","border-top-right-radius": "10px"},
+                                                {"cssSelector":".select:focus","border-bottom":"1px solid transparent","border-bottom": "2px solid #0000ff","box-shadow": "5px 5px 10px #000000"}
+                                            ],
+                                            "onchange": "i18n.changeLanguage"}
+                                    ]},
+                                    {"compType": "col","class": "colsSpacer","css": {"width":"10px","height":"10px","float":"right"}},
+                                    {"compType": "col","class": "themesWrapper","css": {"width":"100px","float":"right"},"children": [
+                                        {"compType": "tag","tagName": "select","id": "cmbThemes","size": 1,"class": "select",
+                                            "onchange": "changeTheme"}
+                                    ]}
+                                ]}
+                            ]},
+                        {"compType": "row","id": "loginHeaderText","class": "loginHeaderRow","css": {"height": "40px","padding-top": "50px","text-align": "center"},"text": ""}
+                    ]},
+                "body": {
+                    "id": "loginDialogBody",
+                    "class": "loginDialogBody",
+                    "css": { "height": "200px" },
+                    "children": [
+                        {"compType": "tag","tagName":"form","id":"loginForm","action":"studio.html","method":"get","onsubmit":"login","children": [
+                            {"compType": "row","id": "loginBodyUsername","class": "loginItemRow","children":[
+                                {"compType": "inputText","id": "username","placeholder": "","tooltip": "","validations": [
+                                    {"required": true, "datatype": "string", "errorMessageKey": "wfeman.index.username_Error.validationErrorRequired"},
+                                    {"validationType": "length", "min": 5, "max": 10, "errorMessageKey": "wfeman.index.username_Error.validationErrorLength", "errorMessageParams": [{"name": "min","value": 5},{"name": "max","value": 10}]}
+                                ]}
+                            ]},
+                            {"compType": "row","id": "loginBodyPassword","class": "loginItemRow","children":[
+                                {"compType": "inputText","id": "password","type": "password","placeholder": "","tooltip": "","validations": [
+                                    {"required": true, "datatype": "string", "errorMessageKey": "wfeman.index.password_Error.validationErrorRequired"},
+                                    {"validationType": "length", "min": 5, "max": 10, "errorMessageKey": "wfeman.index.password_Error.validationErrorLength", "errorMessageParams": [{"name": "min","value": 5},{"name": "max","value": 10}]}
+                                ]}
+                            ]}
+                        ]}
+                    ]
+                },
+                "footer": {
+                    "id": "loginDialogFooter",
+                    "children": [
+                        {"compType": "row","id": "footerButtons","class": "footerButtonsRow","css": {"text-align":"center","height":"50px","width":"270px","display":"inline-block"},"children":[
+                            {"compType": "col","class": "buttonWrapper","css": {"width":"120px","float":"left"},"children": [
+                                {"compType": "button","id": "btnLogin","events":[
+                                    {"name": "onclick", "actions": [
+                                        {"action": "validate","for": ["username","password"]},
+                                        {"action": "ajax","url": "studio.html","method": "get","dataNames": ["username","password"],"dataValuesIds": ["username","password"],"onsuccess":"loginSuccess","onFailure":"loginFailure"}
+                                    ]}
+                                ]}
+                            ]},
+                            {"compType": "col","class": "colsSpacer2","css": {"width":"30px","height":"10px","float":"left"}},
+                            {"compType": "col","class": "buttonWrapper","children": [
+                                {"compType": "button","id": "btnClear","events":[
+                                    {"name": "onclick", "actions": [
+                                        {"action": "clearValidations","for": ["username","password"]},
+                                        {"action": "updateDom","for": "loginErrors","attName":"text","attValue":""},
+                                        {"action": "updateCss","for": "loginErrors","attName":"display","attValue":"none"}
+                                    ]}
+                                ]}
+                            ]}
+                        ]},
+                        {"compType": "row","class": "footerErrorSpacer", "css": {"height": "30px","width": "10px"}},
+                        {"compType": "row","id": "loginErrors","class": "loginErrorContainer",
+                            "css": {
+                                "display": "none",
+                                "color": "red",
+                                "direction": "ltr",
+                                "font-size": "18px",
+                                "font-weight": "400",
+                                "text-align": "center"
+                            }
+                        }
+                    ]
+                }
+            }
+        ];
+    </script>
+
+    <script id="sharedJs" type="text/javascript">
+        function getLoaderId() {
+            return "loader";
+        }
+
+        function getUiBlockerId() {
+            return "uiBlocker";
+        }
+    </script>
+
+    <script id="loginJs" type="text/javascript">
+        let _loginUrl = "https://dannyshr.github.io/jul/studio.html";
+        let _loader;
+
+        function getDialogId() {
+            let elemId = "_loginDialog";
+            return elemId;
+        }
+
+        function getErrorContainerId() {
+            let elemId = "loginErrors";
+            return elemId;
+        }
+
+        function handlePageOnLoad() {
+            //create a Loader
+            let loaderId = getLoaderId();
+            let uiBlockerId = getUiBlockerId();
+            let errorContainerId = getErrorContainerId();
+            _loader = new Loader({ loader: { id: loaderId }, uiBlocker: { id: uiBlockerId } });
+            _loader.render();
+            domUtils.centerComponent(loaderId);
+            _loader.show();
+
+            //set ajax.js configuration
+            ajaxUtils.setLoader(_loader);
+            ajaxUtils.setErrorId(errorContainerId);
+
+            //set a language change callback
+            i18n.loadBundle(loginBundle);
+            i18n.setChangeLanguageCallback(onLanguageChange);
+
+            //check if the user is authenticated
+            loadUi();
+        }
+
+        function loadUi() {
+            let uiConfig = loginUi;
+
+            //render the login UI
+            renderUi(uiConfig);
+            centerUi();
+
+            //set the language which will invoke the callback
+            i18n.changeLanguage("en");
+
+            //hide the loader
+            _loader.hide();
+        }
+
+        function onLanguageChange() {
+            i18n.translateAll();
+            centerUi();
+        }
+
+        function changeTheme() {
+            let linkId = "cssTheme";
+            let theme = "assets/styles/themes/" + utils.getFromDom("cmbThemes").value;
+            domUtils.changeTheme(linkId, theme);
+        }
+
+        function centerUi() {
+            //center the dialog
+            let loaderId = getLoaderId();
+            domUtils.centerComponent(loaderId);
+            let dialogId = getDialogId();
+            domUtils.centerComponent(dialogId);
+        }
+
+        function renderUi(uiConfig) {
+            //declare locals
+            let jsonUi;
+
+            //check for valid values
+            if (!utils.isArray(uiConfig) || uiConfig.length<1) {
+                return;
+            }
+            if (!utils.isJson(uiConfig[0])) {
+                return;
+            }
+
+            //check if the item is already in the DOM
+            jsonUi = uiConfig[0];
+            if (utils.isInDom(jsonUi.id)) {
+                return;
+            }
+
+            //create a new Dialog
+            _loginDialog = new Dialog(jsonUi);
+
+            //render the login dialog
+            _loginDialog.render();
+        }
+
+        function login() {
+            //do something
+        }
+
+        function loginFailure(response) {
+            let errorId = getErrorContainerId();
+            let errorMessage = "wfeman.index.loginErrors." + response;
+            errorMessage = i18n.translate(errorMessage, errorId, null, null);
+            utils.getFromDom(errorId).innerHTML = errorMessage;
+            utils.getFromDom(errorId).style.display = "block";
+        }
+
+        function loginSuccess(response) {
+            //submit the login form
+            let token = response.body;
+            let errorMessage;
+
+            //check for valid values
+            if (utils.isEmpty(token)) {
+                errorMessage = "token is empty !!";
+                ajaxUtils.showError(errorMessage);
+                return;
+            }
+
+            //create a header
+            let url = "https://dannyshr.github.io/jul/studio.html";
+            let configOpts = { headers: {
+                    "x-token-ad": token
+                }};
+
+            //generate the data
+            let data = {};
+
+            //send the request
+            window.location.href = url;
+            //ajaxUtils.sendPost(url, data, null, null, configOpts);
+        }
+    </script>
+</head>
+
+<body id="pageBody" dir="ltr" class="body" onresize="centerUi();">
+
+<script type="text/javascript">
+    $( document ).ready(function() {
+        handlePageOnLoad();
+    });
+</script>
+<link id="cssTheme" href="assets/styles/themes/normal.css" rel="stylesheet" type="text/css">
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<html>
+<head>
+	<title>Comboboxes</title>
+	<link href="resources/themes/blue/combobox/combobox.css" type="text/css" rel="stylesheet" id="themesLink" name="themesLink" />
+</head>
+
+<body onload="buildCombosOptions(combosIds,document.getElementById('cmbOptionsSize').value,document.getElementById('cmbOptionGroupSize').value);">
+	<form id="frmComboboxes" >
+		<table>
+			<tr>
+				<td>Theme: </td>
+				<td>
+					<select size="1" id="cmbThemes" name="cmbThemes" onchange="changeTheme('themesLink',this.value);" >
+						<option value="resources/themes/black/combobox/combobox.css" >Black</option>
+						<option value="resources/themes/blue/combobox/combobox.css" selected>Blue</option>
+						<option value="resources/themes/green/combobox/combobox.css" >Green</option>
+						<option value="resources/themes/orange/combobox/combobox.css" >Orange</option>
+						<option value="resources/themes/red/combobox/combobox.css" >Red</option>
+						<option value="resources/themes/skyblue/combobox/combobox.css" >Skyblue</option>
+						<option value="resources/themes/white/combobox/combobox.css" >White</option>
+					</select>
+				</td>
+				<td>Combo Options Size: </td>
+				<td>
+					<select size="1" id="cmbOptionsSize" name="cmbOptionsSize" onchange="buildCombosOptions(combosIds,this.value,document.getElementById('cmbOptionGroupSize').value);" >
+						<option value="10" selected>10</option>
+						<option value="20" >20</option>
+						<option value="50" >50</option>
+						<option value="100" >100</option>
+					</select>
+				</td>
+				<td>Combo GroupOption Size: </td>
+				<td>
+					<select size="1" id="cmbOptionGroupSize" name="cmbOptionGroupSize" onchange="buildCombosOptions(combosIds,document.getElementById('cmbOptionsSize').value,this.value);" >
+						<option value="2" selected>2</option>
+						<option value="3" >3</option>
+						<option value="4" >4</option>
+						<option value="5" >5</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		<table border="1">
+			<tr>
+				<th>
+					Combobox
+				</th>
+				<th>
+					Custom?
+				</th>
+				<th>
+					Disabled
+				</th>
+				<th>
+					Direction
+				</th>
+				<th>
+					Selector Type
+				</th>
+				<th>
+					Selection Mode
+				</th>
+				<th>
+					Title
+				</th>
+			</tr>
+			<tr>
+				<td>
+					<select size="1" id="combobox1" name="combobox1" style="width:110px;height:20px;display:inline;" onchange="changeOptionHandler(this.id);" >
+					</select>
+				</td>
+				<td align="center">
+					<input id="combobox1Cust" name="combobox1Cust" type="checkbox" onclick="customizeCombo('combobox1',this.checked);" />
+				</td>
+				<td align="center">
+					<input id="combobox1Dis" name="combobox1Dis" type="checkbox" onclick="disableCombo('combobox1',this.checked);" />
+				</td>
+				<td>
+					<select size="1" id="combobox1CmbDirections" name="combobox1CmbPositions" onchange="resetComboDirection('combobox1',this.value);" >
+						<option value="ltr" selected>Left To Right</option>
+						<option value="rtl">Right To Left</option>
+					</select>
+				</td>
+				<td>
+					<select size="1" id="combobox1CmbSelType" name="combobox1CmbSelType" onchange="resetComboSelectorType('combobox1',this.value);" >
+						<option value="none" >None</option>
+						<option value="checkbox" >Checkbox</option>
+						<option value="radio" selected>Radio</option>
+					</select>
+				</td>
+				<td>
+					<select size="1" id="combobox1CmbSelMode" name="combobox1CmbSelMode" onchange="resetComboSelectionMode('combobox1',this.value);" >
+						<option value="multiple" >Multiple</option>
+						<option value="single" selected>Single</option>
+					</select>
+				</td>
+				<td align="center">
+					<input id="combobox1TitleText" name="combobox1TitleText" type="text" value="" size="10" >
+					<input id="combobox1Title" name="combobox1Title" type="button" value="Set Title" onclick="setComboTitle('combobox1',document.getElementById('combobox1TitleText').value);" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<select size="1" id="combobox2" name="combobox2" style="width:110px;height:20px;display:inline;" onchange="changeOptionHandler(this.id);" >
+					</select>
+				</td>
+				<td align="center">
+					<input id="combobox2Cust" name="combobox2Cust" type="checkbox" onclick="customizeCombo('combobox2',this.checked);" />
+				</td>
+				<td align="center">
+					<input id="combobox2Dis" name="combobox2Dis" type="checkbox" onclick="disableCombo('combobox2',this.checked);" />
+				</td>
+				<td>
+					<select size="1" id="combobox2CmbDirections" name="combobox2CmbPositions" onchange="resetComboDirection('combobox2',this.value);" >
+						<option value="ltr" selected>Left To Right</option>
+						<option value="rtl">Right To Left</option>
+					</select>
+				</td>
+				<td>
+					<select size="1" id="combobox2CmbSelType" name="combobox2CmbSelType" onchange="resetComboSelectorType('combobox2',this.value);" >
+						<option value="none" >None</option>
+						<option value="checkbox" >Checkbox</option>
+						<option value="radio" selected>Radio</option>
+					</select>
+				</td>
+				<td>
+					<select size="1" id="combobox2CmbSelMode" name="combobox2CmbSelMode" onchange="resetComboSelectionMode('combobox2',this.value);" >
+						<option value="multiple" >Multiple</option>
+						<option value="single" selected>Single</option>
+					</select>
+				</td>
+				<td align="center">
+					<input id="combobox2TitleText" name="combobox2TitleText" type="text" value="" size="10" >
+					<input id="combobox2Title" name="combobox2Title" type="button" value="Set Title" onclick="setComboTitle('combobox2',document.getElementById('combobox2TitleText').value);" />
+				</td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td>
+					<input type="reset" value="Reset">
+				</td>
+			</tr>
+		</table>
+	</form>
+	<script src="resources/scripts/combobox.js" type="text/javascript"></script>
+	<script src="resources/scripts/shared.js" type="text/javascript"></script>
+	<script type="text/javascript" >
+		var combosIds = "combobox1,combobox2";
+	</script>
+</body>
+</html>

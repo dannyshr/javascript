@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="he">
+	<head>
+		<style>
+			.fullWidth {
+				width: 100%;
+			}
+			
+			.topAligned {
+				vertical-align: top;
+			}
+			
+			.thumbnail {
+				width: 15%;
+				height: 15%;
+			}
+			
+			.link {
+				text-decoration: none;
+			}
+			
+			.pagesDiv {
+				height: 300px;
+				width: 90%;
+				overflow-x: hidden;
+				overflow-y: scroll;
+			}
+			
+			.dataDiv {
+				display: block;
+				height: 300px;
+				width: 90%;
+				overflow-x: scroll;
+				overflow-y: scroll;
+			}
+		</style>
+		<title>Kotar Hack</title>
+	</head>
+
+	<script type="text/javascript" id="pagesDataInfo" src="kotarHack.js"></script>
+	
+	<script type="text/javascript">
+		//declare global variables
+		var _pagesData = null;
+		var _int = -1;
+		
+		function antiPlagiarism(a) {
+			var keyChar="g";
+			var c=keyChar.charCodeAt(0);
+			var b="";
+			for(i=0;i<a.length;i++){
+				b+=String.fromCharCode(c^a.charCodeAt(i));
+			}
+			return b;
+		}
+		
+		function loadPagesData(_callBackFunc) {
+			//declare locals
+			var _bookElemId = "txtKotarBookId";
+			var _bookElemValue = document.getElementById(_bookElemId).value;
+			var _bookElemId = "txtKotarBookId";
+			var _bookElemValue = document.getElementById(_bookElemId).value;
+			var _url = "http://www.kotar.co.il/KotarApp/Viewer.aspx?nBookID=" + _bookElemValue;
+			
+			//check for an empty value
+			if (_bookElemValue==null || _bookElemValue=="" || _bookElemValue=="undefined") {
+				alert("You must provide a valid Kotar book ID !!");
+				return;
+			}
+			
+			document.getElementById("pagesDataInfo").src = _url;
+			_int = window.setInterval(checkData,100);
+		}
+		
+		function checkData() {
+			var _html = null;
+			_html = document.getElementById("pagesDataInfo").innerText;
+			
+			if (_html!=null && _html!="undefined" && _html!="") {
+				document.getElementById("btnGenBookImages").enabled = true;
+				window.clearInterval(_int);
+			}
+		}
+		
+		function loadPagesDataAjax(_callBackFunc) {
+			//declare locals
+			var _bookElemId = "txtKotarBookId";
+			var _bookElemValue = document.getElementById(_bookElemId).value;
+			var _bookElemId = "txtKotarBookId";
+			var _bookElemValue = document.getElementById(_bookElemId).value;
+			var _url = "http://www.kotar.co.il/KotarApp/Viewer.aspx?nBookID=" + _bookElemValue;
+			var _xhttp = null;
+			var _body = '<?xml version="1.0"?><nBookID>' + _bookElemValue + '</nBookID>';
+			
+			//check for an empty value
+			if (_bookElemValue==null || _bookElemValue=="" || _bookElemValue=="undefined") {
+				alert("You must provide a valid Kotar book ID !!");
+				return;
+			}
+			
+			//create an XMLHTTP request
+			_xhttp = new XMLHttpRequest();
+			
+			//set an onreadystatechange event function
+			_xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					_callBackFunc(this);
+				}
+			};
+			
+			//send the ajax request
+			_xhttp.open("GET", _url, true);
+			//_xhttp.setRequestHeader("Host","www.kotar.co.il")
+			//_xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+			//_xhttp.setRequestHeader('X-PINGOTHER', 'pingpong');
+			//_xhttp.setRequestHeader('Content-Type', 'application/xml');
+			_xhttp.send();
+		}
+		
+		function getResponse(_response) {
+			//declare locals
+			var _btnObj = document.getElementById("btnGenBookImages");
+			
+			//enable the button
+			_btnObj.enabled = true;
+			
+			//show the ajax response
+			document.getElementById("bookPagesData").innerHTML = _response.responseText;
+		}
+		
+		function getPagesData() {
+			//declare locals
+			var _html = document.getElementById("bookPagesData").innerHTML;
+			var _indStart = -1;
+			
+			//parse the _html
+			_indStart = _html.indexOf("oPagesInfo");
+			alert("_indStart="+_indStart);
+			//document.getElementById("bookPagesData").innerHTML = _indStart;
+		}
+			
+		function getPageToken(_pageIndex) {
+			return antiPlagiarism(_pagesData.pages[_pageIndex].gid);
+		}
+		
+		function getPageUrl(_pageIndex) {
+			//declare locals
+			var _imgSize = "9";
+			var _typeNormal = "page_img";
+			var _typeCovered = "covered";
+			var _typeThumbnail = "thumbnail";
+			var _type = (_pagesData.pages[_pageIndex].o==true ? _typeNormal : _typeCovered);
+			var _version = _pagesData.pages[_pageIndex].v;
+			var _pageToken = getPageToken(_pageIndex);
+			var _url = 'http://kotarimagesSTG.cet.ac.il/GetPageImg_v2.ashx?Type=' + _type + '&nStep=' + _imgSize + '&nVersion=' + _version + '&gPageToken=' + _pageToken;
+			return _url;
+		}
+		
+		function generatePagesImages() {
+			//declare locals
+			var _bookElemId = "txtKotarBookId";
+			var _bookElemValue = document.getElementById(_bookElemId).value;
+			var _containerId = "bookPages";
+			var _containerObj = document.getElementById(_containerId);
+			var _currItem = null;
+			var _url = null;
+			var _html = '';
+			
+			//check for an empty value
+			if (_bookElemValue==null || _bookElemValue=="" || _bookElemValue=="undefined") {
+				alert("You must provide a valid Kotar book ID !!");
+				return;
+			}
+			
+			//get the data for the book
+			getPagesData();
+			
+			//check if data is available
+			if (_pagesData==null || _pagesData=="" || _pagesData=="undefined") {
+				alert("No pages data was found for Kotar book ID [" + _bookElemValue + "] !!");
+				return;
+			}
+			
+			//generate the html
+			_html += '<table border="1" class="fullWidth" cellpadding="0" cellspacing="0">';
+			_html += '<thead>';
+			_html += '<th>Page</th>';
+			_html += '<th>Is Covered?</th>';
+			_html += '<th>Image</th>';
+			_html += '<th>URL</th>';
+			_html += '</thead>';
+			
+			//loop through the items
+			for (var i=0;i<_pagesData.pages.length;i++) {
+				//get the current item and its info
+				_currItem = _pagesData.pages[i];
+				_url = getPageUrl(i);
+				
+				//render the current item
+				_html += '<tr>';
+				_html += '<td class="topAligned">'+ _currItem.lbl +'</td>';
+				_html += '<td class="topAligned">'+ (!_currItem.o) +'</td>';
+				_html += '<td><a target="_blank" href="'+ _url +'"><img class="thumbnail" src="'+ _url +'"/></a></td>';
+				_html += '<td class="topAligned"><a target="_blank" class="link" href="'+ _url +'">' + _url + '</a></td>';
+				_html += '</tr>';
+			}
+			_html += '</table>';
+			
+			//render the html
+			_containerObj.innerHTML = _html;
+		}
+	</script>
+	
+	<body>
+		<input type="button" value="Load Pages Data" onclick="loadPagesDataAjax(getResponse);"/> for Kotar book <input type="text" id="txtKotarBookId" value="BookID" /> <input id="btnGenBookImages" type="button" value="Generate Pages Images" onclick="getPagesData();" disabled="disabled"/>
+		<br/>
+		<img style="dislay:none;" id="pagesDataInfoImg" src=""></img>
+		<div id="bookPagesData" class="dataDiv"></div>
+		<div id="bookPages" class="pagesDiv"></div>
+	</body>
+</html>

@@ -1,0 +1,56 @@
+
+.dark {
+	background-color: #3b3b3b;
+}
+
+.pw_modal {
+	width: 180px;
+}
+
+.page {
+			
+}
+
+.side_pannel {
+	display: block;
+	background-color:#ffffff;
+    position: absolute;
+    width: 350px;
+    left: 0px;
+    top: 64px;
+    will-change: transform;
+    height: 92%;
+    padding-left: 10px;
+    padding-right: 10px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.grid {
+	height: 370px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	border: 1px solid transparent; 
+}
+
+.grid_row {
+	height: 60px;
+}
+
+.hspacer {
+	display: inline-block;
+	width: 10px;
+	background-color: transparent;
+}
+
+.modal-header {
+	border-radius: 0 0 2px 2px;
+	background-color: #fafafa;
+	padding: 4px 6px;
+	height: 56px;
+	width: 100%;
+}
+
+.jul_modal {
+	width: 60%;
+}

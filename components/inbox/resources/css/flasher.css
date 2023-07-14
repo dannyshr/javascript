@@ -1,0 +1,16 @@
+
+.flasher {
+	display: none;
+	position: absolute;
+}
+
+.message {
+	display: none;
+	width: 50px;
+	border: 1px solid black;
+	position: relative;
+	top: -25px;
+	left: -30px;
+	white-space: nowrap;
+}
+

@@ -1,0 +1,35 @@
+.body {
+    height: 100%;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    margin-top: 0px;
+    margin-left: 0px;
+    font-family: Arial, sans-serif;
+}
+
+.studioPage {
+    background-color: #ffffff;
+    color: #303030;
+}
+
+.studioHeaderText {
+    color: #666666;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.collapsibleHandle {
+    background-color: rgba(0,0,0,0.2);
+    color: #303030;
+}
+
+.collapsibleHandleButton {
+    background-color: #0288d1;
+    color: #ffffff;
+}
+
+.collapsibleHandleButton:focus {
+    outline: 1px solid #666666;
+    box-shadow: 5px 5px 10px #666666;
+}

@@ -1,0 +1,1463 @@
+<html>
+	<head>
+		<title>Page Title</title>
+		<link id="themeCss" rel="stylesheet" type="text/css" href="css/black.css" />
+		<style type="text/css">
+			body {
+				width: 99%;
+				height:97%;
+				overflow-x: hidden;
+				overflow-y: hidden;
+			}			
+			.header {
+				height: 40px;
+				width: 99%;
+				position: absolute;
+				top: 0px;
+				vertical-align: middle;
+			}
+			.headerText {
+				white-space: nowrap;
+			}
+			.headerContainerMain {
+				width: 95%;
+				height: 100%;
+				vertical-align: middle;
+				text-align: center;
+				white-space: nowrap;
+			}
+			.headerContainer {
+				height: 100%;
+				vertical-align: middle;
+				white-space: nowrap;
+			}
+			.headerHSpace {
+				float: left;
+				width: 10px;
+			}
+			.footer {
+				height: 40px;
+				width: 99%;
+				position: absolute;
+				bottom: 0px;
+			}
+			.footerText {
+				white-space: nowrap;
+			}
+			.footerTextNormal {
+				white-space: nowrap;
+			}
+			.footerContainer {
+				width: 95%;
+				height: 100%;
+				vertical-align: middle;
+				text-align: center;
+				white-space: nowrap;
+			}
+			.footerHSpace {
+				float: left;
+				width: 10px;
+			}
+			.headerIcon {
+				width: 30px;
+				height: 30px;
+				cursor: pointer;
+				vertical-align: middle;
+				text-align: center;
+			}
+			.footerIcon {
+				width: 30px;
+				height: 30px;
+				cursor: pointer;
+				vertical-align: middle;
+				text-align: center;
+			}
+			.timeContainer {
+				width: 150px;
+				vertical-align: middle;
+				text-align: center;
+				white-space: nowrap;
+			}
+			.contentsContainer {
+				width: 99%;
+				height: 82%;
+				overflow-x: hidden;
+				overflow-y: hidden;
+				position: absolute;
+				top: 44px;
+			}
+			.contents {
+				width: 99%;
+				height: 58%;
+				overflow-x: scroll;
+				overflow-y: scroll;
+				white-space: nowrap;
+			}
+			.westpanel {
+				vertical-align: top;
+				width: 290px;
+			}
+			.eastpanel {
+				vertical-align: top;
+			}
+			.dataListContainer {
+				width: 290px;
+				height: 58%;
+				overflow-x: scroll;
+				overflow-y: scroll;
+			}
+			.listItemText {
+				white-space: nowrap;
+			}
+			.dataRowOdd {
+				cursor: pointer;
+			}
+			.dataRowEven {
+				cursor: pointer;
+			}
+			.dataRowSelected {
+				cursor: pointer;
+			}
+			.hSpacer {
+				width: 10px;
+			}
+
+			.dialogContainer {
+				width: 400px;
+				height: 204px;
+				display: none;
+			}
+			.dialogHeaderRow {
+				height: 30px;
+			}
+			.dialogHeaderRowIconCol {
+				width: 20px;
+			}
+			.dialogHeaderRowTextCol {
+				width: 70%;
+				white-space: nowrap;
+			}
+			.dialogHeaderRowButtonsCol {
+				width: 30%;
+				text-align: right;
+			}
+			.dialogLabelCol {
+				width: 180px;
+			}
+			.dialogFieldCol {
+				width: 200px;
+			}
+			.requiredLabel {
+				cursor: help;
+			}
+			.dialogBody {
+				height: 140px;
+				width: 100%;
+				overflow-x: hidden;
+				overflow-y: auto;
+			}
+			.dialogButtonsRow {
+				height: 30px;
+			}
+			.button {
+				height: 30px;
+				cursor: pointer;
+			}
+			.pleaseWaitDialogContainer {
+				width: 200px;
+				height: 100px;
+				display: none;
+			}
+			.pleaseWaitTextCol {
+				text-align: center;
+			}
+			.pleaseWaitIconCol {
+				text-align: center;
+			}
+			.windowSettings {
+				display: none;
+				width: 200px;
+				height: 250px;
+				position: absolute;
+				top: 36px;
+				right: 40px;
+			}
+			.windowEmail {
+				display: none;
+				width: 200px;
+				height: 250px;
+				position: absolute;
+				bottom: 38px;
+				right: 180px;
+			}
+			.windowUsers {
+				display: none;
+				width: 200px;
+				height: 250px;
+				position: absolute;
+				bottom: 38px;
+				right: 240px;
+			}
+		</style>
+		<script type="text/javascript" language="javascript" src="jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" language="javascript">
+			var currTheme = "black";
+			
+			function getPleaseWaitDialogId() {
+				return "pleaseWaitDialogContainer";
+			}
+			
+			function getDataListContainerId() {
+				return "dataListContainer";
+			}
+			
+			function getDataDialogId() {
+				return "dialogContainer";
+			}
+			
+			function getDataDialogClearButtonId() {
+				return (getDataDialogId()+"_btnClear");
+			}
+			
+			function getDataDialogCloseButtonId() {
+				return (getDataDialogId()+"_btnClose");
+			}
+			
+			function getDataListName() {
+				return "dataList1";
+			}
+			
+			function getTimeContainerId() {
+				return "timeContainer";
+			}
+			
+			function getThemeCssId() {
+				return "themeCss";
+			}
+			
+			function getOddRowClassName() {
+				return "dataRowOdd";
+			}
+			
+			function getEvenRowClassName() {
+				return "dataRowEven";
+			}
+			
+			function getSelectedRowClassName() {
+				return "dataRowSelected";
+			}
+			
+			function getRowTextClassName() {
+				return "listItemText";
+			}
+			
+			function getSelectedRowTextClassName() {
+				return "listItemTextSelected";
+			}
+			
+			function getRequiredMarker() {
+				return "*";
+			}
+			
+			function handleOnLoad() {
+				applyPageStyle();
+				startClock();
+				attachWindowResizeEvent();
+			}
+			
+			function attachWindowResizeEvent() {
+				document.getElementsByTagName("body")[0].onresize = function() {
+					resizeWin();
+				};
+			}
+			
+			function resizeWin() {
+				//declare locals
+				var _dialogIdPlsWait = getPleaseWaitDialogId();
+				var _dialogId = getDataDialogId();
+				
+				//re-center the components
+				centerComponent(_dialogIdPlsWait);
+				centerComponent(_dialogId);
+			}
+			
+			function changeTheme(newTheme) {
+				//declare locals
+				var _themePath = "css/";
+				var _themeExt = ".css";
+				var _newThemeHref = _themePath + newTheme + _themeExt;
+				var _compId = getThemeCssId();
+				var _compObj = document.getElementById(_compId);
+				
+				//chack for nulls
+				if (_compObj==null) {
+					return;
+				}
+				
+				//change the theme
+				_compObj.href = _newThemeHref;
+			}
+			
+			function applyPageStyle() {
+				//declare locals
+				var _cssConfig = new Array();
+				
+				//create an array of css changes to apply
+				_cssConfig.push({forClass:"header",applyClasses:"bgColorHeader"});
+				_cssConfig.push({forClass:"headerText",applyClasses:"fontHeader;fontHeaderColor"});
+				_cssConfig.push({forClass:"button",applyClasses:"fontButton;fontButtonColor;bgColorButton;borderButton;borderButtonColor"});
+				_cssConfig.push({forClass:"dataListContainer",applyClasses:"border;borderColor"});
+				_cssConfig.push({forClass:"contents",applyClasses:"border;borderColor;font;fontColor"});
+				_cssConfig.push({forClass:"pleaseWaitDialogContainer",applyClasses:"border;borderColor"});
+				_cssConfig.push({forClass:"dialogContainer",applyClasses:"border;borderColor;bgColor"});
+				_cssConfig.push({forClass:"dialogHeaderRow",applyClasses:"bgColorHeader"});
+				_cssConfig.push({forClass:"dialogHeaderText",applyClasses:"fontHeader;fontHeaderColor"});
+				_cssConfig.push({forClass:"dialogBodyRow",applyClasses:"bgColor"});
+				_cssConfig.push({forClass:"dialogBody",applyClasses:"bgColor"});
+				_cssConfig.push({forClass:"footer",applyClasses:"bgColorHeader"});
+				_cssConfig.push({forClass:"footerText",applyClasses:"fontHeader;fontHeaderColor"});
+				_cssConfig.push({forClass:"timeContainer",applyClasses:"font;fontHeaderColor"});
+				_cssConfig.push({forClass:"dataRowOdd",applyClasses:"itemRowOdd"});
+				_cssConfig.push({forClass:"dataRowEven",applyClasses:"itemRowEven"});
+				_cssConfig.push({forClass:"dataRowSelected",applyClasses:"itemRowSelected"});
+				_cssConfig.push({forClass:"listItemText",applyClasses:"font;fontColor"});
+				_cssConfig.push({forClass:"listItemTextSelected",applyClasses:"font;fontHeaderColor"});
+				_cssConfig.push({forClass:"dialogHeaderText",applyClasses:"fontHeader;fontHeaderColor"});
+				_cssConfig.push({forClass:"dialogLabel",applyClasses:"font;fontColor"});
+				_cssConfig.push({forClass:"requiredLabel",applyClasses:"fontRequiredMarker;fontRequiredMarkerColor"});
+				_cssConfig.push({forClass:"dialogField",applyClasses:"border;borderColor;bgColorTextbox;fontTextbox;fontTextboxColor"});
+				_cssConfig.push({forClass:"dialogFieldDisabled",applyClasses:"border;borderColor;bgColorTextboxDisabled;fontTextboxDisabled;fontTextboxDisabledColor"});
+				_cssConfig.push({forClass:"dialogButtonsRow",applyClasses:"bgColorHeader"});
+				_cssConfig.push({forClass:"menuDialog",applyClasses:"border;borderColor;bgColorMenuDialog"});
+				
+				//apply the changes
+				applyCssChanges(_cssConfig);
+			}
+			
+			function applyCssChanges(cssConfig) {
+				//declare locals
+				var _currCssConfigItem = null;
+				var _currSourceCss = null;
+				var _targetCssDelimiter = ";";
+				var _currTargetCss = null;
+				var _arrTargetCss = null;
+				var _currTargetCss = null;
+				
+				//loop through the cssConfig array
+				for (var i=0;i<cssConfig.length;i++) {
+					//get the current item
+					_currCssConfigItem = cssConfig[i];
+					
+					//get the item's source class and target classes
+					_currSourceCss = _currCssConfigItem.forClass;
+					_currTargetCss = _currCssConfigItem.applyClasses;
+					
+					//check for nulls
+					if (_currSourceCss==null || !_currSourceCss.length || _currSourceCss.length<1 
+						|| _currTargetCss==null || !_currTargetCss.length || _currTargetCss.length<1) {
+						continue;
+					}
+					
+					//turn the target classes into an array
+					if (_currTargetCss.indexOf(_targetCssDelimiter)==-1) {
+						_arrTargetCss = new Array(_currTargetCss);
+					}
+					else {
+						_arrTargetCss = _currTargetCss.split(_targetCssDelimiter);
+					}
+					
+					//loop through the nodes
+					$("."+_currSourceCss).each(function( index ) {
+						//loop throug the target classes
+						for (var k=0;k<_arrTargetCss.length;k++) {
+							//get the current target css
+							_currTargetCss = _arrTargetCss[k];
+							
+							//check for nulls
+							if (_currTargetCss==null || !_currTargetCss.length || _currTargetCss.length<1) {
+								continue;
+							}
+							
+							//check if the node has the taget css
+							if (!$(this).hasClass(_currTargetCss)) {
+								//add the current target css to the current node
+								$(this).addClass(_currTargetCss);
+							}
+						}
+					});					
+				}
+			}
+			
+			function centerComponent(_compId) {
+				//declare locals
+				var _compObj = null;
+				var _winHeight = null;
+				var _winWidth = null;
+				var _compHeight = null;
+				var _compWidth = null;
+				var _compLeft = null;
+				var _compTop = null;
+				
+				//check for nulls
+				if (_compId==null || _compId=="undefined" || !_compId.length || _compId.length<1) {
+					return;
+				}
+				
+				//check for a valid component
+				_compObj = document.getElementById(_compId);
+				if (_compObj==null) {
+					return;
+				}
+				
+				//initialize values
+				_winHeight = $(window).height();
+				_winWidth = $(window).width();
+				_compHeight = $("#"+_compId).height();
+				_compWidth = $("#"+_compId).width();
+				_compLeft = (_winWidth-_compWidth)/2;
+				_compTop = (_winHeight-_compHeight)/2;
+				
+				//center the component
+				$("#"+_compId).css('position','absolute');
+				$("#"+_compId).css('left',_compLeft+'px');
+				$("#"+_compId).css('top',_compTop+'px');
+			}
+			
+			function setWindowDisplay(windowId) {
+				//declare locals
+				var winComp = null;
+				var currDisplay = null;
+				
+				//get components by their ids
+				//alert("showing " + windowId + " window...");
+				winComp = document.getElementById(windowId);
+				
+				//check if the window exists
+				if (winComp==null) {
+					createWindow(windowId);
+					
+					//get components by their ids
+					winComp = document.getElementById(windowId);
+					
+					//set the component's class
+					if (windowId=="settings") {
+						winComp.className = "windowSettings menuDialog";
+					}
+					else if (windowId=="email") {
+						winComp.className = "windowEmail menuDialog";
+					}
+					else if (windowId=="users") {
+						winComp.className = "windowUsers menuDialog";
+					}
+					
+					//re-apply page style
+					applyPageStyle();
+				}
+				
+				//check the window's display
+				currDisplay = winComp.style.display;
+				
+				//check the display
+				if (currDisplay==null || currDisplay=="") {
+					currDisplay = "none";
+				}
+				
+				//set the display
+				if (currDisplay=="block") {
+					hideComponent(windowId);
+				}
+				else {
+					showComponent(windowId);
+				}
+			}
+			
+			function createWindow(winId) {
+				//declare locals
+				var elem = null;
+				var bodyComp = null;
+				
+				//generate the element
+				elem = document.createElement("div");
+				elem.setAttribute("id",winId);
+				
+				//add the element to the container
+				bodyComp = document.getElementsByTagName("body")[0];
+				bodyComp.appendChild(elem);
+			}
+			
+			function getRandomInt(min, max) {
+				return Math.floor(Math.random() * (max - min + 1)) + min;
+			}
+			
+			function generateRandomString(minLength,maxLength) {
+				var arrLetters = new Array("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","0","1","2","3","4","5","6","7","8","9");
+				var arrSize = arrLetters.length;
+				var strLength = getRandomInt(minLength,maxLength);
+				var letterIndex = -1;
+				var retStr = "";
+				
+				//loop through the length
+				for (var i=0;i<strLength;i++) {
+					//generate a random letter position
+					letterIndex = getRandomInt(0,(arrSize-1));
+					//get the letter by its position
+					retStr += arrLetters[letterIndex];
+				}
+				
+				//return the method's value
+				return retStr;
+			}
+			
+			function getDatasourceDataItem() {
+				//declare locals
+				var data = null;
+				var minStrLength = 10;
+				var maxStrLength = 20;
+				var cpDelimiter = ";";
+				var dataType = "Datasource";
+				var dsName = generateRandomString(minStrLength,maxStrLength);
+				var dsUrl = generateRandomString(minStrLength,maxStrLength);
+				var dsDriver = generateRandomString(minStrLength,maxStrLength);
+				var dsUser = generateRandomString(minStrLength,maxStrLength);
+				var dsPassword = generateRandomString(minStrLength,maxStrLength);
+				var configParamsNames = generateRandomString(minStrLength,maxStrLength) + cpDelimiter + generateRandomString(minStrLength,maxStrLength);
+				var configParamsValues = generateRandomString(minStrLength,maxStrLength) + cpDelimiter + generateRandomString(minStrLength,maxStrLength);
+				var propsNames = new Array("datatype","dsName","dsUrl","dsDriver","dsUser","dsPassword","configParamsNames","configParamsValues");
+				var propsValues = new Array(dataType,dsName,dsUrl,dsDriver,dsUser,dsPassword,configParamsNames,configParamsValues);
+				data = {};
+				
+				//populate the item
+				for (var i=0;i<propsNames.length;i++) {
+					data[propsNames[i]] = propsValues[i];
+				}
+				
+				//return the method's value
+				return data;
+			}
+			
+			function getClassmappingDataItem() {
+				//declare locals
+				var data = null;
+				var minStrLength = 10;
+				var maxStrLength = 20;
+				var dataType = "Classmapping";
+				var mappingName = generateRandomString(minStrLength,maxStrLength);
+				var mappingClass = generateRandomString(minStrLength,maxStrLength);
+				var datasourceName = generateRandomString(minStrLength,maxStrLength);
+				var propsNames = new Array("datatype","mappingName","mappingClass","datasourceName");
+				var propsValues = new Array(dataType,mappingName,mappingClass,datasourceName);
+				data = {};
+				
+				//populate the item
+				for (var i=0;i<propsNames.length;i++) {
+					data[propsNames[i]] = propsValues[i];
+				}
+				
+				//return the method's value
+				return data;
+			}
+			
+			function getConfigparamDataItem() {
+				//declare locals
+				var data = null;
+				var minStrLength = 10;
+				var maxStrLength = 20;
+				var dataType = "Configparam";
+				var paramName = generateRandomString(minStrLength,maxStrLength);
+				var paramValue = generateRandomString(minStrLength,maxStrLength);
+				var propsNames = new Array("datatype","paramName","paramValue");
+				var propsValues = new Array(dataType,paramName,paramValue);
+				data = {};
+				
+				//populate the item
+				for (var i=0;i<propsNames.length;i++) {
+					data[propsNames[i]] = propsValues[i];
+				}
+				
+				//return the method's value
+				return data;
+			}
+			
+			function getRoleDataItem() {
+				//declare locals
+				var data = null;
+				var minStrLength = 10;
+				var maxStrLength = 20;
+				var dataType = "Role";
+				var roleId = getRandomInt(1,100);
+				var roleName = generateRandomString(minStrLength,maxStrLength);
+				var propsNames = new Array("datatype","roleId","roleName");
+				var propsValues = new Array(dataType,roleId,roleName);
+				data = {};
+				
+				//populate the item
+				for (var i=0;i<propsNames.length;i++) {
+					data[propsNames[i]] = propsValues[i];
+				}
+				
+				//return the method's value
+				return data;
+			}
+			
+			function getUserDataItem() {
+				//declare locals
+				var data = null;
+				var minStrLength = 10;
+				var maxStrLength = 20;
+				var dataType = "User";
+				var userName = generateRandomString(minStrLength,maxStrLength);
+				var computerName = generateRandomString(minStrLength,maxStrLength);
+				var roles = generateRandomString(minStrLength,maxStrLength);
+				var theme = generateRandomString(minStrLength,maxStrLength);
+				var language = generateRandomString(minStrLength,maxStrLength);
+				var propsNames = new Array("datatype","userName","computerName","roles","theme","language");
+				var propsValues = new Array(dataType,userName,computerName,roles,theme,language);
+				data = {};
+				
+				//populate the item
+				for (var i=0;i<propsNames.length;i++) {
+					data[propsNames[i]] = propsValues[i];
+				}
+				
+				//return the method's value
+				return data;
+			}
+			
+			function getRandomDataItem() {
+				//declare locals
+				var minValue = 0;
+				var maxValue = 4;
+				var itemIndex = getRandomInt(minValue,maxValue);
+				var dataItem = null;
+				
+				switch (itemIndex) {
+					case 0:
+						dataItem = getDatasourceDataItem();
+						break;
+					case 1:
+						dataItem = getClassmappingDataItem();
+						break;
+					case 2:
+						dataItem = getConfigparamDataItem();
+						break;
+					case 3:
+						dataItem = getRoleDataItem();
+						break;
+					case 4:
+						dataItem = getUserDataItem();
+						break;
+				}
+				
+				//return the method's value
+				return dataItem;
+			}
+			
+			function getRandomData() {
+				//declare locals
+				var data = new Array();
+				var dataSize = 50;
+				var dataItem = null;
+				
+				//loop through the size
+				for (var i=0;i<dataSize;i++) {
+					//generate a random data item
+					dataItem = getRandomDataItem();
+					
+					//create a new object
+					data.push(dataItem);
+				}
+				
+				//return the method's value
+				return data;
+			}
+			
+			function getIconPath(icon) {
+				//declae locals
+				var _iconsPath = "images/";
+				var _iconExt = ".png";
+				var _retIcon = _iconsPath + icon + _iconExt;
+				
+				//return the method's value
+				return _retIcon;
+			}
+			
+			function getDatalist(data) {
+				//declare locals
+				var datalist = new Array();
+				var dataSize = data.length;
+				var dataItem = null;
+				var itemType = null;
+				var itemName = null;
+				var itemIcon = null;
+				var itemTooltip = null;
+				
+				//loop through the size
+				for (var i=0;i<dataSize;i++) {
+					//get the current data item, and its type
+					dataItem = data[i];
+					if (dataItem==null) {
+						continue;
+					}
+					itemType = dataItem["datatype"];
+
+					//check for nulls
+					if (itemType==null || itemType=="undefined" || !itemType.length || itemType.length<1) {
+						continue;
+					}
+					
+					//generate an object for a data list, according to the type
+					switch (itemType.toLowerCase()) {
+						case "datasource":
+							itemName = dataItem["dsName"];
+							itemIcon = getIconPath("datasource");
+							itemTooltip = "This is the tooltip for this "+itemType+" item ["+itemName+"]";
+							break;
+						case "classmapping":
+							itemName = dataItem["mappingName"];
+							itemIcon = getIconPath("classmapping");
+							itemTooltip = "This is the tooltip for this "+itemType+" item ["+itemName+"]";
+							break;
+						case "configparam":
+							itemName = dataItem["paramName"];
+							itemIcon = getIconPath("configparam");
+							itemTooltip = "This is the tooltip for this "+itemType+" item ["+itemName+"]";
+							break;
+						case "role":
+							itemName = dataItem["roleName"];
+							itemIcon = getIconPath("role");
+							itemTooltip = "This is the tooltip for this "+itemType+" item ["+itemName+"]";
+							break;
+						case "user":
+							itemName = dataItem["userName"];
+							itemIcon = getIconPath("user");
+							itemTooltip = "This is the tooltip for this "+itemType+" item ["+itemName+"]";
+							break;
+					}
+					
+					//create a new object
+					datalist.push({label:itemName,icon:itemIcon,tooltip:itemTooltip,itemData:dataItem});
+				}
+				
+				//return the method's value
+				return datalist;
+			}
+			
+			function renderTestData() {
+				//hide the data dialog if its open
+				var dataDialogId = getDataDialogId();
+				hideComponent(dataDialogId);
+				
+				//show a please wait
+				showPleaseWait();
+				
+				//declare locals
+				var data = getRandomData();
+				var datalist = getDatalist(data);
+				var renderTo = getDataListContainerId();
+				var listItemRenderer = datalistRowRenderer;
+				var dataItemRenderer = dataDialogRenderer;
+				var datalistName = getDataListName();
+				
+				renderDataList(datalistName,datalist,renderTo,listItemRenderer,dataItemRenderer);
+				
+				//hide the please wait
+				hidePleaseWait();
+				
+				//re-apply css style
+				applyPageStyle();
+			}
+			
+			function renderDataList(datalistName,datalist,renderTo,listItemRenderer,dataItemRenderer) {
+				//declare locals
+				var container = document.getElementById(renderTo);
+				var datalistItem = null;
+				var _html = "";
+				
+				//chck for nulls
+				if (container==null) {
+					return;
+				}
+				if (datalist==null || !datalist.length || datalist.length<1) {
+					return;
+				}
+				
+				//build the html 
+				_html += '<table id="'+datalistName+'" border="0" style="width:100%;" cellpadding="0" cellspacing="0">';
+				//loop through the datalist
+				for (var i=0;i<datalist.length;i++) {
+					//render the current item
+					datalistItem = datalist[i];
+					_html += listItemRenderer(datalistName,datalistItem,i);
+				}
+				_html == '</table>';
+				
+				//render the html
+				container.innerHTML = _html;
+				
+				//attach events
+				attachDatalistItemEvents(datalistName,datalist,dataItemRenderer);
+			}
+			
+			function datalistRowRenderer(datalistName,datalistItem,rowIndex) {
+				//declare locals
+				var _html = "";
+				var _itemId = null;
+				var _rowClassName = null;
+				var _rowTextClassName = getRowTextClassName();
+				
+				//set the classname
+				if ((rowIndex % 2)==0) {
+					_rowClassName = getEvenRowClassName();
+				}
+				else {
+					_rowClassName = getOddRowClassName();
+				}
+				
+				//get the currrent item's ud
+				_itemId = getDatalistItemId(datalistName,rowIndex);
+				
+				//build the html
+				_html += '<tr id="'+_itemId+'" class="'+_rowClassName+'" title="'+datalistItem.tooltip+'">';
+				_html += '<td>';
+				_html += '<div id="'+_itemId+'RowNumText" class="'+_rowTextClassName+'">';
+				_html += (rowIndex+1);
+				_html += '</div>';
+				_html += '</td>';
+				_html += '<td class="hSpacer">';
+				_html += '<div class="hSpacer"></div>'
+				_html += '</td>';
+				_html += '<td>';
+				_html += '<img src="'+datalistItem.icon+'" border="none" />'
+				_html += '</td>';
+				_html += '<td class="hSpacer">';
+				_html += '<div class="hSpacer"></div>'
+				_html += '</td>';
+				_html += '<td>';
+				_html += '<div id="'+_itemId+'LabelText" class="'+_rowTextClassName+'">';
+				_html += datalistItem.label;
+				_html += '</div>';
+				_html += '</td>';
+				_html += '</tr>';
+				
+				//return the method's value
+				return _html;
+			}
+			
+			function getDialogFields(dataItem) {
+				//declarre locals
+				var _dataFields = new Array();
+				var _itemData = null;
+				var _itemType = null;
+				
+				//check for nulls
+				if (dataItem==null) {
+					return null;
+				}
+				
+				//get the item's original data
+				_itemData = dataItem.itemData;
+				
+				//check for nulls
+				if (_itemData==null) {
+					return null;
+				}
+				
+				//get the item's type
+				_itemType = _itemData["datatype"];
+
+				//check for nulls
+				if (_itemType==null || _itemType=="undefined" || !_itemType.length || _itemType.length<1) {
+					return null;
+				}
+				
+				//generate an object for a data list, according to the type
+				switch (_itemType.toLowerCase()) {
+					case "datasource":
+						_dataFields.push({label:"Datasource Name",type:"text",id:"txtDsName",tooltip:"The data source's name",value:_itemData.dsName,required:true,disabled:true});
+						_dataFields.push({label:"Datasource Url",type:"text",id:"txtDsUrl",tooltip:"The data source's url",value:_itemData.dsUrl,required:true,disabled:false});
+						_dataFields.push({label:"Datasource Driver",type:"text",id:"txtDsDriver",tooltip:"The data source's driver",value:_itemData.dsDriver,required:false,disabled:false});
+						_dataFields.push({label:"Datasource User",type:"text",id:"txtDsUser",tooltip:"The data source's user",value:_itemData.dsUser,required:false,disabled:false});
+						_dataFields.push({label:"Datasource Password",type:"text",id:"txtDsPass",tooltip:"The data source's password",value:_itemData.dsPassword,required:false,disabled:false});
+						_dataFields.push({label:"Datasource Params Names",type:"text",id:"txtDsParamsNames",tooltip:"The data source's ConfigParams names, separated by a semicolon [;]",value:_itemData.configParamsNames,required:false,disabled:false});
+						_dataFields.push({label:"Datasource Params Values",type:"text",id:"txtDsParamsValues",tooltip:"The data source's ConfigParams values, separated by a semicolon [;]",value:_itemData.configParamsValues,required:false,disabled:false});
+						break;
+					case "classmapping":
+						_dataFields.push({label:"Mapping Name",type:"text",id:"txtMappingName",tooltip:"The class mapping's name",value:_itemData.mappingName,required:true,disabled:true});
+						_dataFields.push({label:"Mapping Class",type:"text",id:"txtMappingClass",tooltip:"The class mapping's fully qualified classpath",value:_itemData.mappingClass,required:true,disabled:false});
+						_dataFields.push({label:"Mapping Datasource Name",type:"text",id:"txtMappingDsName",tooltip:"The class mapping's Datasource name",value:_itemData.datasourceName,required:false,disabled:false});
+						break;
+					case "configparam":
+						_dataFields.push({label:"Param Name",type:"text",id:"txtParamName",tooltip:"The config param's name",value:_itemData.paramName,required:true,disabled:true});
+						_dataFields.push({label:"Param Value",type:"text",id:"txtParamValue",tooltip:"The config param's value",value:_itemData.paramValue,required:true,disabled:false});
+						break;
+					case "role":
+						_dataFields.push({label:"Role Id",type:"text",id:"txtRoleId",tooltip:"The role's id",value:_itemData.roleId,required:true,disabled:true});
+						_dataFields.push({label:"Role Name",type:"text",id:"txtRoleName",tooltip:"The role's name",value:_itemData.roleName,required:true,disabled:false});
+						break;
+					case "user":
+						_dataFields.push({label:"User Name",type:"text",id:"txtUserName",tooltip:"The user's name",value:_itemData.userName,required:true,disabled:true});
+						_dataFields.push({label:"Computer Name",type:"text",id:"txtComputerName",tooltip:"The user's computer name",value:_itemData.computerName,required:true,disabled:false});
+						_dataFields.push({label:"Roles",type:"text",id:"txtRoles",tooltip:"A comma separated string of role names",value:_itemData.roles,required:true,disabled:false});
+						_dataFields.push({label:"Theme",type:"text",id:"txtTheme",tooltip:"The user's prefered theme",value:_itemData.theme,required:true,disabled:false});
+						_dataFields.push({label:"Language",type:"text",id:"txtLanguage",tooltip:"The user's prefered language",value:_itemData.language,required:true,disabled:false});
+						break;
+				}
+				
+				//return the method's value
+				return _dataFields;
+			}
+			
+			function dataDialogRenderer(dataItem) {
+				var _containerId = getDataDialogId();
+				var _compObj = document.getElementById(_containerId);
+				var _dialogFields = getDialogFields(dataItem);
+				var _currField = null;
+				var _disabled = null;
+				var _required = null;
+				var _fieldClass = null;
+				var _dialogHeader = null;
+				var _btnCloseId = getDataDialogCloseButtonId();
+				var _btnClearId = getDataDialogClearButtonId();
+				var _requiredMarker = getRequiredMarker();
+				var _html = "";
+				
+				//check for nulls
+				if (_compObj==null) {
+					return;
+				}
+				
+				//set the dialog's header
+				_dialogHeader = dataItem.itemData["datatype"] + " for item=["+dataItem.label+"]";
+				
+				//build the html
+				_html += '<table border="0" style="width:100%;" cellpadding="2" cellspacing="0">';
+				_html += '<tr id="dialogHeaderRow" class="dialogHeaderRow">';
+				_html += '<td>';
+				_html += '<table border="0" style="width:100%;" cellpadding="2" cellspacing="0">';
+				_html += '<tr>';
+				_html += '<td class="dialogHeaderRowIconCol">';
+				_html += '<img src="'+dataItem.icon+'" border="none" />';
+				_html += '</td>';
+				_html += '<td class="dialogHeaderRowTextCol">';
+				_html += '<div id="'+_containerId+'HeaderText" class="dialogHeaderText">'+_dialogHeader+'</div>';
+				_html += '</td>';
+				_html += '<td class="dialogHeaderRowButtonsCol">';
+				_html += '<input id="'+_btnCloseId+'" type="button" value="X" class="button" title="Click here to close this dialog" onclick="hideComponent(\''+_containerId+'\');"/>';
+				_html += '</td>';
+				_html += '</tr>';
+				_html += '</table>';
+				_html += '</td>';
+				_html += '</tr>';		
+				_html += '<tr>';
+				_html += '<td>';
+				_html += '<div id="dialogBody" class="dialogBody">';
+				_html += '<table border="0" style="width:100%;" cellpadding="2" cellspacing="0">';
+				
+				//loop throug the fields
+				for (var i=0;i<_dialogFields.length;i++) {
+					//get the current field
+					_currField = _dialogFields[i];
+					_disabled = _currField["disabled"];
+					_required = _currField["required"];
+					
+					//set defaults if necessary
+					if (_disabled==null || _disabled=="undefined") {
+						_disabled = false;
+					}
+					if (_required==null || _required=="undefined") {
+						_required = false;
+					}
+					if (_disabled) {
+						_disabled = ' disabled="disabled"';
+						_fieldClass = "dialogFieldDisabled";
+					}
+					else {
+						_disabled = '';
+						_fieldClass = "dialogField";
+					}
+					
+					//render the current field
+					_html += '<tr>';
+					_html += '<td class="dialogLabelCol">';
+					_html += '<table border="0" cellpadding="0" cellspacing="0">';
+					_html += '<tr>';
+					_html += '<td>';
+					_html += '<label id="'+_currField.id+'_lbl" for="'+_currField.id+'" class="dialogLabel" title="'+_currField.tooltip+'">';
+					_html += _currField.label;
+					_html += '</label>';
+					if (_required) {
+						_html += '</td>';
+						_html += '<td class="hSpacer">';
+						_html += '<div class="hSpacer"></div>'
+						_html += '</td>';
+						_html += '<td>';
+						_html += '<span id="'+_currField.id+'_ReqMarker" class="requiredLabel" title="this field is required">'+_requiredMarker+'</span>';
+					}
+					_html += '</td>';
+					_html += '</tr>';
+					_html += '</table>';
+					_html += '</td>';
+					_html += '<td class="dialogFieldCol">';
+					if (_currField.type.toLowerCase()=="text") {
+						_html += '<input type="text" id="'+_currField.id+'" class="'+_fieldClass+'" value="'+_currField.value+'"' + _disabled +'/>';
+					}
+					_html += '</td>';
+					_html += '</tr>';
+				}
+				_html += '</table>';
+				_html += '</div>';
+				_html += '</td>';
+				_html += '</tr>';
+				_html += '<tr id="dialogButtonsRow" class="dialogButtonsRow">';
+				_html += '<td>';
+				_html += '<input id="'+_btnClearId+'" type="button" class="button" title="Click here to clear the values" value="Clear" onclick="" />';
+				_html += '</td>';
+				_html += '</tr>';
+				_html += '</table>';
+				
+				//render the html
+				_compObj.innerHTML = _html;
+				
+				//attach events
+				attachDialogClearButtonClickEvent(_btnClearId,_dialogFields);
+				
+				//center the component
+				centerComponent(_containerId);
+				
+				//show the component
+				showComponent(_containerId);
+			}
+			
+			function attachDialogClearButtonClickEvent(buttonId,dialogFields) {
+				//declare locals
+				var _compObj = document.getElementById(buttonId);
+				
+				//check for nulls
+				if (_compObj==null) {
+					return;
+				}
+				
+				//attach the event
+				_compObj.onclick = function() {
+					//declare locals
+					var _currFieldId = null;
+					var _currField = null;
+					
+					//loop throug the fields
+					for (var i=0;i<dialogFields.length;i++) {
+						//get the current field
+						_currFieldId = dialogFields[i].id;
+						
+						//get the current field
+						_currField = document.getElementById(_currFieldId);
+						if (_currField==null) {
+							continue;
+						}
+						
+						//check if the current field is disabled
+						if (dialogFields[i].disabled) {
+							continue;
+						}
+						
+						//clear the current field
+						_currField.value = "";
+					}
+				};
+			}
+			
+			function showPleaseWait() {
+				//declare locals
+				var _compId = getPleaseWaitDialogId();
+				var _compObj = document.getElementById(_compId);
+				var _html = "";
+				
+				//check for nulls
+				if (_compObj==null) {
+					return;
+				}
+				
+				//build the html
+				_html += '<table border="0" style="width:100%;" cellpadding="0" cellspacing="0">';
+				_html += '<tr id="dialogHeaderRowPlsWait" class="dialogHeaderRow" style="height:20px;">';
+				_html += '<td class="pleaseWaitTextCol">';
+				_html += '<div id="dialogHeaderTextPlsWait" class="dialogHeaderText">';
+				_html += 'Please wait...'
+				_html += '</div>';
+				_html += '</td>';
+				_html += '</tr>';
+				_html += '<tr id="dialogBodyRowPlsWait" class="dialogBodyRow" style="height:80px;">';
+				_html += '<td class="pleaseWaitIconCol">';
+				_html += '<img src="images/hourglass.png" border="none" />'
+				_html += '</td>';
+				_html += '</tr>';
+				_html += '</table>';
+				
+				//render the html
+				_compObj.innerHTML = _html;
+				
+				//center the component
+				centerComponent(_compId);
+				
+				//show the component
+				showComponent(_compId);
+			}
+			
+			function hidePleaseWait() {
+				//declare locals
+				var _compId = getPleaseWaitDialogId();
+				
+				//hide the component
+				hideComponent(_compId);
+			}
+			
+			function showComponent(compId) {
+				$("#"+compId).show();
+			}
+			
+			function hideComponent(compId) {
+				$("#"+compId).hide();
+			}
+			
+			function getDatalistItemId(datalistName,rowIndex) {
+				return (datalistName+'Row'+(rowIndex+1));
+			}
+			
+			function attachDatalistItemEvents(datalistName,datalist,dataItemRenderer) {
+				//declare locals
+				var _itemId = null;
+				var _datalistItem = null;
+				var _datalistSize = datalist.length;
+				
+				//loop through the datalist
+				for (var i=0;i<_datalistSize;i++) {
+					//get the current item and its id
+					_itemId = getDatalistItemId(datalistName,i);
+					_datalistItem = datalist[i];
+					
+					//attach and event to the current item
+					attachDatalistItemClickEvent(datalistName,_datalistSize,_itemId,_datalistItem,dataItemRenderer)
+				}
+			}
+			
+			function selectClickedRow(datalistName,datalistSize,itemId) {
+				//declare locals
+				var _newItemClass = getSelectedRowClassName();
+				var _rowTextClass = getRowTextClassName();
+				var _newTextClass = getSelectedRowTextClassName();
+				var _textNode1IdSuffix = "RowNumText";
+				var _textNode2IdSuffix = "LabelText";
+				var _textNode1Comp = null;
+				var _textNode2Comp = null;
+				var _currItemId = null;
+				var _currComp = null;
+				var _rowClassName = null;
+				var _currCompClass = null;
+				
+				//loop through the datalist
+				for (var i=0;i<datalistSize;i++) {
+					//get the current item's id
+					_currItemId = getDatalistItemId(datalistName,i);
+					_currComp = document.getElementById(_currItemId);
+					if (_currComp==null) {
+						continue;
+					}
+					
+					//reset the item's text nodes class
+					_textNode1Comp = document.getElementById(_currItemId+_textNode1IdSuffix);
+					if (_textNode1Comp!=null) {
+						_textNode1Comp.className = _rowTextClass;
+					}
+					_textNode2Comp = document.getElementById(_currItemId+_textNode2IdSuffix);
+					if (_textNode2Comp!=null) {
+						_textNode2Comp.className = _rowTextClass;
+					}
+					
+					//reset the current item's classname
+					if ((i % 2)==0) {
+						_currCompClass = getEvenRowClassName();
+					}
+					else {
+						_currCompClass = getOddRowClassName();
+					}
+					_currComp.className = _currCompClass;
+					
+					//check if it's the clicked item
+					if (_currItemId==itemId) {
+						//add the new class to the current item
+						_currCompClass += " " + _newItemClass;
+						_currComp.className = _currCompClass;
+						if (_textNode1Comp!=null) {
+							_textNode1Comp.className = _newTextClass;
+						}
+						if (_textNode2Comp!=null) {
+							_textNode2Comp.className = _newTextClass;
+						}
+					}
+				}
+			}
+			
+			function attachDatalistItemClickEvent(datalistName,datalistSize,itemId,dataItem,dataItemRenderer) {
+				//declare locals
+				var _compObj = document.getElementById(itemId);
+				
+				//check for nulls
+				if (_compObj==null) {
+					return;
+				}
+				
+				//attach the event
+				_compObj.onclick = function() {
+					//select the clicked row
+					selectClickedRow(datalistName,datalistSize,itemId);
+					
+					//render the clicked item
+					dataItemRenderer(dataItem);
+					
+					//re-apply css style
+					applyPageStyle();
+				};
+			}
+			
+			function startClock() {
+				var _interval = 1000;
+				window.setInterval("updateClock()",_interval);
+			}
+			
+			function updateClock() {
+				//declare locals
+				var _compId = getTimeContainerId();
+				var _compObj = document.getElementById(_compId);
+				var _html = null;
+				
+				//check for nulls
+				if (_compObj==null) {
+					return;
+				}
+				
+				//render the data
+				_html = formatDateTime(new Date(),false);
+				_compObj.innerHTML = _html;
+			}
+			
+			function formatDateTime(datetime,showMillis) {
+				//declare locals
+				var _dateDelimiter = "/";
+				var _timeDelimiter = ":";
+				var _dateTimeDelimiter = "<br/>";
+				var _day,_month,_year,_hour,_minutes,_seconds,_milliseconds = null;
+				var _showMillis = showMillis;
+				var _fomattedDatetime = null;
+				
+				//set defaults if necessary
+				if (_showMillis==null || _showMillis=="undefined") {
+					_showMillis = false;
+				}
+				
+				//populate the date time parts
+				_day = String(datetime.getDate());
+				_month = String(datetime.getMonth()+1);
+				_year = String(datetime.getFullYear());
+				_hour = String(datetime.getHours());
+				_minutes = String(datetime.getMinutes());
+				_seconds = String(datetime.getSeconds());
+				_milliseconds = String(datetime.getMilliseconds());
+				
+				//fix the date time parts if necessary
+				if (_day.length<2) {
+					_day = "0" + _day;
+				}
+				if (_month.length<2) {
+					_month = "0" + _month;
+				}
+				if (_hour.length<2) {
+					_hour = "0" + _hour;
+				}
+				if (_minutes.length<2) {
+					_minutes = "0" + _minutes;
+				}
+				if (_seconds.length<2) {
+					_seconds = "0" + _seconds;
+				}
+				if (_milliseconds.length<2) {
+					_milliseconds = "00" + _milliseconds;
+				}
+				if (_milliseconds.length<3) {
+					_milliseconds = "0" + _milliseconds;
+				}
+				
+				//render the result
+				_fomattedDatetime = _day + _dateDelimiter + _month + _dateDelimiter + _year + _dateTimeDelimiter + _hour + _timeDelimiter + _minutes + _timeDelimiter + _seconds;
+				if (_showMillis) {
+					_fomattedDatetime += _timeDelimiter + _milliseconds;
+				}
+				
+				//return the method's value
+				return _fomattedDatetime;
+			}
+		</script>
+	</head>
+	<body onload="handleOnLoad();">
+		<div id="header1" class="header">
+			<table border="0" style="height:100%;">
+				<tr>
+					<td class="headerContainerMain">
+						<div id="sysContainerLabel" class="headerText">
+							System header title 
+						</div>
+					</td>
+					<td>
+						<div class="headerHSpace"></div>
+					</td>
+					<td class="headerContainer">
+						<input id="btnRenderData" type="button" class="button" value="Render Data" onclick="renderTestData();"/>
+					</td>
+					<td>
+						<div class="headerHSpace"></div>
+					</td>
+					<td class="headerContainer">
+						<div id="languageContainerLabel" class="headerText">
+							Language: 
+						</div>
+					</td>
+					<td class="headerContainer">
+						<div id="languageContainer">
+							<select id="cmbLangs" size="1">
+								<option value="en-us" selected="selected">English</option>
+								<option value="he">Hebrew</option>
+								<option value="es">Spanish</option>
+							</select>
+						</div>
+					</td>
+					<td>
+						<div class="headerHSpace"></div>
+					</td>
+					<td class="headerContainer">
+						<div id="themeContainerLabel" class="headerText">
+							Theme: 
+						</div>
+					</td>
+					<td class="headerContainer">
+						<div id="themeContainer">
+							<select id="cmbThemes" size="1" onchange="changeTheme(this.value);">
+								<option value="black" selected="selected">Black</option>
+								<option value="blue">Blue</option>
+								<option value="green">Green</option>
+								<option value="red">Red</option>
+								<option value="orange">Orange</option>
+								<option value="gray">Gray</option>
+							</select>
+						</div>
+					</td>
+					<td class="headerContainer">
+						<div id="userContainerIcon">
+							<img id="imgSesttings" src="images/settings.gif" class="headerIcon" onclick="setWindowDisplay('settings');" title="Click here to view your allowewd actions"/>
+						</div>
+					</td>
+					<td>
+						<div class="headerHSpace"></div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="contents1" class="contentsContainer">
+			<table border="0" style="width:100%;height:100%;" cellpadding="0" cellspacing="0">
+				<tr>
+					<td class="westpanel">
+						<div id="dataListContainer" class="dataListContainer"></div>
+					</td>
+					<td class="eastpanel">
+						<div id="contents" class="contents">
+							<font color="#ff0000"><b>This is the first line of the contents</b></font>
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/>kjhkljhlhj  kjhkljhlhj   kjhkljhlhj    kjhkljhlhj   kjhkljhlhj  kjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhjkjhkljhlhj
+							<br/><font color="#ff0000"><b>This is the last line of the contents</b></font>
+						</div>
+						<div id="pleaseWaitDialogContainer" class="pleaseWaitDialogContainer"></div>
+						<div id="dialogContainer" class="dialogContainer"></div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="footer1" class="footer">
+			<table border="0" style="height:100%;width:100%;">
+				<tr>
+					<td class="footerContainer">
+						<div id="footerContainerLabel" class="footerText">
+							Footer Text: This is the footer text
+						</div>
+					</td>
+					<td class="footerContainer">
+						<div id="usersContainerIcon">
+							<img id="imgUsers" src="images/users.gif" class="footerIcon" onclick="setWindowDisplay('users');" title="Click here to view who is currently online"/>
+						</div>
+					</td>
+					<td class="footerContainer">
+						<div id="emailContainerIcon">
+							<img id="imgEmail" src="images/email.gif" class="footerIcon" onclick="setWindowDisplay('email');" title="Click here to view your incoming messages"/>
+						</div>
+					</td>
+					<td class="footerContainer">
+						<div id="timeContainer" class="timeContainer"></div>
+					</td>
+					<td>
+						<div class="footerHSpace"></div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>

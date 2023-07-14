@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Components Showcase</title>
+    <link rel="icon" href="https://github.githubassets.com/favicons/favicon.svg" />
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font: 16px Arial;
+        }
+
+        .row {
+            height: 40px;
+            width: 100%;
+            padding-top: 7px;
+        }
+
+        .column {
+            float: left;
+        }
+
+        .columnSeparator {
+            float: left;
+            height: 10px;
+            width: 10px;
+        }
+
+        .uiConfig {
+            float: none;
+            position:absolute;
+        }
+
+        .compDiv {
+            float: none;
+            position:absolute;
+            top:440px;
+        }
+        .testDiv {
+            position: absolute;
+            top: 550px;
+            height: 100px;
+            width: 250px;
+            z-index: 900;
+        }
+
+    </style>
+    <script type="text/javascript" src="assets/scripts/jul-infra.js"></script>
+    <script type="text/javascript" src="assets/scripts/ui-components.js"></script>
+</head>
+<body onload="handlePageOnLoad();">
+
+<h2>Components Showcase</h2>
+
+<div class="row">
+    <div class="column">
+        <select id="cmbComponents" size="1">
+            <option value="" selected="selected"></option>
+            <option value="Button">button</option>
+            <option value="Autocomplete">autocomplete</option>
+        </select>
+    </div>
+    <div class="columnSeparator"></div>
+    <div class="column">
+        <button type="button" title="Click here to create the selected component" onclick="createComp();">Create</button>
+    </div>
+</div>
+<div id="uiConfig" class="uiConfig">
+</div>
+<br/>
+<br/>
+<div class="compDiv">
+    <!--Make sure the form has the autocomplete function switched off:-->
+    <form id="comboForm" autocomplete="off">
+    </form>
+</div>
+<br/>
+<br/>
+<div class="testDiv">
+    <div style="background-color: #9d9d9d"> This div is here to test the component z-index property </div>
+    <input type="text" />
+</div>
+
+<script>
+    function handlePageOnLoad() {
+        //do something on page load
+    }
+
+    function getUiContainerId() {
+        return "uiConfig";
+    }
+
+    function getComponentContainerId() {
+        return "comboForm";
+    }
+
+    /*An array containing all the country names in the world:*/
+    let countries = html5Utils.getCountries();
+    let namedColors = html5Utils.getNamedColors();
+    let symbols = html5Utils.getSymbols();
+    let config = {};
+    let compObj = null;
+
+    function createComp() {
+        //declare locals
+        let selectNode = document.getElementById("cmbComponents");
+
+        if (utils.isString(selectNode.value)) {
+            updateConfig(true);
+        }
+    }
+
+    function updateConfig(createNewComp) {
+        let styleStr = "width:300px;";
+        let styleJson = domUtils.styleString2StyleJson(styleStr);
+        config = {
+            cssTagId: "compCss",
+            renderTo: getComponentContainerId(),
+            style: styleJson,
+            options: { data: listUtils.getList("countries") },
+            multiple: false,
+            onchange: function (value) {
+                if (utils.isString(value)) {
+                    console.debug("selected value is: " + value);
+                }
+                else if (utils.isArray(value)) {
+                    console.debug("selected ["+value.length+"] items. " + utils.array2string(value));
+                }
+            },
+        };
+
+        let selectNode = document.getElementById("cmbComponents");
+        if (createNewComp===true) {
+            eval("compObj = new "+selectNode.value + "(config);");
+            renderConfigUi();
+        }
+        else {
+            if (compObj==null) {
+                eval("compObj = new "+selectNode.value + "(config);");
+                renderConfigUi();
+            }
+        }
+
+        utils.getFromDom(getComponentContainerId()).innerHTML = "";
+        compObj.setConfig(config);
+        //compObj.render();
+    }
+
+    function dataListOnChange(value) {
+        let uiConfigItems = [];
+        let valueFieldNameItem;
+        let tooltipFieldNameItem;
+        let displayFieldsItem;
+
+        console.debug("value=["+value+"]");
+        if (utils.isString(value) && (value.toLowerCase()=="countries" || value.toLowerCase()=="namedcolors")) {
+            valueFieldNameItem = { configPath: "options.valueFieldName", type: "text", label: "Data list value field name: ", tooltip: "select the data list's value field name", defaultValue: "value", };
+            tooltipFieldNameItem = { configPath: "options.tooltipFieldName", type: "text", label: "Data list tooltip field name: ", tooltip: "select the data list's tooltip field name", defaultValue: "label", };
+            displayFieldsItem = { configPath: "options.displayFields", type: "text", label: "Data list display fields: ", tooltip: "a comma separated list of fields names to display", defaultValue: "", };
+        }
+        else {
+            valueFieldNameItem = { configPath: "options.valueFieldName", type: "text", label: "Data list value field name: ", tooltip: "select the data list's value field name", defaultValue: "value", };
+            tooltipFieldNameItem = { configPath: "options.tooltipFieldName", type: "text", label: "Data list tooltip field name: ", tooltip: "select the data list's tooltip field name", defaultValue: "label", };
+            displayFieldsItem = { configPath: "options.displayFields", type: "text", label: "Data list display fields: ", tooltip: "a comma separated list of fields names to display", defaultValue: "label, icon, value, group", };
+        }
+
+        uiConfigItems.push(valueFieldNameItem);
+        uiConfigItems.push(tooltipFieldNameItem);
+        uiConfigItems.push(displayFieldsItem);
+        uiCompsUtils.renderConfigUi(compObj, getUiContainerId(), uiConfigItems);
+    }
+
+    function renderConfigUi() {
+        let uiConfig;
+        uiConfig = compObj.getConfigUi();
+        uiConfig.style = "width: 500px;min-width: 350px;height: 300px;";
+        uiConfig.cssTagId = "compCss";
+        uiConfig.displayAsAutocomplete = false;
+        let dataListItem = { configPath: "options.data", type: "list", label: "Data list: ", tooltip: "select the component's data list",
+            options: [{label: "countries", value: "countries"}, {label: "named colors", value: "namedColors"}, {label: "html symbols", value: "symbols"}],
+            defaultValue: "countries",
+            invokeEval: true,
+            onchange: function (value) {
+                dataListOnChange(value);
+            },
+        };
+
+        uiConfig.items.splice(1, 1, dataListItem);
+        compObj.setConfigUi(uiConfig);
+        uiCompsUtils.renderConfigUi(compObj, getUiContainerId());
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+
+.comboDivOuter {
+    border-right: #2d6d8c 1px;
+    border-top: #2d6d8c 1px;
+    border-left: #2d6d8c 1px;
+    border-bottom: #2d6d8c 1px;
+	empty-cells: show;
+	border-collapse: separate;
+}
+
+.comboDivBorder {
+    border-right: #2d6d8c 1px;
+    border-top: #2d6d8c 1px;
+    border-left: #2d6d8c 1px;
+    border-bottom: #2d6d8c 1px;
+	empty-cells: show;
+	border-collapse: separate;
+}
+
+.comboDiv {
+    border-right: #2d6d8c 1px rigid;
+    border-top: #2d6d8c 1px rigid;
+    border-left: #2d6d8c 1px rigid;
+    border-bottom: #2d6d8c 1px rigid;
+    margin-top: 18px;
+    display: none;
+    position: absolute;
+    background-color: white;
+}
+
+.comboDivOption {
+    padding-left: 2px;
+    padding-bottom: 1px;
+    padding-top: 1px;
+    font-size: 11px;
+    font-family: Verdana;
+    color: #044a6a;
+	background-color: white;
+	cursor: pointer;
+}
+
+.comboDivOptionAlternate {
+    padding-left: 2px;
+    padding-bottom: 1px;
+    padding-top: 1px;
+    font-size: 11px;
+    font-family: Verdana;
+    color: #044a6a;
+	background-color: lightgrey;
+	cursor: pointer;
+}
+
+.comboDivOptionHover {
+    padding-left: 2px;
+    padding-bottom: 1px;
+    padding-top: 1px;
+    font-size: 11px;
+    font-family: Verdana;
+    color: #ffffff;
+	background-color: skyblue;
+	cursor: pointer;
+}
+
+.comboDivOptionText {
+    font-size: 11px;
+    font-family: Verdana;
+    letter-spacing: -1px;
+    color: #044a6a;
+	cursor: pointer;
+}
+
+.comboControl {
+	cursor: pointer;
+}
+
+.comboDivInput {
+    border-right: #2d6d8c 0px inset;
+    border-top: #2d6d8c 1px inset;
+    border-left: #2d6d8c 1px inset;
+    border-bottom: #2d6d8c 1px inset;
+    height: 18px;
+	width: 100%;
+    background-color: #ffffff;
+}
+
+.comboDivTextInput {
+    font-size: 11px;
+    color: grey;
+    font-family: Verdana;
+    letter-spacing: -1px;
+}
+
+.comboDivText {
+    font-size: 11px;
+    color: #044a6a;
+    font-family: Verdana;
+    letter-spacing: -1px;
+}
+
+.comboButton {
+    height: 18px;
+    margin-left: -3px;
+    margin-top: 0px;
+	cursor: pointer;
+}

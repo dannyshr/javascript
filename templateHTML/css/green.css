@@ -1,0 +1,114 @@
+
+.font {
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.fontColor {
+	color: #000000;
+}
+
+.fontHeader {
+	font-family: Arial;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.fontHeaderColor {
+	color: #ffffff;
+}
+
+.fontTextbox {
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.fontTextboxColor {
+	color: #000000;
+}
+
+.fontTextboxDisabled {
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.fontTextboxDisabledColor {
+	color: #ffffff;
+}
+
+.fontRequiredMarker {
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.fontRequiredMarkerColor {
+	color: #ff0000;
+}
+
+.fontButton {
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.fontButtonColor {
+	color: #ffffff;
+}
+
+.borderButton {
+	border-width: 1px;
+	border-style: solid;
+}
+
+.borderButtonColor {
+	border-color: #ffffff;
+}
+
+.bgColorButton {
+	background-color: #008000;
+}
+
+.bgColor {
+	background-color: #ffffff;
+}
+
+.bgColorHeader {
+	background-color: #008000;
+}
+
+.bgColorTextbox {
+	background-color: #ffffff;
+}
+
+.bgColorTextboxDisabled {
+	background-color: #cccccc;
+}
+
+.bgColorMenuDialog {
+	background-color: #adff2f;
+}
+
+.border {
+	border-width: 1px;
+	border-style: solid;
+}
+
+.borderColor {
+	border-color: #008000;
+}
+
+.itemRowOdd {
+	background-color: #ffffff;
+}
+
+.itemRowEven {
+	background-color: #adff2f;
+}
+
+.itemRowSelected {
+	background-color: #008000;
+}

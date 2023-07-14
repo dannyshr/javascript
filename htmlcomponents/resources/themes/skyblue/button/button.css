@@ -1,0 +1,150 @@
+
+* HTML .opaque {
+	filter: alpha(opacity=75);
+}
+
+.opaque {
+	opacity: 0.75;
+}
+
+.buttonBackground {
+	background-image: url('images/background.gif');
+	background-position: center center;
+	background-repeat: repeat-x;
+	background-color: transparent;
+	border: 2px solid #11395e;
+	height: auto;
+	width: auto;
+	cursor: pointer;
+}
+
+.buttonHoverBackground {
+	background-image: url('images/background_hover.gif');
+	background-position: center center;
+	background-repeat: repeat-x;
+	background-color: transparent;
+	border: 2px solid #eac310;
+	height: auto;
+	width: auto;
+	cursor: pointer;
+}
+
+.buttonDisabledBackground {
+	background-image: url('images/background_dis.gif');
+	/*background-position: center center;*/
+	background-repeat: repeat-x;
+	background-color: transparent;
+	border: 2px solid #000000;
+	height: auto;
+	width: auto;
+	cursor: pointer;
+}
+
+.button {
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.buttonHover {
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.buttonDisabled {
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.buttonText {
+	color: #336666;
+	font-family: verdana;
+	font-size: 12;
+	font-weight: bold;
+}
+
+.buttonTextDisabled {
+	color: white;
+	font-family: verdana;
+	font-size: 12;
+	font-weight: bold;
+}
+
+.buttonTextHover {
+	color: #336666;
+	/*color: #ff9900;*/
+	font-family: verdana;
+	font-size: 12;
+	font-weight: bold;
+}
+
+* HTML .imagePositionBottom {
+	background-position: bottom center;
+	text-align: center;
+	vertical-align: top;
+	padding-bottom: 15px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
+* HTML .imagePositionTop {
+	background-position: top center;
+	text-align: center;
+	vertical-align: bottom;
+	padding-top: 15px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
+* HTML .imagePositionRight {
+	background-position: center right;
+	text-align: left;
+	vertical-align: middle;
+	padding-right: 0px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
+* HTML .imagePositionLeft {
+	background-position: center left;
+	text-align: right;
+	vertical-align: middle;
+	padding-left: 0px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
+.imagePositionBottom {
+	background-position: bottom center;
+	text-align: center;
+	vertical-align: top;
+	padding-bottom: 15px;
+}
+
+.imagePositionTop {
+	background-position: top center;
+	text-align: center;
+	vertical-align: bottom;
+	padding-top: 15px;
+}
+
+.imagePositionRight {
+	background-position: center right;
+	text-align: left;
+	vertical-align: middle;
+	padding-right: 20px;
+}
+
+.imagePositionLeft {
+	background-position: center left;
+	text-align: right;
+	vertical-align: middle;
+	padding-left: 20px;
+}

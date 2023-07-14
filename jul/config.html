@@ -1,0 +1,253 @@
+<!doctype html>
+<html>
+	<head>
+		<title>test.html</title>
+		<link rel="icon" href="https://github.githubassets.com/favicons/favicon.svg" />
+		<style type="text/css">
+			body {
+			    height: 100%;
+				width: 100%;
+				overflow: hidden;
+			}
+
+			.grid {
+				border: 1px solid transparent;
+			    height: 100%;
+				width: 100%;
+			}
+
+			.gridRow {
+			    height: 25px;
+				width: 100%;
+				float: none;
+			}
+
+			.gridRowDelimiter {
+			    height: 5px;
+				width: 100%;
+				float: none;
+			}
+
+			.gridCol {
+			    height: 100%;
+				width: 200px;
+				float: left;
+				border: 1px solid transparent;
+			}
+
+			.gridColDelimiter {
+			    height: 100%;
+				width: 5px;
+				float: left;
+			}
+
+			.buttonConfig {
+				cursor: pointer;
+			}
+			
+			.dropTarget {
+				width: 350px;
+				height: 250px;
+				overflow: hidden;
+				border: 2px solid #0000ff;
+			}
+			
+			.compContainer {
+				width: 350px;
+				height: 250px;
+				overflow: hidden;
+				border: 2px solid #ff0000;
+			}
+
+			.bodyRow {
+				width: 100%;
+				height: 25px;
+				white-space: nowrap;
+				padding-left: 5px;
+				padding-right: 5px;
+			}
+		</style>
+		<script type="text/javascript" src="assets/scripts/jul-infra.js"></script>
+		<script type="text/javascript" src="assets/scripts/ui-components.js"></script>
+	</head>
+	<body>
+		<div class="grid">
+			<div class="gridRow">
+				<div class="gridCol">
+					<div>
+						<label for="cmbComponents">Component: </label>
+						<select id="cmbComponents" size="1">
+							<option value="" selected="selected"></option>
+							<option value="Button">button</option>
+							<option value="Panel">panel</option>
+							<option value="Autocomplete">autocomplete</option>
+						</select>
+					</div>
+				</div>
+				<div class="gridColDelimiter"></div>
+				<div class="gridCol">
+					<input type="button" class="btnCreate" value="Create" title="click here to create the component" onclick="createComp();" />
+				</div>
+			</div>
+			<div class="gridRowDelimiter"></div>
+			<div class="gridRow">
+				<div>
+					<label for="cmbElemId">Component Id: </label>
+					<select id="cmbElemId" size="1">
+						<option value="" selected="selected"></option>
+					</select>
+				</div>
+			</div>
+			<div class="gridRowDelimiter"></div>
+			<div class="gridRow">
+				<div>
+					<label for="txtConfigParamName">Config param name: </label>
+					<input type="text" id="txtConfigParamName" value="" />
+				</div>
+			</div>
+			<div class="gridRowDelimiter"></div>
+			<div class="gridRow">
+				<div>
+					<label for="txtConfigParamValue">Config param value: </label>
+					<input type="text" id="txtConfigParamValue" value="" />
+				</div>
+			</div>
+			<div class="gridRowDelimiter"></div>
+			<div class="gridRow">
+				<input type="button" class="buttonConfig" value="Update" title="click here to update the component" onclick="updateComp();" />
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			let arrComps = [];
+
+			function createComp() {
+				let compType = document.getElementById("cmbComponents").value;
+				let buttonId = utils.generateId("button", "button");
+				let panelId = utils.generateId("panel","panel");
+				let defaultButtonStyle = "width: 80px;position: relative;";
+				let defaultPanelStyle = "width: 250px;height: 150px;border: none;position: relative;";
+				let styleText = "";
+				let newConfig = {"cssTagId": "compStyle", "renderTo": "body", "style": ""};
+				let newComp = null;
+				let compId;
+
+				//check for valid values
+				if (utils.isEmpty(compType)) {
+					alert("compType is empty or null !!");
+					return;
+				}
+
+				//check the component's type
+				switch (compType.toLowerCase()) {
+					case "autocomplete":
+						newConfig.options = {data: listUtils.getList("countries")};
+						newComp = new Autocomplete(newConfig);
+						break;
+					case "button":
+						newConfig["text"] = buttonId;
+						newConfig.style = defaultButtonStyle;
+						newComp = new Button(newConfig);
+						break;
+					case "panel":
+						newConfig["header"] = {};
+						newConfig.header["text"] = panelId;
+						newConfig.header["style"] = "background-color:#ffffff";
+						newConfig.style = defaultPanelStyle;
+						newConfig["body"] = {};
+						newConfig.body["style"] = "background-color:#ffffff";
+						newComp = new Panel(newConfig);
+						break;
+					default:
+						break;
+				}
+
+				//check for valid values
+				if (newComp!=null) {
+					try {
+						//render the component
+						//newComp.render();
+						compId = newComp.getId();
+						//save the component to the global array
+						arrComps.push(newComp);
+						//add a new option to the elements ids select
+						selectUtils.addOption("cmbElemId", compId, compId);
+						document.getElementById("cmbElemId").value = compId;
+					}
+					catch(err) {
+						console.error("createComp(): " + err);
+					}
+				}
+			}
+
+			function onclickHandler() {
+				let paramValueId = "txtConfigParamValue";
+				let paramValueValue = document.getElementById(paramValueId).value;
+				console.debug("you entered: " + paramValueValue);
+			}
+
+			function updateComp() {
+				let compId = document.getElementById("cmbElemId").value;
+				let paramNameId = "txtConfigParamName";
+				let paramValueId = "txtConfigParamValue";
+				let paramNameValue = document.getElementById(paramNameId).value;
+				let paramValueValue = document.getElementById(paramValueId).value;
+				let uiComp = null;
+				let currComp;
+				let found = false;
+
+				//check for valid values
+				if (utils.isEmpty(compId)) {
+					alert("Component id is empty or null !!");
+					return;
+				}
+				if (!utils.isInDom(compId)) {
+					alert("Component id=["+compId+"] is NOT in DOM !!");
+					return;
+				}
+				if (utils.isEmpty(paramNameValue)) {
+					alert("Config param name is empty or null !!");
+					return;
+				}
+				
+				//create a json from the param nmae and value
+				let config = jsonUtils.expression2Json(null, paramNameValue, paramValueValue);
+				console.debug("config=[" + JSON.stringify(config) + "]");
+				
+				if (paramNameValue=="body.items" || paramNameValue=="body.children") {
+					if (isNaN(paramValueValue)) {
+						alert("Config param value must be a valid positive number for param name=["+paramNameValue+"] !!");
+						return;
+					}
+					let bodyItems = [];
+					let item = { "compType": "row", "class": "bodyRow","text": "This is an example long row body item &#9728;", "tooltip": "This is an example long row body item" };
+					for (let i=0; i<parseInt(paramValueValue); i++) {
+						bodyItems.push(item);
+					}
+					config["body"]["children"] = bodyItems;
+				}
+				
+				//get the component's config by its id
+				for (let i=0; i<arrComps.length; i++) {
+					//get the current item
+					currComp = arrComps[i];
+
+					if (currComp.getId()==compId) {
+						uiComp = currComp;
+						found = true;
+						break;
+					}
+				}
+
+				//check the found flag
+				if (!found) {
+					alert("Configuration for component id=["+compId+"] was NOT found !!");
+					return;
+				}
+
+				//update te component's configuration
+				uiComp.setConfig(config);
+			}
+		</script>
+	</body>
+</html>

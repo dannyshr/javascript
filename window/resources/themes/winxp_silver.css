@@ -1,0 +1,295 @@
+/* @C Danny Shraga 2009 */
+
+.page {
+	width: 99%;
+	height: 99%;
+}
+
+.fullWidthPanel {
+	width: 100%;
+}
+
+.window {
+	border-bottom: 3px solid #aaaaaa;
+	border-top: 0px solid #aaaaaa;
+	border-left: 0px solid #aaaaaa;
+	border-right: 0px solid #aaaaaa;
+	background-color: #ffffff;
+}
+
+.window-container {
+	width: 100%;
+}
+
+.window-header {
+	background-image: url("winxp_silver/window/window-header-background.jpg");
+	background-repeat: repeat-x;
+	height: 30px;
+}
+
+.window-header-container {
+}
+.window-header-handle {
+	width: 100%;
+	height: 30px;
+}
+
+.window-header-left-container {
+	width: 4px;
+}
+
+.window-header-left {
+	background-image: url("winxp_silver/window/window-header-left.jpg");
+	background-repeat: no-repeat;
+	height: 30px;
+	vertical-align: top;
+}
+
+.window-header-right-container {
+	width: 4px;
+}
+
+.window-header-right {
+	background-image: url("winxp_silver/window/window-header-right.jpg");
+	background-repeat: no-repeat;
+	margin-right: -1px;
+	width: 6px;
+	height: 30px;
+	vertical-align: top;
+}
+
+.window-header-icon {
+	text-align: left;
+	padding-left: 5px;
+}
+
+.window-header-title {
+	color: #000000;
+	font-family: Arial;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: bold;
+	text-decoration: none;
+	text-align: left;
+	padding-left: 5px;
+}
+
+.window-header-buttons {
+	vertical-align: middle;
+	text-align: right;
+	padding-right: 5px;
+}
+
+.window-header-button-min {
+	background-image: url("winxp_silver/window/window-header-button-min.jpg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: transparent;
+	border: 0px solid transparent;
+	cursor: pointer;
+	width: 21px;
+	height: 21px;
+}
+
+.window-header-button-min-hover {
+	background-image: url("winxp_silver/window/window-header-button-min-hover.jpg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: transparent;
+	border: 0px solid transparent;
+	cursor: pointer;
+	width: 21px;
+	height: 21px;
+}
+
+.window-header-button-min-inactive {
+	background-image: url("winxp_silver/window/window-header-button-min-inactive.jpg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: transparent;
+	border: 0px solid transparent;
+	cursor: pointer;
+	width: 21px;
+	height: 21px;
+}
+
+.window-header-button-max {
+	background-image: url("winxp_silver/window/window-header-button-max.jpg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: transparent;
+	border: 0px solid transparent;
+	cursor: pointer;
+	width: 21px;
+	height: 21px;
+}
+
+.window-header-button-max-hover {
+	background-image: url("winxp_silver/window/window-header-button-max-hover.jpg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: transparent;
+	border: 0px solid transparent;
+	cursor: pointer;
+	width: 21px;
+	height: 21px;
+}
+
+.window-header-button-max-inactive {
+	background-image: url("winxp_silver/window/window-header-button-max-inactive.jpg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: transparent;
+	border: 0px solid transparent;
+	cursor: pointer;
+	width: 21px;
+	height: 21px;
+}
+
+.window-header-button-close {
+	background-image: url("winxp_silver/window/window-header-button-close.jpg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: transparent;
+	border: 0px solid transparent;
+	cursor: pointer;
+	width: 21px;
+	height: 21px;
+}
+
+.window-header-button-close-hover {
+	background-image: url("winxp_silver/window/window-header-button-close-hover.jpg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: transparent;
+	border: 0px solid transparent;
+	cursor: pointer;
+	width: 21px;
+	height: 21px;
+}
+
+.window-header-button-close-inactive {
+	background-image: url("winxp_silver/window/window-header-button-close-inactive.jpg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: transparent;
+	border: 0px solid transparent;
+	cursor: pointer;
+	width: 21px;
+	height: 21px;
+}
+
+.window-content {
+	border-bottom: 0px solid #aaaaaa;
+	border-top: 0px solid #aaaaaa;
+	border-left: 3px solid #aaaaaa;
+	border-right: 3px solid #aaaaaa;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.window-content-container {
+	text-align: center;
+	vertical-align: middle;
+	width: 100%;
+}
+
+.component-icon {
+	padding-left: 5px;
+}
+
+.component-label {
+	color: #000000;
+	font-family: Arial;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: normal;
+	text-decoration: none;
+	padding-left: 5px;
+	text-align: left;
+}
+
+.component-field {
+	padding-right: 5px;
+}
+
+.window-footer {
+	text-align: center;
+}
+
+.window-footer-container {
+	text-align: center;
+	width: 100%;
+}
+
+.spacer-vertical {
+	height: 5px;
+}
+
+.spacer-horizontal {
+	width: 5px;
+}
+
+.statusBar {
+	background-image: url("winxp_silver/window/status-bar-background.jpg");
+	background-repeat: repeat-x;
+	background-position: center center;
+	background-color: transparent;
+	border: 0px solid transparent;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	height: 30px;
+}
+
+.minimized-window {
+	display: none;
+	width: 60px;
+	height: 28px;
+	border-bottom: 1px solid #cccccc;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+}
+
+/* 
+ * Splitter bar style; the .active class is added when the
+ * mouse is over the splitter or the splitter is focused
+ * via the keyboard taborder or an accessKey. 
+ */
+.vsplitbar {
+	width: 6px;
+	background-color: #aca;
+	background-image: url("winxp_silver/splitter/vgrabber.gif"); 
+	background-repeat: no-repeat;
+	background-position: center;
+	cursor: col-resize;
+}
+
+.vsplitbar.active {
+	background-color: #da8;
+	background-image: url("winxp_silver/splitter/vgrabber.gif"); 
+	background-repeat: no-repeat;
+	background-position: center;
+	cursor: col-resize;
+	opacity: 0.7;
+}
+
+.hsplitbar {
+	height: 6px;
+	background-color: #aca;
+	background-image: url("winxp_silver/splitter/hgrabber.gif"); 
+	background-repeat: no-repeat;
+	background-position: center;
+	cursor: row-resize;
+}
+
+.hsplitbar.active {
+	background-color: #da8;
+	background-image: url("winxp_silver/splitter/hgrabber.gif"); 
+	background-repeat: no-repeat;
+	background-position: center;
+	cursor: row-resize;
+	opacity: 0.7;
+}

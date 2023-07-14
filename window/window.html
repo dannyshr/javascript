@@ -1,0 +1,379 @@
+<html>
+	<head>
+		<title>Webolution - Login</title>
+		<link type="text/css" href="resources/themes/shared.css" rel="stylesheet" >
+		<link id="themes" type="text/css" href="resources/themes/winxp_blue.css" rel="stylesheet" >
+		<link type="text/css" href="resources/css/login.css" rel="stylesheet" >
+	</head>
+	<body>
+		<form class="page" action="">
+			<table border="1">
+				<tr>
+					<th style="color:white">
+						Theme
+					</th>
+					<td>
+						<select id="cmbThemes" size="1" value="winxp_blue" onchange="changeTheme();">
+							<option value="winxp_blue" selected>Win XP Blue</option>
+							<option value="winxp_silver">Win XP Silver</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th style="color:white">
+						Moveable
+					</th>
+					<th style="color:white">
+						Restrict Movement
+					</th>
+					<th style="color:white">
+						Use Helper
+					</th>
+					<th style="color:white">
+						Resizeable
+					</th>
+					<th style="color:white">
+					</th>
+				</tr>
+				<tr>
+					<td>
+						<input id="cbMoveable0" type="checkbox" onclick="changeMoveable(this.id,this.checked);">
+					</td>
+					<td>
+						<select id="cmbRestrictMove0" size="1" value="none" onchange="changeMoveableContainer(this.id,this.value);">
+							<option value="none" selected>None</option>
+							<option value="document">Document</option>
+							<option value="parent">Parent</option>
+						</select>
+					</td>
+					<td>
+						<input id="cbMoveableHelper0" type="checkbox" onclick="changeMoveableHelper(this.id,this.checked);">
+					</td>
+					<td>
+						<input type="checkbox" id="cbResizeable0" onclick="changeResizeable(this.id,this.checked);">
+					</td>
+					<td>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" id="cbMoveable1" onclick="changeMoveable(this.id,this.checked);">
+					</td>
+					<td>
+						<select id="cmbRestrictMove1" size="1" value="none" onchange="changeMoveableContainer(this.id,this.value);">
+							<option value="none" selected>None</option>
+							<option value="document">Document</option>
+							<option value="parent">Parent</option>
+						</select>
+					</td>
+					<td>
+						<input id="cbMoveableHelper1" type="checkbox" onclick="changeMoveableHelper(this.id,this.checked);">
+					</td>
+					<td>
+						<input type="checkbox" id="cbResizeable1" onclick="changeResizeable(this.id,this.checked);">
+					</td>
+					<td>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" id="cbMoveable2" onclick="changeMoveable(this.id,this.checked);">
+					</td>
+					<td>
+						<select id="cmbRestrictMove2" size="1" value="none" onchange="changeMoveableContainer(this.id,this.value);">
+							<option value="none" selected>None</option>
+							<option value="document">Document</option>
+							<option value="parent">Parent</option>
+						</select>
+					</td>
+					<td>
+						<input id="cbMoveableHelper2" type="checkbox" onclick="changeMoveableHelper(this.id,this.checked);">
+					</td>
+					<td>
+						<input type="checkbox" id="cbResizeable2" onclick="changeResizeable(this.id,this.checked);">
+					</td>
+					<td>
+					</td>
+				</tr>
+			</table>
+			
+			<div class="login-container" >
+					<div class="login-window" id="login0" 
+						state="expanded" 
+						groupSelector=".login-window" 
+						moveable="false" 
+						moveableContainer="none" 
+						moveableHelper="false" 
+						resizeable="true" 
+						>
+						<table class="window-panel" border="0" cellpadding="0" cellspacing="0">
+							<tr>
+								<td class="window-header-cell">
+									<div class="window-header">
+										<table class="window-header-panel" border="0" cellpadding="0" cellspacing="0">
+											<tr>
+												<td class="window-header-left-cell"><div class="window-header-left"></div></td>
+												<td class="window-header-handle-cell">
+													<div class="window-header-handle">
+														<table class="window-header-handle-panel" border="0" cellspacing="0" cellpadding="0">
+															<tr>
+																<td class="window-header-icon">
+																	<div class="login-header-icon"></div>
+																</td>
+																<td class="window-header-title">
+																	Webolution - Login0
+																</td>
+															</tr>
+														</table>
+													</div>
+												</td>
+												<td class="window-header-buttons">
+													<img src="" class="window-header-button-min" forWin="login" styleClass="window-header-button-min" styleClassHover="window-header-button-min-hover" styleClassInactive="window-header-button-min-inactive" title="Click here to collapse/expand this window" >
+													<img src="" class="window-header-button-max" forWin="login" styleClass="window-header-button-max" styleClassHover="window-header-button-max-hover" styleClassInactive="window-header-button-max-inactive" title="Click here to maximize this window" >
+													<img src="" class="window-header-button-close" forWin="login" styleClass="window-header-button-close" styleClassHover="window-header-button-close-hover" styleClassInactive="window-header-button-close-inactive" title="Click here to close this window" >
+												</td>
+												<td class="window-header-right-cell"><div class="window-header-right"></div></td>
+											</tr>
+										</table>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="window-content-cell" colspan="3">
+									<div class="login-window-content">
+										<div class="window-content">
+											<table class="window-content-panel" border="0" cellspacing="0" cellpadding="0">
+												<tr>
+													<td>
+														<div class="spacer-vertical"></div>
+													</td>
+												</tr>
+												<tr>
+													<td class="component-icon">
+														<div class="icon-help" title="Click here for help"></div>
+													</td>
+													<td class="component-label">
+														<label for="txtUser">User Name</label>
+													</td>
+													<td class="component-field">
+														<input type="text" id="txtUser" name="txtUser" maxlength="15" size="20" >
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<div class="spacer-vertical"></div>
+													</td>
+												</tr>
+												<tr>
+													<td class="component-icon">
+														<div class="icon-help" title="Click here for help"></div>
+													</td>
+													<td class="component-label">
+														<label for="txtPass">Password</label>
+													</td>
+													<td class="component-field">
+														<input type="password" id="txtPass" name="txtPass" maxlength="15" size="20" >
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<div class="spacer-vertical"></div>
+													</td>
+												</tr>
+												<tr>
+													<td class="window-footer-cell" colspan="3">
+														<table class="window-footer-panel" border="0" cellspacing="0" cellpadding="0">
+															<tr>
+																<td class="login-button-login-container">
+																	<button class="login-button login-button-login" type="button" title="Click here to login" accesskey="l">Login</button>
+																</td>
+																<td class="login-button-cancel-container">
+																	<button class="login-button login-button-cancel" type="reset" title="Click here to clear the details" accesskey="c">Clear</button>
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<div class="spacer-vertical"></div>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				<br/>
+				<br/>
+				<div class="login-window">
+					<div class="window" id="login1" state="expanded" moveable="true" resizeable="true">
+						<table class="window-panel" border="0" cellpadding="0" cellspacing="0">
+							<tr>
+								<td class="window-header-cell">
+									<div class="window-header">
+										<table class="window-header-panel" border="0" cellpadding="0" cellspacing="0">
+											<tr>
+												<td class="window-header-left-cell"><div class="window-header-left"></div></td>
+												<td class="window-header-handle-cell">
+													<div class="window-header-handle-disabled">
+														<table class="window-header-handle-panel" border="0" cellspacing="0" cellpadding="0">
+															<tr>
+																<td class="window-header-icon">
+																	<div class="login-header-icon"></div>
+																</td>
+																<td class="window-header-title">
+																	Webolution - Login1
+																</td>
+															</tr>
+														</table>
+													</div>
+												</td>
+												<td class="window-header-buttons">
+													<img src="" class="window-header-button-min" forWin="login" styleClass="window-header-button-min" styleClassHover="window-header-button-min-hover" styleClassInactive="window-header-button-min-inactive" title="Click here to collapse/expand this window" >
+													<img src="" class="window-header-button-max" forWin="login" styleClass="window-header-button-max" styleClassHover="window-header-button-max-hover" styleClassInactive="window-header-button-max-inactive" title="Click here to maximize this window" >
+													<img src="" class="window-header-button-close" forWin="login" styleClass="window-header-button-close" styleClassHover="window-header-button-close-hover" styleClassInactive="window-header-button-close-inactive" title="Click here to close this window" >
+												</td>
+												<td class="window-header-right-cell"><div class="window-header-right"></div></td>
+											</tr>
+										</table>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="window-content-cell" colspan="3">
+									<div class="login-window-content">
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<br/>
+				<br/>
+				<div class="login-window">
+					<div class="window" id="login2" state="expanded" moveable="true" resizeable="true">
+						<table class="window-panel" border="0" cellpadding="0" cellspacing="0">
+							<tr>
+								<td class="window-header-cell">
+									<div class="window-header">
+										<table class="window-header-panel" border="0" cellpadding="0" cellspacing="0">
+											<tr>
+												<td class="window-header-left-cell"><div class="window-header-left"></div></td>
+												<td class="window-header-handle-cell">
+													<div class="window-header-handle-disabled">
+														<table class="window-header-handle-panel" border="0" cellspacing="0" cellpadding="0">
+															<tr>
+																<td class="window-header-icon">
+																	<div class="login-header-icon"></div>
+																</td>
+																<td class="window-header-title">
+																	Webolution - Login2
+																</td>
+															</tr>
+														</table>
+													</div>
+												</td>
+												<td class="window-header-buttons">
+													<img src="" class="window-header-button-min" forWin="login" styleClass="window-header-button-min" styleClassHover="window-header-button-min-hover" styleClassInactive="window-header-button-min-inactive" title="Click here to collapse/expand this window" >
+													<img src="" class="window-header-button-max" forWin="login" styleClass="window-header-button-max" styleClassHover="window-header-button-max-hover" styleClassInactive="window-header-button-max-inactive" title="Click here to maximize this window" >
+													<img src="" class="window-header-button-close" forWin="login" styleClass="window-header-button-close" styleClassHover="window-header-button-close-hover" styleClassInactive="window-header-button-close-inactive" title="Click here to close this window" >
+												</td>
+												<td class="window-header-right-cell"><div class="window-header-right"></div></td>
+											</tr>
+										</table>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="window-content-cell" colspan="3">
+									<div class="login-window-content">
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			
+			<div class="statusBar">
+				<div class="minimized-window" forWin="login"></div>
+			</div>
+			
+			<script type="text/javascript" src="../../_shared/scripts/jquery/jquery.js"></script>
+			<script type="text/javascript" src="../../_shared/scripts/jquery/jquery.ui.full.js"></script>
+			<script type="text/javascript" src="resources/scripts/window.js"></script>
+			<script type="text/javascript" >
+				var arrIds = new Array("login0","login1","login2");
+				var arrWins = new Array();
+				var arrComps = new Array();
+				
+				//initialize all windows and jQuery components
+				for (var j=0;j<arrIds.length;j++) {
+					arrWins[j] = new Window(arrIds[j]);
+					arrWins[j].initWindow();
+					arrComps[j] = arrWins[j].getJqueryComp();
+				}
+				
+				function changeTheme() {
+					//change theme
+					var cmbThemes = document.getElementById("cmbThemes");
+					var link = document.getElementById("themes");
+					
+					link.href = "resources/themes/"+cmbThemes.value+".css";
+				}
+				
+				function changeMoveable(_id,_newVal) {
+					var index = parseInt(_id.charAt(_id.length-1));
+					var newVal = "false";
+					if (_newVal) {
+						newVal = "true";
+					}
+					else {
+						newVal = "false";
+					}
+					
+					arrComps[index].attr("moveable",newVal);
+					arrWins[index].resetMoveable();
+				}
+				
+				function changeMoveableContainer(_id,_newVal) {
+					var index = parseInt(_id.charAt(_id.length-1));
+					
+					arrComps[index].attr("moveableContainer",_newVal);
+					arrWins[index].resetMoveable();
+				}
+				
+				function changeMoveableHelper(_id,_newVal) {
+					var index = parseInt(_id.charAt(_id.length-1));
+					var newVal = "false";
+					if (_newVal) {
+						newVal = "true";
+					}
+					else {
+						newVal = "false";
+					}
+					
+					arrComps[index].attr("moveableHelper",newVal);
+					arrWins[index].resetMoveable();
+				}
+				
+				function changeResizeable(_id,_newVal) {
+					var index = parseInt(_id.charAt(_id.length-1));
+					var newVal = "false";
+					if (_newVal) {
+						newVal = "true";
+					}
+					else {
+						newVal = "false";
+					}
+					
+					arrComps[index].attr("resizeable",newVal);
+					arrWins[index].resetResizeable();
+				}
+			</script>
+		</form>
+	</body>
+</html>

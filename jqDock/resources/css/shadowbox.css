@@ -1,0 +1,90 @@
+#shadowbox_overlay {
+	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; Z-INDEX: 998; LEFT: 0px; VISIBILITY: hidden; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; POSITION: absolute; TOP: 0px
+}
+#shadowbox_container {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; Z-INDEX: 999; LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 100%; PADDING-TOP: 0px; POSITION: fixed; TOP: 0px; HEIGHT: 0px; TEXT-ALIGN: center
+}
+#shadowbox {
+	DISPLAY: none; VISIBILITY: hidden; MARGIN: 0px auto; COLOR: #888; FONT-FAMILY: 'Lucida Grande', Tahoma, sans-serif; POSITION: relative; TEXT-ALIGN: left
+}
+#shadowbox_title {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; OVERFLOW: hidden; PADDING-TOP: 0px; HEIGHT: 30px
+}
+#shadowbox_title_inner {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 10px; FONT-SIZE: 16px; PADDING-BOTTOM: 4px; LINE-HEIGHT: 16px; PADDING-TOP: 10px; WHITE-SPACE: nowrap; HEIGHT: 16px; BACKGROUND-COLOR: #fff
+}
+#shadowbox_body {
+	BORDER-RIGHT: #fff 10px solid; PADDING-RIGHT: 0px; BORDER-TOP: #fff 10px solid; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; OVERFLOW: hidden; BORDER-LEFT: #fff 10px solid; PADDING-TOP: 0px; BORDER-BOTTOM: #fff 10px solid; POSITION: relative; BACKGROUND-COLOR: #eee
+}
+#shadowbox_body_inner {
+	OVERFLOW: hidden; POSITION: relative
+}
+#shadowbox_loading {
+	LEFT: 0px; WIDTH: 100%; POSITION: absolute; TOP: 0px; HEIGHT: 10000px; BACKGROUND-COLOR: #ccc
+}
+#shadowbox_loading IMG {
+	FLOAT: left; MARGIN: 10px 10px 0px
+}
+#shadowbox_loading SPAN {
+	MARGIN-TOP: 16px; FONT-SIZE: 10px; FLOAT: left
+}
+#shadowbox_loading SPAN A {
+	COLOR: #fff
+}
+#shadowbox_loading SPAN A:link {
+	COLOR: #fff
+}
+#shadowbox_loading SPAN A:visited {
+	COLOR: #fff
+}
+.html#shadowbox_content {
+	OVERFLOW: auto; WIDTH: 100%; HEIGHT: 100%
+}
+#shadowbox_toolbar {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; OVERFLOW: hidden; PADDING-TOP: 0px; HEIGHT: 26px
+}
+#shadowbox_toolbar_inner {
+	HEIGHT: 26px; BACKGROUND-COLOR: #fff
+}
+#shadowbox_toolbar_inner DIV {
+	FONT-SIZE: 10px; LINE-HEIGHT: 10px; PADDING-TOP: 6px; HEIGHT: 10px
+}
+#shadowbox_toolbar_inner DIV SPAN.shortcut {
+	FONT-WEIGHT: bold; TEXT-DECORATION: underline
+}
+#shadowbox_toolbar_inner DIV A {
+	COLOR: #888; TEXT-DECORATION: none
+}
+#shadowbox_nav_close {
+	PADDING-RIGHT: 10px; FLOAT: right
+}
+#shadowbox_nav_previous {
+	PADDING-RIGHT: 10px; FLOAT: right
+}
+#shadowbox_nav_next {
+	PADDING-RIGHT: 10px; FLOAT: right
+}
+#shadowbox_counter {
+	PADDING-LEFT: 10px; FLOAT: left
+}
+#shadowbox_counter A {
+	PADDING-RIGHT: 4px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+}
+#shadowbox_counter A.shadowbox_counter_current {
+	FONT-WEIGHT: bold; TEXT-DECORATION: underline
+}
+DIV.shadowbox_message {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; TEXT-ALIGN: center
+}
+DIV.shadowbox_message A:link {
+	COLOR: #bed333; TEXT-DECORATION: none
+}
+DIV.shadowbox_message A:visited {
+	COLOR: #bed333; TEXT-DECORATION: none
+}
+DIV.shadowbox_message A:hover {
+	TEXT-DECORATION: underline
+}
+DIV.shadowbox_message A:focus {
+	TEXT-DECORATION: underline
+}

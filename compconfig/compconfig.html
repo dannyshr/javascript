@@ -1,0 +1,678 @@
+<html>
+	<head>
+		<title>CompConfig</title>
+		<style>
+			.compConfig {
+				width: 460px;
+				border: 0px solid #000000;
+			}
+			.rowLineHeader {
+				height: 30px;
+				width: 460px;
+				border: 1px solid #000000;
+				text-align: center;
+				background-color: #cccccc;
+				font-weight: bold;
+			}
+			.rowLine {
+				width: 460px;
+				border: 0px solid #000000;
+				text-align: left;
+			}
+			.configAttribute {
+				height: 40px;
+				width: 460px;
+				border: 0px solid #000000;
+				text-align: left;
+			}
+			.configAttributeHeader {
+				border: 0px solid #000000;
+				text-align: left;
+				font-weight: bold;
+				color: #0000ff;
+			}
+			.configAttributeCont {
+				width: 460px;
+				border: 0px solid #000000;
+				text-align: left;
+			}
+			.toolbarLine {
+				border: 0px solid #000000;
+				text-align: left;
+			}
+			.labelCol {
+				width: 140px;
+				text-align: left;
+			}
+			.valueCol {
+				width: 240px;
+				text-align: left;
+			}
+		</style>
+		<script type="text/javascript" language="javascript" src="jquery.js"></script>
+		<script type="text/javascript" language="javascript" src="uibase.js"></script>
+		<script type="text/javascript" language="javascript" src="blinker.js"></script>
+		<script type="text/javascript" language="javascript" src="marquee.js"></script>
+		<script type="text/javascript" language="javascript" src="timer.js"></script>
+		<script type="text/javascript" language="javascript" src="configlist.js"></script>
+		<script language="javascript">
+			//declare globals
+			var _mapComps = new HashMap();
+			var _timerBlinker = null;
+			var _configList = null;
+			var _listUtils = new SelectUtils();
+			var _LABEL_VALUE_DELIMITER = "::";
+			
+			function init() {
+				renderCompTypesCombo();
+				attachCompTypesOnChange();
+				attachBtnStartOnClick();
+				attachBtnStopOnClick();
+				attachBtnRenderOnClick();
+				setButtonsMode(null);
+			}
+			
+			function getDefaultBlinkerConfig() {
+				//declare locals
+				var _config = {
+					id: "blinker_01"
+					,renderTo: "configHeader"
+					,speed: "fast"
+					,style: "border: 1px solid #ff0000"
+				};
+				
+				//return the method's value
+				return _config;
+			}
+			
+			function getDefaultMarqueeConfig() {
+				//declare locals
+				var _config = {
+					id: "marquee_01"
+					,height: "100"
+					,width: "400"
+					,movementDir: "ltr"
+					,interval: 150
+					,style: "border: 1px solid #ff0000"
+					,distance: "10"
+					,content: "The little brown fox jumped over the fence and ran into the forest..."
+				};
+				
+				//return the method's value
+				return _config;
+			}
+			
+			function getDefaultTimerConfig() {
+				//declare locals
+				var _config = {
+					id: "timer_01"
+					,height: 30
+					,width: 200
+					,style: "border: 1px solid #ff0000;font-size:20px;color:#0000ff"
+					,timeInSeconds: 10
+					,showMillis: false
+					,countDir: "countdown"
+					,ontimeup: function() {
+						timerOntimeUp();
+					}
+				};
+				
+				//return the method's value
+				return _config;
+			}
+			
+			function timerOntimeUp() {
+				//declare locals
+				alert("Time is up!!");
+				blinkTimer();
+			}
+			
+			function blinkTimer() {
+				var _timerCompId = "timer_01";
+				var _timerBlinkerConfig = {
+					id: "timerBlinker_01"
+					,renderTo: _timerCompId
+					,speed: "fast"
+				};
+				
+				_timerBlinker = null;
+				_timerBlinker = new Blinker(_timerBlinkerConfig);
+				_timerBlinker.render();
+				_timerBlinker.start();
+			}
+			
+			function renderCompTypesCombo() {
+				//declare locals
+				var _opts = [
+					{label:"",value:""}
+					,{label:"Blinker",value:"Blinker"}
+					,{label:"Marquee",value:"Marquee"}
+					,{label:"Timer",value:"Timer"}
+				];
+				var _comboId = "cmbCompTypes";
+				
+				//render the combo
+				renderCombo(_comboId,_opts);
+			}
+			
+			function renderCombo(_comboId,_opts) {
+				//declare locals
+				var _comp = document.getElementById(_comboId);
+				var _currItem = null;
+				var _opt = null;
+				
+				//check for nulls
+				if (_comp==null) {
+					return;
+				}
+				
+				//loop through the options
+				for (var i=0;i<_opts.length;i++) {		
+					//get the current item
+					_currItem = _opts[i];
+					
+					//create a new option
+					opt = document.createElement("option");
+					
+					//set the attributes
+					opt.text = _currItem.label;
+					opt.value = _currItem.value;
+					
+					//add the option
+					try {
+						_comp.add(opt,_comp.options[null]);
+					}
+					catch(e) {
+						_comp.add(opt,null);
+					}
+				}
+			}
+			
+			function attachBtnStartOnClick() {
+				//declare locals
+				var _compObjId = "btnStart";
+				var _comp = document.getElementById(_compObjId);
+				
+				//check for nulls
+				if (_comp==null) {
+					return;
+				}
+				
+				//attach the event
+				_comp.onclick = function(){
+					//set the buttons mode
+					setButtonsMode(_comp);
+					
+					//set the component's mode
+					startComp(true);
+				};
+			}
+			
+			function attachBtnStopOnClick() {
+				//declare locals
+				var _compObjId = "btnStop";
+				var _comp = document.getElementById(_compObjId);
+				
+				//check for nulls
+				if (_comp==null) {
+					return;
+				}
+				
+				//attach the event
+				_comp.onclick = function(){
+					//set the buttons mode
+					setButtonsMode(_comp);
+					
+					//set the component's mode
+					startComp();
+				};
+			}
+			
+			function attachBtnRenderOnClick() {
+				//declare locals
+				var _compObjId = "btnRender";
+				var _comp = document.getElementById(_compObjId);
+				
+				//check for nulls
+				if (_comp==null) {
+					return;
+				}
+				
+				//attach the event
+				_comp.onclick = function(){
+					//set the buttons mode
+					setButtonsMode(_comp);
+					
+					//set the component's mode
+					startComp();
+					
+					//render the component
+					renderComponent();
+				};
+			}
+			
+			function isValidConfig() {
+				//declare locals
+				var _config = getConfigFromList();
+				var _compId = null;
+				var _retVal = true;
+				
+				//check for nulls
+				if (_config==null) {
+					return false;
+				}
+				
+				//get the component's id
+				_compId = _config.id;
+				
+				//check for nulls
+				if (_compId==null || _compId=="") {
+					return false;
+				}
+				
+				//return the method's value
+				return _retVal;
+			}
+			
+			function renderComponent() {
+				//declare locals
+				var _config = getConfigFromList();
+				var _compId = null;
+				var _compObj = null;
+				
+				//check for a valid config
+				if (!isValidConfig()) {
+					return;
+				}
+				
+				//get the component's id
+				_compId = _config.id;
+				
+				//get the component's by its id
+				_compObj = _mapComps.get(_compId);;
+				
+				//render the component
+				if (_compObj==null) {
+					_compObj = getComponentByType(_config);
+					_compObj.render();
+				}
+				else {
+					_compObj.reRender(_config);
+				}
+				
+				//update the map
+				_mapComps.put(_compId,_compObj);
+			}
+			
+			function attachCompTypesOnChange() {
+				//declare locals
+				var _compId = "cmbCompTypes";
+				var _comp = document.getElementById(_compId);
+				
+				//check for nulls
+				if (_comp==null) {
+					return;
+				}
+				
+				//attach the event
+				_comp.onchange = function(){
+					renderConfigurationList();
+				};
+			}
+			
+			function getComponentByType(_config) {
+				//declare locals
+				var _compId = "cmbCompTypes";
+				var _comp = document.getElementById(_compId);
+				var _compValue = null;
+				var _compObj = null;
+				
+				//check for nulls
+				if (_comp==null) {
+					return null;
+				}
+				
+				//get the selected component
+				_compValue = _comp.value;
+				
+				//check for nulls
+				if (_compValue==null || _compValue=="") {
+					_compObj = null;
+				}
+				else {
+					//check the value
+					switch (_compValue.toUpperCase()) {
+						case "BLINKER":
+							_compObj = new Blinker(_config);
+							break;
+						case "MARQUEE":
+							_compObj = new Marquee(_config);
+							break;
+						case "TIMER":
+							_compObj = new Timer(_config);
+							break;
+						default:
+							_compObj = null;
+							break;
+					}
+				}				
+				
+				//return the method's value
+				return _compObj;
+			}
+			
+			function renderConfigurationList() {
+				//declare locals
+				var _compId = "cmbCompTypes";
+				var _comp = document.getElementById(_compId);
+				var _compValue = null;
+				var _options = null;
+				var btnRenderId = "btnRender";
+				var btnRenderComp = document.getElementById(btnRenderId);
+				
+				//check for nulls
+				if (_comp==null) {
+					return;
+				}
+				
+				//get the selected component
+				_compValue = _comp.value;
+				
+				//check for nulls
+				if (_compValue==null || _compValue=="") {
+					_options = null;
+				}
+				else {
+					//check the value
+					switch (_compValue.toUpperCase()) {
+						case "BLINKER":
+							_options = getDefaultBlinkerConfig();
+							break;
+						case "MARQUEE":
+							_options = getDefaultMarqueeConfig();
+							break;
+						case "TIMER":
+							_options = getDefaultTimerConfig();
+							break;
+						default:
+							_options = null;
+							break;
+					}
+				}				
+				
+				//check for a config
+				if (_options==null) {
+					btnRenderComp.disabled = true;
+				}
+				else {
+					btnRenderComp.disabled = false;
+				}
+				
+				//render the list, and attach its onchange event
+				renderConfigList(_options);
+			}
+			
+			function renderConfigList(_options) {
+				//declare locals
+				var _compId = "lstConfig";
+				var _config = {
+					id: _compId
+					,renderTo: "lstConfigCont"
+					,size: 10
+					,addEmptyOption: true
+					,attachValueToLabel: true
+					,showEmptyValues: true
+					,labelValueDelimiter: "::"
+					,onchange: function() {
+						renderUpdateLine();
+					}
+					,options: _options
+				};
+				
+				//render the component
+				if (_configList==null) {
+					_configList = new ConfigList(_config);
+					_configList.render();
+				}
+				else {
+					_configList.reRender(_config);
+				}
+			}
+			
+			function renderUpdateLine() {
+				//declare locals
+				var _containerId = "configAttribute";
+				var _containerComp = null;
+				var _optionLabel = null;
+				var _optionValue = null;
+				var _html = "";
+				
+				//get components by their ids
+				_containerComp = document.getElementById(_containerId);
+				
+				//check for nulls
+				if (_containerComp==null || _configList==null) {
+					return;
+				}
+				
+				//get the selected value
+				_optionLabel = _configList.getSelectedOptionText();
+				_optionValue = _configList.getSelectedOptionValue();
+				
+				//build the html
+				_html += "<div class=\"configAttributeHeader\">Current selected attribute:</div>";
+				_html += "<div class=\"configAttributeCont\">";
+				_html += "<input id=\"txtAttrName\" class=\"labelCol\" size=\"20\" type=\"text\" value=\"" + _optionLabel + "\" title=\"This is the component's attribute name\" />";
+				_html += "<input id=\"txtAttrValue\" class=\"valueCol\" size=\"20\" type=\"text\" value=\"" + _optionValue + "\" title=\"This is the component's attribute value\" />";
+				_html += "<input id=\"btnSave\" class=\"btnSave\" type=\"button\" title=\"Click here to save the component's configuration attribute\" value=\"Save\" />";
+				_html += "</div>";
+				
+				//render the html
+				_containerComp.innerHTML = _html;
+				
+				//attach the save event
+				attachBtnSaveOnClick();
+			}
+			
+			function attachBtnSaveOnClick() {
+				//declare locals
+				var _compId = "btnSave";
+				var _comp = document.getElementById(_compId);
+				
+				//check for nulls
+				if (_comp==null) {
+					return;
+				}
+				
+				//attach the event
+				_comp.onclick = function(){
+					//set the buttons mode
+					setButtonsMode(_comp);
+					
+					//set the component's mode
+					startComp();
+					
+					//save the component's attributes to the list
+					saveAttributeToList();
+				};
+			}
+			
+			function saveAttributeToList() {
+				//declare locals
+				var _txtAttNameId = "txtAttrName";
+				var _txtAttValueId = "txtAttrValue";
+				var _txtAttNameComp = null;
+				var _txtAttValueComp = null;
+				var _attributeName = null;
+				var _attributeValue = null;
+				
+				//get components by their ids
+				_txtAttNameComp = document.getElementById(_txtAttNameId);
+				_txtAttValueComp = document.getElementById(_txtAttValueId);
+				
+				//check for nulls
+				if (_configList==null || _txtAttNameComp==null || _txtAttValueComp==null) {
+					return;
+				}
+				
+				//get the values
+				_attributeName = _txtAttNameComp.value;
+				_attributeValue = _txtAttValueComp.value;
+				
+				//update the configuration list
+				_configList.updateList(_attributeName,_attributeValue);
+			}
+			
+			function getConfigFromList() {
+				//check for nulls
+				if (_configList==null) {
+					return null;
+				}
+				
+				//return the method's value
+				return _configList.listToConfig();
+			}
+			
+			function startComp(_startFlag) {
+				//declare locals
+				var _config = getConfigFromList();
+				var _compId = null;
+				var _compObj = null;
+				
+				//check for a valid config
+				if (!isValidConfig()) {
+					return;
+				}
+				
+				//get the component's id
+				_compId = _config.id;
+				
+				//get the component object
+				_compObj = _mapComps.get(_compId);
+				
+				//check if the component exists
+				if (_compObj!=null) {
+					//set the comp's mode
+					if (_startFlag==true) {
+						_compObj.start();
+					}
+					else {
+						_compObj.stop();
+						if (_timerBlinker!=null) {
+							_timerBlinker.stop();
+						}
+					}
+				}
+			}
+			
+			function setButtonsMode(_lastClicked) {
+				//declare locals
+				var btnRenderId = "btnRender";
+				var btnStartId = "btnStart";
+				var btnStopId = "btnStop";
+				var btnSaveId = "btnSave";
+				var btnRenderComp = null;
+				var btnStartComp = null;
+				var btnStopComp = null;
+				var btnSaveComp = null;
+				
+				//get components by their ids
+				btnRenderComp = document.getElementById(btnRenderId);
+				btnStartComp = document.getElementById(btnStartId);
+				btnStopComp = document.getElementById(btnStopId);
+				btnSaveComp = document.getElementById(btnSaveId);
+				
+				//check the _lastClicked
+				if (_lastClicked==null) {
+					if (btnRenderComp!=null) {
+						btnRenderComp.disabled = true;
+					}
+					if (btnSaveComp!=null) {
+						btnSaveComp.disabled = true;
+					}
+					if (btnStartComp!=null) {
+						btnStartComp.disabled = true;
+					}
+					if (btnStopComp!=null) {
+						btnStopComp.disabled = true;
+					}
+				}
+				else if (_lastClicked.id==btnRenderId) {
+					if (btnRenderComp!=null) {
+						btnRenderComp.disabled = false;
+					}
+					if (btnSaveComp!=null) {
+						btnSaveComp.disabled = false;
+					}
+					if (btnStartComp!=null) {
+						btnStartComp.disabled = false;
+					}
+					if (btnStopComp!=null) {
+						btnStopComp.disabled = true;
+					}
+				}
+				else if (_lastClicked.id==btnSaveId) {
+					if (btnRenderComp!=null) {
+						btnRenderComp.disabled = false;
+					}
+					if (btnSaveComp!=null) {
+						btnSaveComp.disabled = false;
+					}
+					if (btnStartComp!=null) {
+						btnStartComp.disabled = true;
+					}
+					if (btnStopComp!=null) {
+						btnStopComp.disabled = true;
+					}
+				}
+				else if (_lastClicked.id==btnStartId) {
+					if (btnRenderComp!=null) {
+						btnRenderComp.disabled = true;
+					}
+					if (btnSaveComp!=null) {
+						btnSaveComp.disabled = true;
+					}
+					if (btnStartComp!=null) {
+						btnStartComp.disabled = true;
+					}
+					if (btnStopComp!=null) {
+						btnStopComp.disabled = false;
+					}
+				}
+				else if (_lastClicked.id==btnStopId) {
+					if (btnRenderComp!=null) {
+						btnRenderComp.disabled = false;
+					}
+					if (btnSaveComp!=null) {
+						btnSaveComp.disabled = false;
+					}
+					if (btnStartComp!=null) {
+						btnStartComp.disabled = false;
+					}
+					if (btnStopComp!=null) {
+						btnStopComp.disabled = true;
+					}
+				}
+			}
+		</script>
+	</head>
+	<body onload="init();">
+		<center>
+			<div class="compConfig">
+				<div id="configHeader" class="rowLineHeader">
+					Component Config: 
+					<select id="cmbCompTypes" class="cmbCompTypes" size="1">
+					</select>
+				</div>
+				<div id="lstConfigCont" class="rowLine">
+				</div>
+				<div class="toolbarLine">
+					<input type="button" id="btnRender" class="btnRender" title="Click here to render the component" value="Render" />
+					<input type="button" id="btnStart" class="btnStart" title="Click here to start the component's movement" value="Start" />
+					<input type="button" id="btnStop" class="btnStop" title="Click here to stop the component's movement" value="Stop" />
+				</div>
+			</div>
+			<div id="configAttribute" class="configAttribute"></div>
+		</center>
+	</body>
+</html>

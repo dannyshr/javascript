@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<title>Wikipedia Search</title>
+
+			<!-- 
+			Wikipedia  Gadget
+			Design & Code: LabPixies
+			All subsequent code and resources used are proprietary of LabPixies unless directly stated otherwise.
+			Copyright (C) 2008 LabPixies.    
+			www.labpixies.com
+
+			This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivs 2.5 License.
+			To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/2.5/ or
+			send a letter to Creative Commons, 543 Howard Street, 5th Floor, San Francisco, California, 94105, USA.
+			-->
+
+		<meta name="Description" content="Search Wikipedia and wikipedia sub-domains">
+		<meta name="words" content="LabPixies, Gadgets, Gadget, Widget, Widgets, Personalized, Homepage, Wikipedia, Search">
+		<style type="text/css">
+			.style1{font-size: 1px;}
+
+			.style3 {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 11px;
+				color: #595959;
+			}
+
+			.style5 {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 12px;
+				font-weight:bold;
+				color: #343434;
+			}
+
+			.style6 {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 12px;
+				font-weight:bold;
+				color: #343434;
+			}
+
+			.style8 {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 10px;
+				color: #595959;
+			}
+
+
+			#searchInput {
+				border: 0px solid #2F6FAB;  
+				margin-top: -2px;
+				font-size: 13px;
+				padding-top: -5px;
+				vertical-align: top;
+				font-family: Arial;
+			}
+
+			#main_tbl {
+				background-image: url(resources/images/background.gif);
+			} 
+			#tbl_settings {
+				background-image: url(resources/images/background2.jpg);
+			} 
+			#logo {
+				background-image: url(resources/images/wikipedia.gif);
+			} 
+		</style>
+		<script type="text/javascript">
+			//declare global script variables
+			var g_language;
+			var g_source;
+			var code_str;
+			
+			function settings_button(){
+				code_str=document.getElementById("outer_tbl").innerHTML;
+				document.getElementById("settings_label").style.display = "none";
+				document.getElementById("outer_tbl").innerHTML = 
+				
+				'<table width="284" height="72" cellpadding="0" cellspacing="0" border="0" id="tbl_settings">'+
+				'<tr>'+
+					'<td colspan="2" width="284" height="8" class="style1">&nbsp;</td>'+
+				'</tr>'+
+				'<tr>'+
+					'<td colspan="2" width="284" height="12" valign="bottom" align="right" class="style8" style="padding-right:13px; padding-bottom:0px;"><span class="style8" onclick="cancel_button();" style="cursor:pointer;" onmouseout="this.style.color=\'#595959\';" onmouseover="this.style.color=\'#2F6FAB\';">cancel</span>&nbsp;&nbsp;<span  class="style8" onclick="save_button();" style="cursor:pointer;" onmouseout="this.style.color=\'#595959\';" onmouseover="this.style.color=\'#2F6FAB\';">save</span></td>'+
+				'</tr>'+
+				'<tr>' +
+					'<td class="style6" width="154" height="15" align="left" valign="bottom">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Language:</td>'+
+					'<td class="style6" width="130" height="15" align="left" valign="bottom">&nbsp;&nbsp;Source:</td>'+
+				'</tr>'+
+				'<tr height="34">'+
+					'<td valign="top" class="style6" align="left" width="154">'+
+						'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="language" name="language" style="font-size:12px; width:124px;" >'+
+							'<option value="en">English</option>'+
+							'<option value="he">Hebrew</option>'+
+							'<option value="de">German</option>'+
+							'<option value="es">Spanish</option>'+
+							'<option value="fr">French</option>'+
+							'<option value="it">Italian</option>'+
+							'<option value="nl">Dutch</option>'+
+							'<option value="ja">Japanese</option>'+
+							'<option value="pl">Polish</option>'+
+							'<option value="pt">Portuguese</option>'+
+							'<option value="ru">Russian</option>'+
+							'<option value="fi">Suomi</option>'+
+							'<option value="sv">Svenska</option>'+
+							'<option value="he">Hebrew</option>'+
+							'<option value="zh">Chinese</option>'+
+							'<option value="ko">Korean</option>'+
+						'</select>'+
+					'</td>'+
+					'<td valign="top" class="style6" align="left">&nbsp;&nbsp;'+			
+						'<select id="source" name="source" style="font-size:12px; width:110px;">'+
+							'<option value="wikipedia">Wikipedia</option>'+
+							'<option value="wiktionary">Wiktionary</option>'+
+							'<option value="wikibooks">Wikibooks</option>'+
+							'<option value="wikiversity">Wikiversity</option>'+
+							'<option value="wikinews">Wikinews</option>'+
+							'<option value="wikispecies">Wikispecies</option>'+
+							'<option value="commons">Commons</option>'+
+							'<option value="wikiquote">Wikiquote</option>'+
+							'<option value="wikisource">Wikisource</option>'+
+							'<option value="wikimeta">Meta-Wiki</option>'+
+						'</select>'+
+					'</td>'+
+				'</tr>'+
+				'</table>';
+				
+				//show current values
+				document.getElementById("language").value 	= g_language;
+				document.getElementById("source").value 	= g_source;
+			}
+			
+			function save_button(){
+				//save to local var
+				g_language = document.getElementById("language").value;
+				g_source   = document.getElementById("source").value;
+						
+				//save to cookie
+				//settings.setParam("lang_wiki",g_language);
+				//settings.setParam("source",g_source);
+				
+				document.getElementById("outer_tbl").innerHTML = code_str;
+				document.getElementById("settings_label").style.display = "";
+				
+				//update UI
+				updateUI();
+				
+				document.getElementById("searchInput").select();		
+			}
+			
+			function cancel_button(){
+			
+				document.getElementById("outer_tbl").innerHTML = code_str;
+				document.getElementById("settings_label").style.display = "";
+				
+				document.getElementById("searchInput").select();
+			}
+			
+			function go_click(){
+				
+				var url = "";
+				if(g_source=="commons"){
+					url = "http://commons.wikimedia.org/wiki/" + document.getElementById("searchInput").value;
+				}
+				else if(g_source=="wikispecies"){
+					url = "http://species.wikimedia.org/wiki/" + document.getElementById("searchInput").value;
+				}
+				else if(g_source=="wikimeta"){
+					url = "http://meta.wikimedia.org/wiki/" + document.getElementById("searchInput").value;
+				}
+				else{
+					url = "http://" + g_language + "." + g_source + ".org/wiki/" + document.getElementById("searchInput").value;
+				}
+				
+				window.open(url,"wiki_res","toolbar=yes, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=yes, copyhistory=yes, width=800, height=600");
+				
+				
+			}
+			
+			function search_click(){
+				
+				var url = "";	
+				if(g_source=="commons"){
+					url = "http://commons.wikimedia.org/wiki/Special:Search?search="+document.getElementById("searchInput").value+"&fulltext="+document.getElementById("searchInput").value;
+				}
+				else if(g_source=="wikispecies"){
+					url = "http://species.wikimedia.org/wiki/Special:Search?search="+document.getElementById("searchInput").value+"&fulltext="+document.getElementById("searchInput").value;
+				}
+				else if(g_source=="wikimeta"){
+					url = "http://meta.wikimedia.org/wiki/Special:Search?search="+document.getElementById("searchInput").value+"&fulltext="+document.getElementById("searchInput").value;
+				}
+				else{
+					url = "http://" + g_language + "." + g_source + ".org/wiki/Special:Search?search="+document.getElementById("searchInput").value+"&fulltext="+document.getElementById("searchInput").value;
+				}
+				
+				window.open(url,"wiki_res","toolbar=yes, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=yes, copyhistory=yes, width=800, height=600");
+			}
+			
+			function onKeyHandle(e){
+				var keynum;
+				if(window.event){
+					keynum = e.keyCode;
+				}
+				else if(e.which){
+					keynum = e.which;
+				}
+				
+				if(keynum == 13){
+					if(document.getElementById("searchInput").value!=""){
+						go_click();	
+					}
+					return false;
+				}
+				return true;
+			}
+			
+			function updateUI(){
+			
+				//change logo
+				document.getElementById("logo").style.backgroundImage = "url('resources/images/" + g_source + ".gif')";
+				
+				//update title
+				if(g_source=="wikipedia") str_title ="Wikipedia";
+				if(g_source=="wiktionary") str_title ="Wiktionary";
+				if(g_source=="wikibooks") str_title ="Wikibooks";
+				if(g_source=="wikiversity") str_title ="Wikiversity";
+				if(g_source=="wikinews") str_title ="Wikinews";
+				if(g_source=="wikispecies") str_title ="Wikispecies";
+				if(g_source=="commons") str_title ="Commons";
+				if(g_source=="wikiquote") str_title ="Wikiquote";
+				if(g_source=="wikisource") str_title ="Wikisource";
+				if(g_source=="wikimeta") str_title ="Meta-Wiki";
+				
+				if (g_language=="he") {
+					document.getElementById('searchInput').dir="rtl";
+					document.getElementById('searchInput').lang="iw";
+				}
+				else {
+					document.getElementById('searchInput').dir="ltr";
+					document.getElementById('searchInput').lang=g_language;
+				}
+				
+				document.getElementById("search_title").innerHTML = "<span class='style1'>&nbsp;</span>" + str_title + " ("+g_language+"):";
+			}
+			
+			function InitWikiSearch(){
+				
+				//get last settings from cookie
+				//g_language	= settings.getString("lang_wiki");
+				//g_source	= settings.getString("source");
+				
+				if (!g_language) {
+					g_language = "he";
+				}
+				if (!g_source) {
+					g_source = "wikipedia";
+				}
+				
+				//update UI
+				updateUI();
+				
+				//set focus 
+				document.getElementById("searchInput").select();
+			}
+		</script>
+	</head>
+	<body>
+		<center>
+			<table height="72" cellspacing="0" cellpadding="0" border="0" width="284">
+				<tbody>
+					<tr>
+						<td valign="top" id="outer_tbl">
+							<table height="72" cellspacing="0" cellpadding="0" border="0" width="284" id="main_tbl">
+								<tbody>
+									<tr height="15">
+										<td class="style1"> </td>
+									</tr>
+									<tr height="40">
+										<td>
+											<table height="40" cellspacing="0" cellpadding="0" border="0" width="284">
+												<tbody><tr>
+													<td width="11" class="style1"> </td>
+													<td width="40" id="logo" class="style1" style="background-image: url(resources/images/wikipedia.gif);"> </td>
+													<td width="6" class="style1"> </td>
+													<td align="left" width="135" class="style1">
+														<table cellspacing="0" cellpadding="0" border="0" align="left">
+															<tbody>
+																<tr>
+																	<td height="19" align="left" valign="top" id="search_title" class="style5">
+																		<span class="style1"> </span>Wikipedia (en):
+																	</td>
+																</tr>
+																<tr>
+																	<td height="17" style="padding-left: 4px;" class="style1">
+																		<input type="text" value="" id="searchInput" size="15" name="search" onkeypress="onKeyHandle(event);"/>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+													<td width="5" class="style1"> </td>
+													<td width="27">
+														<table cellspacing="0" cellpadding="0" border="0">
+															<tbody>
+																<tr>
+																	<td height="21" class="style1"> </td>
+																</tr>
+																<tr>
+																	<td height="16" class="style1">
+																		<img height="16" border="0" width="27" onclick="go_click();" style="cursor: pointer;" onmouseover="this.src='resources/images/go_roll.gif';" onmouseout="this.src='resources/images/go.gif';" src="resources/images/go.gif" id="go_img"/>
+																	</td>
+																</tr>
+																<tr>
+																	<td height="3" class="style1"> </td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+													<td width="3" class="style1"> </td>
+													<td width="43">
+														<table cellspacing="0" cellpadding="0" border="0">
+															<tbody>
+																<tr>
+																	<td height="21" class="style1"> </td>
+																</tr>
+																<tr>
+																	<td height="16" class="style1">
+																		<img height="16" border="0" width="43" onclick="search_click();" style="cursor: pointer;" onmouseover="this.src='resources/images/search_roll.gif';" onmouseout="this.src='resources/images/search.gif';" src="resources/images/search.gif" id="go_img"/>
+																	</td>
+																</tr>
+																<tr>
+																	<td height="3" class="style1"> </td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+													<td width="14" class="style1"> </td>
+												</tr>
+											</tbody></table>
+										</td>
+									</tr>
+									<tr height="17">
+										<td class="style1"> </td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>			
+			<div id="settings_label" style="position:relative; top:-65px; left:110px;">
+				<span  class="style8" onclick="settings_button();" style="cursor:pointer;" onmouseout="this.style.color='#595959';" onmouseover="this.style.color='#2F6FAB';">settings</span>
+			</div>
+			<script type="text/javascript">
+				onload = InitWikiSearch;
+			</script>
+		</center>
+	</body>
+</html>

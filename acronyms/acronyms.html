@@ -1,0 +1,1057 @@
+﻿<html>
+    <head>
+        <title>ראשי תיבות</title>
+        <style>
+            .header {
+                width: 200px;
+                border: 0px solid #000000;
+                color: #000000;
+                font-family: Arial;
+                font-size: 26px;
+                font-weight: bold;
+            }
+            .subjects {
+                width: 200px;
+                border: 0px solid #000000;
+                color: #000000;
+                font-family: Arial;
+                font-size: 18px;
+                font-weight: normal;
+            }
+            .acronym {
+                display: none;
+                width: 400px;
+                border: 0px solid #000000;
+                color: #ff0000;
+                font-family: Arial;
+                font-size: 40px;
+                font-weight: normal;
+            }
+            .solution {
+                display: none;
+                vertical-align: top;
+                width: 400px;
+                border: 0px solid #000000;
+                color: #0000ff;
+                font-family: Arial;
+                font-size: 40px;
+                font-weight: normal;
+            }
+            .toolbar {
+                height: 30px;
+                width: 300px;
+                border: 0px solid #000000;
+            }
+            .btnSol {
+                height: 30px;
+                width: 60px;
+            }
+            .btnNext {
+                height: 30px;
+                width: 60px;
+            }
+            .btnPrev {
+                height: 30px;
+                width: 60px;
+            }
+            .navbar {
+                height: 30px;
+                width: 300px;
+                border: 0px solid #000000;
+                color: #000000;
+                font-family: Arial;
+                font-size: 16px;
+                font-weight: normal;
+            }
+            .refText {
+                color: #000000;
+                font-family: Arial;
+                font-size: 16px;
+                font-weight: normal;
+            }
+            .refLbl {
+                height: 30px;
+                border: 0px solid #000000;
+                position: absolute;
+                bottom: 2px;
+                left: 5%;
+            }
+            .ref {
+                height: 30px;
+                border: 0px solid #000000;
+                position: absolute;
+                bottom: 2px;
+                left: 14%;
+            }
+                .timerTitle {
+                                height: 30px;
+                                width: 250px;
+                                border: 0px solid #000000;
+                                font-family: Arial;
+                                font-size: 20px;
+                                font-weight: normal;
+                                color: #0000ff;
+                }
+                .timerComp {
+                                height: 30px;
+                                width: 250px;
+                                border: 0px solid #000000;
+                                font-family: Arial;
+                                font-size: 30px;
+                                font-weight: bold;
+                                color: #ff0000;
+                }
+                .pageTable {
+                                height: 100%;
+                                width: 100%;
+                }
+                .timerTxtTime {
+                                height: 25px;
+                                width: 35px;
+                }
+                .rowCol {
+                                vertical-align: top;
+                                text-align: center;
+                }
+                .solutionCol {
+                                width: 70%;
+                                vertical-align: top;
+                                text-align: center;
+                }
+                .timerCol {
+                                width: 30%;
+                                vertical-align: top;
+                                text-align: center;
+                }
+                .headerRow {
+                                height: 30px;
+                }
+                .subjectRow {
+                                height: 30px;
+                }
+                .toolbarRow {
+                                height: 30px;
+                }
+                .navbarRow {
+                                height: 30px;
+                }
+                .acronymRow {
+                                height: 60px;
+                }
+                .solutionRow {
+                                height: 120px;
+                }
+                .footerRow {
+                                height: 20px;
+                }
+                .timerContainer {
+                                display: none;
+                }
+                .btnTimer {
+                                height: 20px;
+                                width: 20px;
+                }
+      </style>
+      <script language="javascript">
+                //declare global counters
+                var _arrIndexes = [
+                                {subject:"1",index:"-1"}
+                                ,{subject:"2",index:"-1"}
+                                ,{subject:"3",index:"-1"}
+                                ,{subject:"4",index:"-1"}
+                                ,{subject:"5",index:"-1"}
+                                ,{subject:"6",index:"-1"}
+                                ,{subject:"7",index:"-1"}
+                ];
+                var _arrAcronyms = getAcronyms();
+                var timer = null;
+                var interval = null;
+                var totalMilliseconds = 0;
+                var timeout = 10;
+                var showDays = false;
+                var blinkerInterval = null;
+                var blinkerTimeout = 400;
+ 
+            function getAcronyms() {
+                //declare locals
+                var _acronyms = [
+                    {subject:"1",acronym:"ANSI",solution:"American National Standards Institute"}
+                    ,{subject:"1",acronym:"AOP",solution:"Aspect Oriented Programming"}
+                    ,{subject:"1",acronym:"API",solution:"Application Programming Interface"}
+                    ,{subject:"1",acronym:"ASCII",solution:"American Standard Code for Information Interchange"}
+                    ,{subject:"1",acronym:"BTT",solution:"Branch Transformation Toolkit"}
+                    ,{subject:"1",acronym:"CICS",solution:"Customer Information Control System"}
+                    ,{subject:"1",acronym:"COBOL",solution:"Common Business Oriented Language"}
+                    ,{subject:"1",acronym:"DTD",solution:"Document Type Definition"}
+                    ,{subject:"1",acronym:"DVD",solution:"Digital Video Decoder"}
+                    ,{subject:"1",acronym:"EAR",solution:"Enterprise Archive"}
+                    ,{subject:"1",acronym:"GUI",solution:"Graphical User Interface"}
+                    ,{subject:"1",acronym:"IDE",solution:"Integrated Development Environment"}
+                    ,{subject:"1",acronym:"JAR",solution:"Java Archive"}
+                    ,{subject:"1",acronym:"JCL",solution:"Job Control Language"}
+                    ,{subject:"1",acronym:"OOD",solution:"Object Oriented Design"}
+                    ,{subject:"1",acronym:"OOP",solution:"Object Oriented Programming"}
+                    ,{subject:"1",acronym:"PDF",solution:"Portable Document Format"}
+                    ,{subject:"1",acronym:"RAD",solution:"Rational Application Developer"}
+                    ,{subject:"1",acronym:"RAM",solution:"Random Access Memory"}
+                    ,{subject:"1",acronym:"RAR",solution:"Resoure Archive"}
+                    ,{subject:"1",acronym:"ROM",solution:"Read Only Memory"}
+                    ,{subject:"1",acronym:"SOA",solution:"Service Oriented Architecture"}
+                    ,{subject:"1",acronym:"SQL",solution:"Structured Query Language"}
+                    ,{subject:"1",acronym:"TOAD",solution:"Tools for Oracle Application Developer"}
+                    ,{subject:"1",acronym:"USB",solution:"Universal Serial Bus"}
+                    ,{subject:"1",acronym:"WAS",solution:"Websphere Application Server"}
+                    ,{subject:"1",acronym:"WAR",solution:"Web Archive"}
+                    ,{subject:"1",acronym:"XML",solution:"eXtensible Markup Language"}
+                    ,{subject:"1",acronym:"XSL",solution:"eXtensible Style Language"}
+                    ,{subject:"1",acronym:"XSD",solution:"eXtensible Schema Definition"}
+                    ,{subject:"2",acronym:"AFAIK",solution:"As Far As I Know"}
+                    ,{subject:"2",acronym:"AFK",solution:"Away From Keyboard"}
+                    ,{subject:"2",acronym:"AKA",solution:"Also Known As"}
+                    ,{subject:"2",acronym:"ASAP",solution:"As Soon As Possible"}
+                    ,{subject:"2",acronym:"BFF",solution:"Best Friends Forever"}
+                    ,{subject:"2",acronym:"CYL",solution:"See You Later"}
+                    ,{subject:"2",acronym:"CYT",solution:"See you Tomorrow"}
+                    ,{subject:"2",acronym:"ETA",solution:"Estimated Time Arrival"}
+                    ,{subject:"2",acronym:"GG",solution:"Good Game"}
+                    ,{subject:"2",acronym:"IMO",solution:"In My Opinion"}
+                    ,{subject:"2",acronym:"IMHO",solution:"In My Humble Opinion"}
+                    ,{subject:"2",acronym:"LOL",solution:"Lough Out Loud"}
+                    ,{subject:"2",acronym:"OMG",solution:"Oh My God"}
+                    ,{subject:"3",acronym:"ATF",solution:"Alcohol Tobacco and Firearms"}
+                    ,{subject:"3",acronym:"CERN",solution:"Conceil Europeen pour la Recherche Nucleaire"}
+                    ,{subject:"3",acronym:"CIA",solution:"Central Intelligence Agency"}
+                    ,{subject:"3",acronym:"CSI",solution:"Crime Scene Investigation"}
+                    ,{subject:"3",acronym:"CTU",solution:"Counter Terrorist Unit"}
+                    ,{subject:"3",acronym:"FBI",solution:"Federal Bureau of Investigation"}
+                    ,{subject:"3",acronym:"FDA",solution:"Food and Drug Administration"}
+                    ,{subject:"3",acronym:"NASA",solution:"National Aeronautics and Space Agency"}
+                    ,{subject:"3",acronym:"NATO",solution:"North Atlantic Treaty Organization"}
+                    ,{subject:"3",acronym:"NYFD",solution:"NewYork Fire Department"}
+                    ,{subject:"3",acronym:"NYPD",solution:"NewYork Police Department"}
+                    ,{subject:"4",acronym:"ABC",solution:"American Broadcasting Company"}
+                    ,{subject:"4",acronym:"BBC",solution:"British Broadcasting Company"}
+                    ,{subject:"4",acronym:"CBS",solution:"Columbia Broadcasting System"}
+                    ,{subject:"4",acronym:"CNN",solution:"Cable News Network"}
+                    ,{subject:"4",acronym:"NBA",solution:"National Basketball Agency"}
+                    ,{subject:"4",acronym:"NBC",solution:"National Broadcasting Company"}
+                    ,{subject:"4",acronym:"NFL",solution:"National Football League"}
+                    ,{subject:"5",acronym:"ECG",solution:"Electro Cardio Graph"}
+                    ,{subject:"5",acronym:"EEG",solution:"Electro Encephalo Graph"}
+                    ,{subject:"5",acronym:"DDT",solution:"Dichloro Diphenyl Trichloroethane"}
+                    ,{subject:"5",acronym:"DNA",solution:"Deoxyribo Nucleic Acid"}
+                    ,{subject:"5",acronym:"MRI",solution:"Magnetic Resonance Imaging"}
+                    ,{subject:"5",acronym:"RNA",solution:"Ribo Nucleic Acid"}
+                    ,{subject:"5",acronym:"TNT",solution:"Tri Nitro Toluene"}
+                    ,{subject:"6",acronym:"DC",solution:"District of Columbia"}
+                    ,{subject:"6",acronym:"FYROM",solution:"Former Yugoslavian Republic of Macedonia"}
+                    ,{subject:"6",acronym:"USSR",solution:"Union of Soviet Socialist Republics"}
+                    ,{subject:"7",acronym:"AC",solution:"Alternate Current"}
+                    ,{subject:"7",acronym:"AD",solution:"Anno Domini"}
+                    ,{subject:"7",acronym:"AM (time)",solution:"Ante Meridiem"}
+                    ,{subject:"7",acronym:"ATM",solution:"Automatic Teller Machine"}
+                    ,{subject:"7",acronym:"BA",solution:"Bachelor of Arts"}
+                    ,{subject:"7",acronym:"BC",solution:"Before Christ"}
+                    ,{subject:"7",acronym:"BCE",solution:"Before the Common Era"}
+                    ,{subject:"7",acronym:"CD (cars)",solution:"Corps Diplomatique"}
+                    ,{subject:"7",acronym:"CET (time)",solution:"Central European Time"}
+                    ,{subject:"7",acronym:"DC",solution:"Direct Current"}
+                    ,{subject:"7",acronym:"DJ",solution:"Disc Jockey"}
+                    ,{subject:"7",acronym:"FM",solution:"Frequency Modulation"}
+                    ,{subject:"7",acronym:"GMT (time)",solution:"Greenwich Mean Time"}
+                    ,{subject:"7",acronym:"ISBN",solution:"International Serial Book Number"}
+                    ,{subject:"7",acronym:"MA",solution:"Magister of Arts"}
+                    ,{subject:"7",acronym:"MD",solution:"Medical Doctor"}
+                    ,{subject:"7",acronym:"PhD",solution:"Philosophy Doctor"}
+                    ,{subject:"7",acronym:"PM",solution:"Post Meridiem"}
+                ];
+               
+                //return the method's value
+                return _acronyms;
+            }
+           
+            function init() {
+                loadSubjects();
+                setButtonsDisplayByIndex(-1);
+                var timerContainerId = "timerContainer";
+                var timerTitle = "זמן נותר לתשובה";
+                renderTimer(timerContainerId,timerTitle);
+            }
+           
+            function loadSubjects() {
+                //declare locals
+                var lstSubjects = new Array(
+                    ""
+                    ,"מחשבים"
+                    ,"שיחה ומשחקים"
+                    ,"סוכנויות"
+                    ,"רשתות טלויזיה וספורט"
+                    ,"מדעים"
+                    ,"גיאוגרפיה"
+                    ,"כללי"
+                );
+                var subjComp = document.getElementById("cmbSubject");
+                var opt = null;
+               
+                if (subjComp==null) {
+                                alert("subjComp is NULL!!");
+                }
+ 
+                //create lists
+                if (subjComp!=null) {
+                    for (var i=0;i<lstSubjects.length;i++) {
+                                opt = document.createElement("option");
+                                opt.value = i;
+                                opt.text = lstSubjects[i];
+                                try {
+                                                // for IE earlier than version 8
+                                                subjComp.add(opt,subjComp.options[null]);
+                                }
+                                catch (e) {
+                                                subjComp.add(opt,null);
+                                }
+                    }
+                }
+            }
+                    
+            function getCurrentAcronym() {
+                //declare locals
+                var _compObj = document.getElementById("acronym");
+                var _compValue = null;
+               
+                //get the inner HTML value
+                _compValue = _compObj.innerHTML;
+               
+                //return the method's value
+                return _compValue;
+            }
+           
+            function getDisplayedAcronymIndexInArray() {
+                //declare locals
+                var _index = -1;
+                var _array = _arrAcronyms;
+                var _currItem = null;
+                var _currItemValue = null;
+                var _currDisplayedAcronym = getCurrentAcronym();
+               
+                //check for nulls
+                if (_currDisplayedAcronym==null || _currDisplayedAcronym=="") {
+                    return _index;
+                }
+               
+                //loop through the array
+                for (var i=0;i<_array.length;i++) {       
+                    //get the current item
+                    _currItem = _array[i];
+                   
+                    //get the item's required attribute
+                    _currItemValue = _currItem.acronym;
+                   
+                    //compare it to the currently displayed acronym
+                    if (_currDisplayedAcronym==_currItemValue) {
+                        //set the return value
+                        _index = i;
+                    }
+                }
+               
+                //return the method's value
+                return _index;
+            }
+           
+            function getNextAcronymBySubjectAndIndex(_subject,_index) {
+                //declare locals
+                var _array = _arrAcronyms;
+                var _currItem = null;
+                var _currItemSubject = null;
+                var _currItemIndex = 0;
+                var _currItemValue = "";
+               
+                //check for nulls
+                if (_subject==null || _subject=="" || _subject=="0" || _index<0) {
+                    return _currItemValue;
+                }
+               
+                //loop through the array
+                for (var i=0;i<_array.length;i++) {       
+                    //get the current item
+                    _currItem = _array[i];
+                   
+                    //get the item's required attribute
+                    _currItemSubject = _currItem.subject;
+                   
+                    //compare it to the requested attribute
+                    if (_subject==_currItemSubject) {                        
+                        //compare it to the requested attribute
+                        if (_index==_currItemIndex) {                   
+                            //set the return value
+                            _currItemValue = _currItem.acronym;
+                            break;
+                        }
+                        else {
+                            _currItemIndex++;
+                        }
+                    }
+                }
+               
+                //return the method's value
+                return _currItemValue;
+            }
+           
+            function getNextSolutionBySubjectAndIndex(_subject,_index) {
+                //declare locals
+                var _array = _arrAcronyms;
+                var _currItem = null;
+                var _currItemSubject = null;
+                var _currItemIndex = 0;
+                var _currItemValue = "";
+               
+                //check for nulls
+                if (_subject==null || _subject=="" || _subject=="0" || _index<0) {
+                    return _currItemValue;
+                }
+               
+                //loop through the array
+                for (var i=0;i<_array.length;i++) {        
+                    //get the current item
+                    _currItem = _array[i];
+                   
+                    //get the item's required attribute
+                    _currItemSubject = _currItem.subject;
+                   
+                    //compare it to the requested attribute
+                    if (_subject==_currItemSubject) {                       
+                        //compare it to the requested attribute
+                        if (_index==_currItemIndex) {                    
+                            //set the return value
+                            _currItemValue = _currItem.solution;
+                            break;
+                        }
+                        else {
+                            _currItemIndex++;
+                        }
+                    }
+                }
+               
+                //return the method's value
+                return _currItemValue;
+            }
+           
+            function getAcronymsCountBySubject(_subject) {
+                //declare locals
+                var _array = _arrAcronyms;
+                var _currItem = null;
+                var _currItemValue = null;
+                var _counter = 0;
+                
+                //check for nulls
+                if (_subject==null || _subject=="" || _subject=="0") {
+                    return _counter;
+                }
+               
+                //loop through the array
+                for (var i=0;i<_array.length;i++) {       
+                    //get the current item
+                    _currItem = _array[i];
+                   
+                    //get the item's required attribute
+                    _currItemValue = _currItem.subject;
+                    
+                    //compare it to the requested attribute
+                    if (_subject==_currItemValue) {
+                        //increment a counter
+                        _counter++;
+                    }
+                }
+               
+                //return the method's value
+                return _counter;
+            }
+           
+            function getAcronymSubject() {
+                //declare locals
+                var _index = getDisplayedAcronymIndexInArray();
+                var _array = _arrAcronyms;
+                var _currItem = null;
+                var _currItemValue = null;
+               
+                //check for a valid index
+                if (_index==-1) {
+                    return _currItemValue;
+                }
+               
+                //get the correct item's value
+                _currItem = _array[_index];
+                _currItemValue = _currItem.subject;
+               
+                //return the method's value
+                return _currItemValue;
+            }
+           
+            function getAcronymSolution() {
+                //declare locals
+                var _index = getDisplayedAcronymIndexInArray();
+                var _array = _arrAcronyms;
+                var _currItem = null;
+                var _currItemValue = null;
+               
+                //check for a valid index
+                if (_index==-1) {
+                    return _currItemValue;
+                }
+               
+                //get the correct item's value
+                _currItem = _array[_index];
+                _currItemValue = _currItem.solution;
+               
+                //return the method's value
+                return _currItemValue;
+            }
+            
+            function getIndexBySubject(_subject) {
+                //declare locals
+                var _currItem = null;
+                var _currItemValue = null;
+                var _index = -1;
+               
+                //check for nulls
+                if (_subject==null || _subject=="" || _subject=="0") {
+                    return _index;
+                }
+               
+                //loop through the array
+                for (var i=0;i<_arrIndexes.length;i++) {       
+                    //get the current item
+                    _currItem = _arrIndexes[i];
+                   
+                    //get the item's required attribute
+                    _currItemValue = _currItem.subject;
+                   
+                    //compare it to the requested attribute
+                    if (_subject==_currItemValue) {
+                        //set the return value
+                        _index = parseInt(_currItem.index);
+                        break;
+                    }
+                }
+               
+                //return the method's value
+                return _index;
+            }
+           
+            function setIndexBySubject(_subject,_index) {
+                //declare locals
+                var _currItem = null;
+                var _currItemValue = null;
+               
+                //check for nulls
+                if (_subject==null || _subject=="" || _subject=="0" || _index==-1) {
+                    return;
+                }
+               
+                //loop through the array
+                for (var i=0;i<_arrIndexes.length;i++) {       
+                    //get the current item
+                    _currItem = _arrIndexes[i];
+                   
+                    //get the item's required attribute
+                    _currItemValue = _currItem.subject;
+                   
+                    //compare it to the requested attribute
+                    if (_subject==_currItemValue) {
+                        //set the current item
+                        _arrIndexes[i].index = _index;
+                        break;
+                    }
+                }
+            }
+           
+            function showAcronym(acronymValue,solutionValue) {
+                //declare locals
+                var acronymComp = document.getElementById("acronym");
+                var solutionComp = document.getElementById("solution");
+               
+                //hide the solution, and show the acronym
+                solutionComp.style.display = "none";
+                acronymComp.style.display = "block";
+               
+                //set the value to display
+                acronymComp.innerHTML = acronymValue;
+                solutionComp.innerHTML = solutionValue;
+            }
+           
+            function showSolution() {
+                //declare locals
+                //var acronymComp = document.getElementById("acronym");
+                var solutionComp = document.getElementById("solution");
+               
+                //hide the acronym, and show the solution
+                //acronymComp.style.display = "none";
+                solutionComp.style.display = "block";
+           }
+           
+            function showAcronymBySubject() {
+                //declare locals
+                var cmbSubj = document.getElementById("cmbSubject");
+                var navbar = document.getElementById("navbar");
+                var subjValue = null;
+                var index = -1;
+                var acronymValue = null;
+                var solutionValue = null;
+                var totalPerSubject = 0;
+               
+                //get the subject
+                subjValue = cmbSubj.value;
+               
+                //check for nulls
+                if (subjValue==null || subjValue=="" || subjValue=="0") {
+                    acronymValue = "";
+                    solutionValue = "";
+                    showAcronym(acronymValue,solutionValue);
+                    setButtonsDisplayByIndex(-1);
+                    navbar.innerHTML = "";
+                    return;
+                }
+               
+                //get the currently displayed acronym's index
+                index = getIndexBySubject(subjValue);
+               
+                //get the total values for this subject
+                totalPerSubject = getAcronymsCountBySubject(subjValue);
+               
+                //check for a valid index
+                if (index<0 || index>(totalPerSubject-1)) {
+                    index = 0;
+                }
+               
+                //get the next item to display
+                acronymValue = getNextAcronymBySubjectAndIndex(subjValue,index);
+                solutionValue = getNextSolutionBySubjectAndIndex(subjValue,index);
+                showAcronym(acronymValue,solutionValue);
+               
+                //save the ne index
+                setIndexBySubject(subjValue,index);
+               
+                //set the buttons display by the index
+                setButtonsDisplayByIndex(index);
+               
+                //display a navbar info
+                navbar.innerHTML = (index+1) + " " + "מתוך" + " " + totalPerSubject;
+            }
+           
+            function showNextAcronymBySubject() {
+                //declare locals
+                var cmbSubj = document.getElementById("cmbSubject");
+                var navbar = document.getElementById("navbar");
+                var subjValue = null;
+                var index = -1;
+                var acronymValue = null;
+                var solutionValue = null;
+                var totalPerSubject = 0;
+               
+                //get the subject
+                subjValue = cmbSubj.value;
+               
+                //check for nulls
+                if (subjValue==null || subjValue=="" || subjValue=="0") {
+                    acronymValue = "";
+                    solutionValue = "";
+                    showAcronym(acronymValue,solutionValue);
+                    setButtonsDisplayByIndex(-1);
+                    navbar.innerHTML = "";
+                    return;
+                }
+               
+                //get the currently displayed acronym's index
+                index = getIndexBySubject(subjValue);
+               
+                //get the total values for this subject
+                totalPerSubject = getAcronymsCountBySubject(subjValue);
+               
+                //check for a valid index
+                if (index<0 || (index+1)>(totalPerSubject-1)) {
+                    index = 0;
+                }
+                index++;
+               
+                //get the next item to display
+                acronymValue = getNextAcronymBySubjectAndIndex(subjValue,index);
+                solutionValue = getNextSolutionBySubjectAndIndex(subjValue,index);
+                showAcronym(acronymValue,solutionValue);
+               
+                //save the ne index
+                setIndexBySubject(subjValue,index);
+               
+                //set the buttons display by the index
+                setButtonsDisplayByIndex(index);
+               
+                //display a navbar info
+                navbar.innerHTML = (index+1) + " " + "מתוך" + " " + totalPerSubject;
+            }
+           
+            function showPrevAcronymBySubject() {
+                //declare locals
+                var cmbSubj = document.getElementById("cmbSubject");
+                var navbar = document.getElementById("navbar");
+                var subjValue = null;
+                var index = -1;
+                var acronymValue = null;
+                var solutionValue = null;
+                var totalPerSubject = 0;
+               
+                //get the subject
+                subjValue = cmbSubj.value;
+               
+                //check for nulls
+                if (subjValue==null || subjValue=="" || subjValue=="0") {
+                    acronymValue = "";
+                    solutionValue = "";
+                    showAcronym(acronymValue,solutionValue);
+                    setButtonsDisplayByIndex(-1);
+                    navbar.innerHTML = "";
+                    return;
+                }
+               
+                //get the currently displayed acronym's index
+                index = getIndexBySubject(subjValue);
+               
+                //get the total values for this subject
+                totalPerSubject = getAcronymsCountBySubject(subjValue);
+               
+                //check for a valid index
+                if ((index-1)<0 || index>(totalPerSubject-1)) {
+                    index = 0;
+                }
+                index--;
+               
+                //get the next item to display
+                acronymValue = getNextAcronymBySubjectAndIndex(subjValue,index);
+                solutionValue = getNextSolutionBySubjectAndIndex(subjValue,index);
+                showAcronym(acronymValue,solutionValue);
+               
+                //save the ne index
+                setIndexBySubject(subjValue,index);
+               
+                //set the buttons display by the index
+                setButtonsDisplayByIndex(index);
+               
+                //display a navbar info
+                navbar.innerHTML = (index+1) + " " + "מתוך" + " " + totalPerSubject;
+            }
+           
+            function setButtonsDisplayByIndex(_index) {
+                //declare locals
+                var cmbSubj = document.getElementById("cmbSubject");
+                var btnPrev = document.getElementById("btnPrev");
+                var btnNext = document.getElementById("btnNext");
+                var btnSol = document.getElementById("btnSol");
+                var subjValue = null;
+                var totalPerSubject = 0;
+               
+                //get the subject
+                subjValue = cmbSubj.value;
+               
+                //get the total values for this subject
+                totalPerSubject = getAcronymsCountBySubject(subjValue);
+               
+                //check for nulls
+                if (subjValue==null || subjValue=="" || subjValue=="0") {
+                    btnPrev.disabled = true;
+                    btnNext.disabled = true;
+                    btnSol.disabled = true;
+                    return;
+                }
+                btnPrev.disabled = false;
+                btnNext.disabled = false;
+                btnSol.disabled = false;
+               
+                //check the index
+                if (_index<=0) {
+                    btnPrev.disabled = true;
+                    return;
+                }
+                if ((_index+1)>(totalPerSubject-1)) {
+                    btnNext.disabled = true;
+                    return;
+                }
+            }
+                                               
+                                                function renderTimer(_containerId,_title) {
+                                                                //declare locals
+                                                                var _timerObj = document.getElementById("timer");
+                                                                var _containerObj = document.getElementById(_containerId);
+                                                                var _html = "";
+                                                               
+                                                                //check for existing elements
+                                                                if (_timerObj!=null) {
+                                                                                return;
+                                                                }
+                                                               
+                                                                //check for a container
+                                                                if (_containerObj==null) {
+                                                                                alert("renderTimer(): Container with id [" + _containerId + "] does NOT exist!");
+                                                                                return;
+                                                                }
+                                                               
+                                                                //build the html
+                                                                _html += "<div id=\"title\" class=\"timerTitle\" >" + _title + "</div>";
+                                                                _html += "<input type=\"button\" id=\"btnStart\" class=\"btnStart\" value=\"Start\" onclick=\"startTimer();\" />";
+                                                                _html += "<input type=\"text\" id=\"txtTime\" class=\"timerTxtTime\" value=\"10\" maxlength=\"6\" />";
+                                                                _html += "<input type=\"button\" id=\"btnStop\" class=\"btnStop\" value=\"Stop\" disabled=\"disabled\" onclick=\"stopTimer();\" />";
+                                                                _html += "<div id=\"timer\" class=\"timerComp\" />";
+                                                               
+                                                                //render the html
+                                                                _containerObj.innerHTML = _html;
+                                                }
+                                               
+                                                function startTimer() {
+                                                                //declare locals
+                                                                var timerId = "timer";
+                                                                var timeObjId = "txtTime";
+                                                                var timeObj = document.getElementById(timeObjId);
+                                                                var timeObjValue = null;
+                                                                var intTimeObjValue = null;
+                                                               
+                                                                //stop any previous timer
+                                                                stopTimer();
+                                                                stopBlinker();
+                                                               
+                                                                //check for nulls
+                                                                if (timeObj==null) {
+                                                                                return;
+                                                                }
+                                                               
+                                                                //get the value
+                                                                timeObjValue = timeObj.value;
+                                                               
+                                                                //check for valid values
+                                                                if (timeObjValue==null || timeObjValue=="" || isNaN(timeObjValue)) {
+                                                                                return;
+                                                                }
+                                                               
+                                                                //parse the value into an integer
+                                                                intTimeObjValue = parseInt(timeObjValue);
+                                                               
+                                                                //invoke the method
+                                                                //alert("before createTimer(): timerId=[" + timerId + "] intTimeObjValue=[" + intTimeObjValue + "]");
+                                                                createTimer(timerId, intTimeObjValue);
+                                                               
+                                                                //set the buttons' display
+                                                                var btnStart = document.getElementById("btnStart");
+                                                                var btnStop = document.getElementById("btnStop");
+                                                                btnStop.disabled = false;
+                                                                btnStart.disabled = true;
+                                                }
+ 
+                                                function stopTimer() {
+                                                                if (interval!=null) {
+                                                                                window.clearInterval(interval);
+                                                                }
+                                                               
+                                                                //set the buttons' display
+                                                                var btnStart = document.getElementById("btnStart");
+                                                                var btnStop = document.getElementById("btnStop");
+                                                                btnStart.disabled = false;
+                                                                btnStop.disabled = true;
+                                                }
+                                               
+                                                function createTimer(timerID, time) {
+                                                                timer = document.getElementById(timerID);
+                                                                totalMilliseconds = (time*1000);
+                                                                updateTimer()
+                                                                interval = window.setInterval("tick()", timeout);
+                                                }
+                                               
+                                                function tick() {
+                                                                if (totalMilliseconds <= 0) {
+                                                                                stopTimer();
+                                                                                startBlinker("timer");
+                                                                                return;
+                                                                }
+                                                                totalMilliseconds -= timeout;
+                                                                updateTimer();
+                                                }
+                                               
+                                                function leadingZero(time) {
+                                                                return (time < 10) ? ("0" + time) : time;
+                                                }
+                                               
+                                                function leadingZeros(time) {
+                                                                //declare locals
+                                                                var retVal = "";
+                                                               
+                                                                //check the length
+                                                                if (time<10) {
+                                                                                retVal = "00" + time;
+                                                                }
+                                                                else if (time<100) {
+                                                                                retVal = "0" + time;
+                                                                }
+                                                                else {
+                                                                                retVal = time;
+                                                                }
+                                                                return retVal;
+                                                }
+                                               
+                                                function updateTimer() {
+                                                                var seconds = Math.round(totalMilliseconds/1000);
+                                                                var days = Math.floor(seconds / 86400);
+                                                                seconds -= days * 86400;
+                                                                var hours = Math.floor(seconds / 3600);
+                                                                seconds -= hours * (3600);
+                                                                var minutes = Math.floor(seconds / 60);
+                                                                seconds -= minutes * (60);
+                                                                var timeStr = ((days > 0) ? (showDays ? days + " Days " : "0 Days ") : "") + leadingZero(hours) + ":" + leadingZero(minutes) + ":" + leadingZero(seconds);
+                                                                var millisecs = (((seconds+1)*1000) - totalMilliseconds);
+                                                                millisecs = (millisecs % 1000);
+                                                                if (millisecs<0) {
+                                                                                millisecs = Math.abs(millisecs);
+                                                                }
+                                                                timeStr += ":" + leadingZeros(millisecs);
+                                                                timer.innerHTML = timeStr;
+                                                }
+ 
+                                                function setTimerDisplay() {
+                                                                //declare locals
+                                                                var containerId = "timerContainer";
+                                                                var _containerObj = document.getElementById(containerId);
+                                                                var _display = null;
+ 
+                                                                //check for a container
+                                                                if (_containerObj==null) {
+                                                                                return;
+                                                                }
+                                                               
+                                                                //get the container's display
+                                                                _display   = _containerObj.style.display;
+                                                               
+                                                                //check the container's display
+                                                                if (_display=="" || _display=="none") {
+                                                                                _display = "block";
+                                                                }
+                                                                else {
+                                                                                _display = "none";
+                                                                                stopTimer();
+                                                                }
+                                                               
+                                                                //set the container's display
+                                                                _containerObj.style.display = _display;
+                                                }
+                                                                                               
+                                                function stopBlinker() {
+                                                                if (blinkerInterval!=null) {
+                                                                                window.clearInterval(blinkerInterval);
+                                                                }
+                                                               
+                                                                //declare locals
+                                                                var _elemObj = document.getElementById("timer");
+                                                               
+                                                                //check for nulls
+                                                                if (_elemObj==null) {
+                                                                                return;
+                                                                }
+                                                               
+                                                                //set the element's display
+                                                                _elemObj.style.display = "block";
+                                                }
+                                                                                               
+                                                function startBlinker(_elemId) {
+                                                                //declare locals
+                                                                var _elemObj = document.getElementById(_elemId);
+                                                               
+                                                                //check for nulls
+                                                                if (_elemObj==null) {
+                                                                                return;
+                                                                }
+                                                               
+                                                                //start the blinker
+                                                                blinkerInterval = window.setInterval("blink('" + _elemId + "')", blinkerTimeout);
+                                                }
+                                               
+                                                function blink(_elemId) {
+                                                                //declare locals
+                                                                var _elemObj = document.getElementById(_elemId);
+                                                                var _display = null;
+                                                               
+                                                                //check for nulls
+                                                                if (_elemObj==null) {
+                                                                                return;
+                                                                }
+                                                               
+                                                                //get the element's display
+                                                                _display = _elemObj.style.display;
+                                                               
+                                                                //check the display
+                                                                if (_display==null || _display=="") {
+                                                                                _display = "block";
+                                                                }
+                                                                if (_display=="block") {
+                                                                                _display = "none";
+                                                                }
+                                                                else if (_display=="none") {
+                                                                                _display = "block";
+                                                                }
+                                                               
+                                                                //set the element's display
+                                                                _elemObj.style.display = _display;
+                                                }
+        </script>
+    </head>
+    <body onload="init();">
+        <center>
+                <table class="pageTable" border="0">
+                                <tr>
+                                                <td>
+                                                                <table border="0" style="height:100%;width:100%;">
+                                                                                <tr class="headerRow">
+                                                                                                <td class="rowCol" coslpan="2">
+                                                                                                                <div class="header">ראשי תיבות</div>
+                                                                                                </td>
+                                                                                </tr>
+                                                                                <tr class="subjectRow">
+                                                                                                <td class="rowCol" coslpan="2">
+                                                                                                                <div dir="rtl" class="subjects" id="subjects">
+                                                                                                                                נושאים: <select size="1" id="cmbSubject" onchange="showAcronymBySubject();">
+                                                                                                                                </select>
+                                                                                                                </div>
+                                                                                                </td>
+                                                                                </tr>
+                                                                                <tr class="toolbarRow">
+                                                                                                <td class="rowCol" coslpan="2">
+                                                                                                                <div dir="rtl" id="toolbar" class="toolbar">
+                                                                                                                                <input id="btnPrev" class="btnPrev" type="button" value="הקודם <-" title="לחצ/י כאן בכדי לעבור לראשי התיבות הקודמים" onclick="showPrevAcronymBySubject();" />
+                                                                                                                                <input id="btnSol" class="btnSol" type="button" value="פירוש" title="לחצ/י כאן בכדי לפרש את ראשי התיבות" onclick="showSolution();" />
+                                                                                                                                <input id="btnNext" class="btnNext" type="button" value="הבא ->" title="לחצ/י כאן בכדי לעבור לראשי התיבות הבאים" onclick="showNextAcronymBySubject();" />
+                                                                                                                </div>
+                                                                                                </td>
+                                                                                </tr>
+                                                                                <tr class="navbarRow">
+                                                                                                <td class="rowCol" coslpan="2">
+                                                                                                                <div dir="rtl" id="navbar" class="navbar"></div>
+                                                                                                </td>
+                                                                                </tr>
+                                                                                <tr class="acronymRow">
+                                                                                                <td class="rowCol" coslpan="2">
+                                                                                                                <div dir="ltr" class="acronym" id="acronym"></div>
+                                                                                                </td>
+                                                                                </tr>
+                                                                                <tr class="solutionsRow">
+                                                                                                <td class="solutionCol">
+                                                                                                                <div dir="ltr" class="solution" id="solution"></div>
+                                                                                                </td>
+                                                                                                <td class="timerCol">
+                                                                                                                <img src="bell.png" class="btnTimer" title="לחצ/י כאו בכדי להציג/להסתיר שעון עצר" onclick="setTimerDisplay();" />
+                                                                                                                <div id="timerContainer" class="timerContainer"></div>
+                                                                                                </td>
+                                                                                </tr>
+                                                                </table>
+                                                </td>
+                                </tr>
+                                <tr>
+                                                <td class="footerRow">
+                                                                <span dir="ltr" class="refLbl">Data Source: </span><span dir="ltr" class="ref">Fioretta B.M., (2003), <u>Elsevier's Dictionary of Acronyms, Initialisms, Abbreviations and Aymbols, Amsterdam</u>, (ISBN: 0444512411).</span>
+                                                </td>
+                                </tr>
+                </table>
+        </center>
+    </body>
+</html>

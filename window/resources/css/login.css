@@ -1,0 +1,67 @@
+
+body {
+	background-color: #000000;
+	overflow: auto;
+}
+
+.login-container {
+	width: 950px;
+	height: 350px;
+	border: 2px solid #ffffff;
+}
+
+.login-window {
+	border-bottom: 3px solid #0000ff;
+	border-top: 0px solid #0000ff;
+	border-left: 0px solid #0000ff;
+	border-right: 0px solid #0000ff;
+	background-color: #ffffff;
+	position: relative;
+	top: 10%;
+	left: 10%;
+	width: 270px;
+	float: left;
+}
+
+.login-window-content{
+	height: 85px;
+}
+
+.login-header-icon {
+	background-image: url(../images/login-header-icon.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 16px;
+	height: 16px;
+}
+
+.login-button-login-container {
+	text-align: right;
+	padding-right: 5px;
+}
+
+.login-button {
+	background-color: darkgrey;
+	border: 1px solid #000000;
+	padding-left: 5px;
+	cursor: pointer;
+	width: 80px;
+}
+
+.login-button-login {
+	background-image: url(../images/login-button-login.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+.login-button-cancel-container {
+	text-align: left;
+	padding-left: 5px;
+}
+
+
+.login-button-cancel {
+	background-image: url(../images/login-button-cancel.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}

@@ -1,0 +1,156 @@
+
+.sbComponent {
+	background-image: url('images/background.gif');
+	background-repeat: repeat-x;
+	border: 2px groove #cccccc;
+}
+
+.sbTable {
+	height: 100%;
+}
+
+.sbFont {
+	font-family: verdana;
+	font-size: 12px;
+	font-weight: normal;
+	color: #ffffff;
+	cursor: default;
+}
+
+.sbConfigColumn {
+	width: 34px;
+}
+
+.sbConfigDiv {
+	width: 300px;
+	height: 179px;
+	display: none;
+	border: 2px solid #000000;
+	position: absolute;
+}
+
+.sbConfigHeaderRow {
+	background-image: url('images/background.gif');
+	background-repeat: repeat-x;
+	height: 30px;
+	vertical-align: middle;
+}
+
+.sbConfigHeader {
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: bold;
+	color: #ffffff;
+	vertical-align: middle;
+}
+
+.sbConfigFooterRow {
+	background-image: url('images/background.gif');
+	background-repeat: repeat-x;
+	height: 30px;
+	vertical-align: middle;
+}
+
+.sbConfigFooter {
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: bold;
+	color: #ffffff;
+	vertical-align: middle;
+}
+
+.sbConfigButton {
+	height: 21px;
+	width: 21px;
+	vertical-align: middle;
+	border: 1px inset transparent;
+}
+
+.sbConfigButtonHover {
+	height: 21px;
+	width: 21px;
+	vertical-align: middle;
+	border: 1px inset #ffffff;
+	cursor: pointer;
+}
+
+.sbConfigRow {
+	background-color: #ffffff;
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: normal;
+	color: #000000;
+}
+
+.sbConfigBodyDiv {
+	height: 100px;
+	/*width: 100%;*/
+	overflow: auto;
+	border: 1px solid transparent;
+}
+
+.sbConfigOptionsOptionColumnHeader {
+	background-color: #aaaaaa;
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: bold;
+	color: #ffffff;
+	width: 250px;
+}
+
+.sbConfigOptionsValueColumnHeader {
+	background-color: #aaaaaa;
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: bold;
+	color: #ffffff;
+	width: 180px;
+}
+
+.sbConfigOptionsOptionColumn {
+	border-right: 1px solid #000000;
+	border-bottom: 1px solid transparent;
+	width: 250px;
+}
+
+.sbConfigOptionsHSpace {
+	width: 5px;
+}
+
+.sbConfigOptionsValueColumn {
+	border-bottom: 1px solid transparent;
+	width: 150px;
+}
+
+.sbConfigFieldLabel {
+	width: 100%;
+	white-space: nowrap;
+}
+
+.sbConfigFieldError {
+	border: 1px solid #ff0000;
+}
+
+.sbHSpace {
+	width: 5px;
+}
+
+.sbNonBorderedColumn {
+	padding-left: 5px;
+	padding-right: 5px;
+	height: 80%;
+}
+
+.sbBorderedColumnLeft {
+	border-left: 2px groove #cccccc;
+	padding-left: 5px;
+	padding-right: 5px;
+	height: 80%;
+}
+
+.sbBorderedColumnRight {
+	border-right: 2px groove #cccccc;
+	padding-left: 5px;
+	padding-right: 5px;
+	height: 80%;
+}

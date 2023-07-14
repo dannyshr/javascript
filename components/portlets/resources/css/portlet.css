@@ -1,0 +1,225 @@
+/* ECI 2009 (c) */
+
+.portletsContainer {
+	background-color: #aaaaaa;
+	margin: 0 auto;
+	border: 1px solid #000000;
+	height: 1200px;
+}
+
+.portletContainerColumn {
+	vertical-align: top; 
+	width: 49%;
+}
+
+.portletContainerRow {
+	/* leave empty as this is 
+	just a place holder */ 
+}
+
+.sort_placeholder {
+	/* leave empty as this is 
+	just a place holder */ 
+}
+
+._portlet {
+	/* leave empty as this is 
+	just a place holder */ 
+}
+
+._portletHeader {
+	/* leave empty as this is 
+	just a place holder */ 
+}
+
+._portletBody {
+	/* leave empty as this is 
+	just a place holder */ 
+}
+
+.portlet {
+	border: 0px solid #000000;
+	margin: 0 0 10px;
+	width: 100%;
+}
+
+.portlet-disabled {
+	border: 0px solid #000000;
+	margin: 0 0 10px;
+	width: 100%;
+}
+
+.portletHeader {
+	background-image: url('portlet/headerBackground.gif');
+	background-repeat: repeat-x;
+	background-color: transparent;
+	cursor: move;
+	height: 27px;
+}
+
+.portletHeader-disabled {
+	background-image: url('portlet/headerBackground.gif');
+	background-repeat: repeat-x;
+	background-color: transparent;
+	cursor: default;
+	height: 27px;
+}
+
+.portletHeaderContainer {
+	width: 100%;
+}
+
+.portletHeaderIconTd {
+	padding-top: 2px;
+	padding-left: 5px;
+	vertical-align: middle;
+	width: 3%;
+}
+
+.portletHeaderIcon {
+	width: 20px;
+}
+
+.portletHeaderTitle {
+	width: 80%;
+	color: #ffffff;
+	font-family: Calibri;
+	font-size: 15px;
+	font-style: normal;
+	font-weight: bold;
+	text-align: left;
+	vertical-align: middle;
+	white-space: nowrap;
+	padding-left: 5px;
+	border: 0px solid #ffffff;
+	margin-top: 0px;
+}
+
+.portletHeaderButtons {
+	width: 17%;
+	margin-top: 0px;
+    text-align: right;
+	vertical-align: top;
+	border: 0px solid #ffffff;
+}
+
+.portletHeaderButtonClose {
+	background-image: url('portlet/close.gif');
+	background-repeat: no-repeat;
+	width: 33px;
+	height: 21px;
+	vertical-align: top;
+	border: 0px solid #000000;
+	cursor: pointer;
+}
+
+.portletHeaderButtonCloseDisabled {
+	background-image: url('portlet/closeDis.gif');
+	background-repeat: no-repeat;
+	width: 33px;
+	height: 21px;
+	vertical-align: top;
+	border: 0px solid #000000;
+	cursor: default;
+}
+
+.portletHeaderButtonCloseHover {
+	background-image: url('portlet/closeHover.gif');
+	background-repeat: no-repeat;
+	width: 33px;
+	height: 21px;
+	vertical-align: top;
+	border: 0px solid #000000;
+	cursor: pointer;
+}
+
+.portletHeaderButtonCollapse {
+	background-image: url('portlet/collapse.gif');
+	background-repeat: no-repeat;
+	width: 33px;
+	height: 21px;
+	vertical-align: top;
+	border: 0px solid #000000;
+	cursor: pointer;
+}
+
+.portletHeaderButtonCollapseDisabled {
+	background-image: url('portlet/collapseDis.gif');
+	background-repeat: no-repeat;
+	width: 33px;
+	height: 21px;
+	vertical-align: top;
+	border: 0px solid #000000;
+	cursor: default;
+}
+
+.portletHeaderButtonCollapseHover {
+	background-image: url('portlet/collapseHover.gif');
+	background-repeat: no-repeat;
+	width: 33px;
+	height: 21px;
+	vertical-align: top;
+	border: 0px solid #000000;
+	cursor: pointer;
+}
+
+.portletHeaderButtonExpand {
+	background-image: url('portlet/expand.gif');
+	background-repeat: no-repeat;
+	width: 33px;
+	height: 21px;
+	vertical-align: top;
+	border: 0px solid #000000;
+	cursor: pointer;
+}
+
+.portletHeaderButtonExpandDisabled {
+	background-image: url('portlet/expandDis.gif');
+	background-repeat: no-repeat;
+	width: 33px;
+	height: 21px;
+	vertical-align: top;
+	border: 0px solid #000000;
+	cursor: default;
+}
+
+.portletHeaderButtonExpandHover {
+	background-image: url('portlet/expandHover.gif');
+	background-repeat: no-repeat;
+	width: 33px;
+	height: 21px;
+	vertical-align: top;
+	border: 0px solid #000000;
+	cursor: pointer;
+}
+
+.portlet-content {
+	background-color: #b4cfec;
+	border-top: 0px solid #aaaaaa; 
+	border-bottom: 1px solid #aaaaaa; 
+	border-left: 1px solid #aaaaaa; 
+	border-right: 1px solid #aaaaaa; 
+	padding: 2px;
+	font-family: Calibri;
+	font-size: 14px;
+	font-weight: normal;
+	font-style: normal;
+	color: #555555;
+	height: 170px;
+}
+
+.portlet-header { cursor: move; }
+.portlet-header-disabled { cursor: default; }
+.ui-sortable-placeholder { background-color: lightyellow; width: 99% !important; height: 50px !important; border: 3px dashed black; visibility: visible !important; }
+.ui-sortable-placeholder * { visibility: hidden; }
+.container { background-color: #ffffff; width: 100%; } 
+
+.ui-corner-tl { -moz-border-radius-topleft: 4px/*{cornerRadius}*/; -webkit-border-top-left-radius: 4px/*{cornerRadius}*/; }
+.ui-corner-tr { -moz-border-radius-topright: 4px/*{cornerRadius}*/; -webkit-border-top-right-radius: 4px/*{cornerRadius}*/; }
+.ui-corner-bl { -moz-border-radius-bottomleft: 4px/*{cornerRadius}*/; -webkit-border-bottom-left-radius: 4px/*{cornerRadius}*/; }
+.ui-corner-br { -moz-border-radius-bottomright: 4px/*{cornerRadius}*/; -webkit-border-bottom-right-radius: 4px/*{cornerRadius}*/; }
+.ui-corner-top { -moz-border-radius-topleft: 4px/*{cornerRadius}*/; -webkit-border-top-left-radius: 4px/*{cornerRadius}*/; -moz-border-radius-topright: 4px/*{cornerRadius}*/; -webkit-border-top-right-radius: 4px/*{cornerRadius}*/; }
+.ui-corner-bottom { -moz-border-radius-bottomleft: 4px/*{cornerRadius}*/; -webkit-border-bottom-left-radius: 4px/*{cornerRadius}*/; -moz-border-radius-bottomright: 4px/*{cornerRadius}*/; -webkit-border-bottom-right-radius: 4px/*{cornerRadius}*/; }
+.ui-corner-right {  -moz-border-radius-topright: 4px/*{cornerRadius}*/; -webkit-border-top-right-radius: 4px/*{cornerRadius}*/; -moz-border-radius-bottomright: 4px/*{cornerRadius}*/; -webkit-border-bottom-right-radius: 4px/*{cornerRadius}*/; }
+.ui-corner-left { -moz-border-radius-topleft: 4px/*{cornerRadius}*/; -webkit-border-top-left-radius: 4px/*{cornerRadius}*/; -moz-border-radius-bottomleft: 4px/*{cornerRadius}*/; -webkit-border-bottom-left-radius: 4px/*{cornerRadius}*/; }
+.ui-corner-all { -moz-border-radius: 4px/*{cornerRadius}*/; -webkit-border-radius: 4px/*{cornerRadius}*/; }

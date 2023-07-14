@@ -1,0 +1,79 @@
+<html>
+	<head>
+		<title>Test jQuery jGrowl</title>
+		<link rel="stylesheet" href="resources/css/jquery.jgrowl.css" type="text/css"/>
+	</head>
+	<body>
+		<form id="frm1" action="" >
+			<label for="header">header</label>
+			<input type="text" value="" id="header" size="20" />
+			<label for="message">message</label>
+			<input type="text" value="" id="message" size="20" />
+			<input type="checkbox" id="cbSticky" />
+			<label for="cbSticky">sticky</label>
+			<select size="1" id="cmbpos">
+				<option value="top-left" selected>top-left</option>
+				<option value="top-right" >top-right</option>
+				<option value="bottom-left" >bottom-left</option>
+				<option value="bottom-right" >bottom-right</option>
+				<option value="center" >center</option>
+			</select>
+			<select size="1" id="cmbanim">
+				<option value="fadeOut" >fadeOut</option>
+				<option value="show" selected>show</option>
+				<option value="hide" >hide</option>
+			</select>
+			<select size="1" id="cmbeasing">
+				<option value="swing" >swing</option>
+				<option value="easeInOutExpo" selected>easeInOutExpo</option>
+				<option value="easeInOutElastic" >easeInOutElastic</option>
+			</select>
+			<input type="checkbox" id="cbCloser" />
+			<label for="cbCloser">show closer</label>
+			<select size="1" id="cmbthemes">
+				<option value="manilla" selected>manilla</option>
+				<option value="smoke" >smoke</option>
+				<option value="flora" >flora</option>
+				<option value="iPhone" >iPhone</option>
+			</select>
+			<input type="button" id="btn1" value="jGrowl" onclick="invokeJgrowl();" />
+			<div id="mydiv" class="bottom-left"></div>
+		</form>
+		<script type="text/javascript" src="../../_shared/scripts/jquery/jquery.js"></script>
+		<script type="text/javascript" src="../../_shared/scripts/jquery/jquery.ui.full.js"></script>
+		<script type="text/javascript" src="resources/scripts/jquery.jgrowl.js"></script>
+		<script type="text/javascript">
+			function invokeJgrowl() {
+				var divId = "mydiv";
+				var msg = document.getElementById('message').value;
+				var sticky = document.getElementById('cbSticky').checked;
+				var header = document.getElementById('header').value;
+				var pos = document.getElementById('cmbpos').value;
+				var anim = document.getElementById('cmbanim').value;
+				var easing = document.getElementById('cmbeasing').value;
+				var close = document.getElementById('cbCloser').checked;
+				var div = document.getElementById('mydiv');
+				var theme = document.getElementById('cmbthemes').value;
+				div.className = document.getElementById('cmbpos').value;
+				$.jGrowl(msg, { 
+					theme: 'manilla',
+					header: header,
+					sticky: sticky,
+					position: pos,
+					speed: 'slow',
+					easing: easing,
+					closer: close,
+					theme: theme,
+					animateOpen: { 
+						height: anim,
+						width: anim,
+						opacity: anim
+					},
+					animateClose: { 
+						height: "hide"
+					}
+				});
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,242 @@
+<html>
+	<head>
+		<title>Grid</title>
+		<link type="text/css" href="resources/themes/shared.css" rel="stylesheet" >
+		<link type="text/css" href="resources/themes/ui.resizable.css" rel="stylesheet" />
+		<link id="themes" type="text/css" href="resources/themes/winxp_blue.css" rel="stylesheet" >
+		<link id="themes" type="text/css" href="resources/css/grid.css" rel="stylesheet" >
+	</head>
+	<body>
+		<form action="" class="page">
+			<table border="1" cellpadding="0" cellspacing="0">
+				<tr>
+					<th></th>
+					<th>Cols</th>
+					<th></th>
+					<th>Rows</th>
+					<th>Rules</th>
+				</tr>
+				<tr>
+					<td>
+						<button type="button" onclick="createGrid('grid1');">Create Grid</button>
+					</td>
+					<td>
+						<select size="1" id="cmbCols" onchange="createGrid('grid1');">
+							<option value="20" selected>20</option>
+							<option value="50">50</option>
+							<option value="60">60</option>
+							<option value="70">70</option>
+							<option value="80">80</option>
+							<option value="90">90</option>
+							<option value="100">100</option>
+							<option value="110">110</option>
+							<option value="120">120</option>
+						</select>
+					</td>
+					<td>x</td>
+					<td>
+						<select size="1" id="cmbRows" onchange="createGrid('grid1');">
+							<option value="20" selected>20</option>
+							<option value="50">50</option>
+							<option value="60">60</option>
+							<option value="70">70</option>
+							<option value="80">80</option>
+							<option value="90">90</option>
+							<option value="100">100</option>
+							<option value="110">110</option>
+							<option value="120">120</option>
+						</select>
+					</td>
+					<td>
+						<select size="1" id="cmbRules" onchange="setGridRules('grid1',this.value);">
+							<option value="all" selected>all</option>
+							<option value="cols">cols</option>
+							<option value="rows">rows</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+			<div class="grid-container">
+				<table id="grid1" class="grid" rules="all" border="1" cellpadding="0" cellspacing="0">
+				</table>
+			</div>
+			<div id="widget1" class="component">
+				<div class="handler">
+					Handler
+				</div>
+				<div class="content">
+					Component contents
+				</div>
+			</div>
+			
+			<script type="text/javascript" src="../../_shared/scripts/jquery/jquery.js"></script>
+			<script type="text/javascript" src="../../_shared/scripts/jquery/jquery.ui.full.js"></script>
+			<script type="text/javascript" >
+
+				function setMoveable(_compId) {
+					var comp = $("#"+_compId);
+					var handler = comp.find(".handler");
+					var container = $("#grid1");
+					var opts = null;
+					var containerRows = 0;
+					var containerCols = 0;
+					var snapToGridHeight = 10;
+					var snapToGridWidth = 10;
+					var contents = null;
+					var msg = null;
+					
+					//compute grid cell size
+					if (container[0].rows!=null) {
+						containerRows = container[0].rows.length;
+					}
+					if (container[0].rows[0]!=null) {
+						containerCols = container[0].rows[0].cells.length;
+					}
+					if (containerRows>0) {
+						snapToGridHeight = (container.innerHeight()/containerRows);
+					}
+					if (containerCols>0) {
+						snapToGridWidth = (container.innerWidth()/containerCols);
+					}
+					
+					//get elements
+					contents = $(".content");
+					
+					//create a message
+					msg = "snapToGridHeight:"+snapToGridHeight+"<br/>";
+					msg += "snapToGridWidth:"+snapToGridWidth+"<br/>";
+					msg += "containerRows:"+containerRows+"<br/>";
+					msg += "containerCols:"+containerCols+"<br/>";
+					msg += "container.innerHeight:"+container.innerHeight()+"<br/>";
+					msg += "container.innerWidth:"+container.innerWidth()+"<br/>";
+					msg += "component.innerHeight:"+contents.innerHeight()+"<br/>";
+					msg += "component.innerWidth:"+contents.innerWidth()+"<br/>";
+					msg += "component.left:"+contents.position().left+"<br/>";
+					msg += "component.top:"+contents.position().top+"<br/>";
+					contents[0].innerHTML = msg;
+					
+					//set moveable options
+					opts = { grid: [snapToGridWidth,snapToGridHeight], stack: { group: ".component", min: 50 }, containment: "#grid1" };
+					comp.draggable("destroy");
+					comp.draggable(opts);
+					comp.draggable("enable");
+				}
+				
+				function setResizeable(_compId) {
+					var comp = $("#"+_compId);
+					var container = $("#grid1");
+					var opts = null;
+					var numRows = 0;
+					var numCols = 0;
+					var snapToGridHeight = 10;
+					var snapToGridWidth = 10;
+					
+					//compute grid cell size
+					if (container[0].rows!=null) {
+						numRows = container[0].rows.length;
+					}
+					if (container[0].rows[0]!=null) {
+						numCols = container[0].rows[0].cells.length;
+					}
+					if (numRows>0) {
+						snapToGridHeight = parseInt(container.innerHeight()/numRows);
+					}
+					if (numCols>0) {
+						snapToGridWidth = parseInt(container.innerWidth()/numCols);
+					}
+					
+					//set resizable options
+					opts = { grid: [snapToGridWidth,snapToGridHeight], containment: "#grid1" };
+					comp.resizable("destroy");
+					comp.resizable(opts);
+					comp.resizable("enable");
+				}
+				
+				function createGrid(_gridId) {
+					//declare locals
+					var height = screen.availHeight;
+					var width = screen.availWidth;
+					var minRowHeight = 5;
+					var minColWidth = 5;
+					var numRows = document.getElementById("cmbRows").value;
+					var numCols = document.getElementById("cmbCols").value;
+					//numRows = (height / minRowHeight);
+					//numCols = (width / minColWidth);
+					var maxRows = 200;
+					var maxCols = 200;
+					numRows = (numRows>maxRows) ? maxRows : numRows;
+					numCols = (numCols>maxCols) ? maxCols : numCols;
+					var comp = null;
+					var html = "";
+					
+					//get elements by their ids
+					comp = $("#"+_gridId);
+					
+					//check for nulls
+					if (comp==null) {
+						return;
+					}
+					
+					//alert("height:"+height+"\nwidth:"+width+"\nnumRows:"+numRows+"\nnumCols:"+numCols);
+					//set the browser's cursor
+					document.cursor = "wait";
+					
+					//delete any previously created grid
+					comp[0].innerHTML = html;
+					
+					//loop through the rows
+					for (var i=0;i<numRows;i++) {
+						//start a row
+						html += "<tr>"
+						
+						//loop through the cols
+						for (var j=0;j<numCols;j++) {
+							//create a cell
+							html += "<td></td>"
+						}
+						
+						//end a row
+						html += "</tr>"
+					}
+					
+					//display the grid
+					comp[0].innerHTML = html;
+					
+					//set the browser's cursor
+					document.cursor = "default";
+					
+					setMoveable("widget1");
+					setResizeable("widget1");
+				}
+				
+				function setGridRules(_gridId,_newValue) {
+					var comp = null;
+					
+					//get elements by their ids
+					comp = $("#"+_gridId);
+					
+					//check for nulls
+					if (comp==null) {
+						return;
+					}
+					
+					comp.attr("rules",_newValue)
+				}
+				
+				function initWidget(_compId) {
+					$("#"+_compId).mouseover(function() {
+						$(this).css("border","3px dashed #000000");
+					});
+					
+					$("#"+_compId).mouseout(function() {
+						$(this).css("border","0px dashed #000000");
+					});
+				}
+				
+				initWidget("widget1");
+				setMoveable("widget1");
+				setResizeable("widget1");
+			</script>
+		</form>
+	</body>
+</html>

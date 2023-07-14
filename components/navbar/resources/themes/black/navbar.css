@@ -1,0 +1,281 @@
+
+.nbNavbar {
+	background-image: url('images/background.gif');
+	background-repeat: repeat-x;
+	height: 34px;
+}
+
+.nbNavbarTable {
+	height: 100%;
+}
+
+.nbNavbarRecordInfoColumn {
+	width: 180px;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+.nbNavbarRecordInfoLabel {
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: normal;
+	color: #ffffff;
+}
+
+.nbNavbarTotalRecords {
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+.nbNavbarButtonsColumn {
+	width: 150px;
+}
+
+.nbNavbarPageinfoColumn {
+	width: 150px;
+}
+
+.nbNavbarPagesizeColumn {
+	width: 150px;
+}
+
+.nbNavbarThemesColumn {
+	width: 150px;
+}
+
+.nbNavbarConfigColumn {
+	width: 50px;
+}
+
+.nbNavbarButtonColumn {
+	width: 34px;
+	height: 34px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+* html .nbNavbarButton {
+	border: 1px solid transparent;
+	height: 75%;
+	width: 60%;
+	vertical-align: middle;
+	margin-top: 6px;
+}
+
+* html .nbNavbarButtonDisabled {
+	border: 1px solid transparent;
+	cursor: default;
+	height: 75%;
+	width: 60%;
+	vertical-align: middle;
+	margin-top: 6px;
+}
+
+* html .nbNavbarButtonHover {
+	border: 1px inset #ffffff;
+	cursor: pointer;
+	height: 75%;
+	width: 60%;
+	vertical-align: middle;
+	margin-top: 6px;
+}
+
+.nbNavbarButton {
+	border: 1px solid transparent;
+	height: 60%;
+	width: 60%;
+	vertical-align: middle;
+}
+
+.nbNavbarButtonDisabled {
+	border: 1px solid transparent;
+	height: 60%;
+	width: 60%;
+	vertical-align: middle;
+	cursor: default;
+}
+
+.nbNavbarButtonHover {
+	border: 1px inset #ffffff;
+	cursor: pointer;
+	height: 60%;
+	width: 60%;
+	vertical-align: middle;
+}
+
+.nbNavbarPageInfoPageLabelColumn {
+	width: 40px;
+}
+
+.nbNavbarPageInfoPageNumberColumn {
+	width: 40px;
+}
+
+.nbNavbarPageInfoOfLabelColumn {
+	text-align: center;
+	width: 30px;
+}
+
+.nbNavbarPageInfoTotalColumn {
+	width: 20px;
+}
+
+.nbNavbarPageInfoLabel {
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: normal;
+	color: #ffffff;
+}
+
+.nbNavbarPageInfoPageNumber {
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: bold;
+	color: #ffffff;
+	text-align: center;
+}
+
+.nbNavbarPageInfoTotalPages {
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+.nbNavbarPageSizeLabelColumn {
+
+}
+
+.nbNavbarPageSizeComboColumn {
+
+}
+
+.nbNavbarPageSizeLabel {
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: normal;
+	color: #ffffff;
+}
+
+.nbNavbarPageSizeCombo {
+
+}
+
+.nbNavbarThemesLabel {
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: normal;
+	color: #ffffff;
+}
+
+.nbNavbarConfigDiv {
+	width: 300px;
+	height: 179px;
+	display: none;
+	border: 2px solid #000000;
+	position: absolute;
+}
+
+.nbNavbarConfigHeaderRow {
+	background-image: url('images/background.gif');
+	background-repeat: repeat-x;
+	height: 30px;
+	vertical-align: middle;
+}
+
+.nbNavbarConfigHeader {
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: bold;
+	color: #ffffff;
+	vertical-align: middle;
+}
+
+.nbNavbarConfigFooterRow {
+	background-image: url('images/background.gif');
+	background-repeat: repeat-x;
+	height: 30px;
+	vertical-align: middle;
+}
+
+.nbNavbarConfigFooter {
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: bold;
+	color: #ffffff;
+	vertical-align: middle;
+}
+
+.nbNavbarConfigButton {
+	height: 21px;
+	width: 21px;
+	vertical-align: middle;
+	border: 1px inset transparent;
+}
+
+.nbNavbarConfigButtonHover {
+	height: 21px;
+	width: 21px;
+	vertical-align: middle;
+	border: 1px inset #ffffff;
+	cursor: pointer;
+}
+
+.nbNavbarConfigRow {
+	background-color: #ffffff;
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: normal;
+	color: #000000;
+}
+
+.nbNavbarConfigBodyDiv {
+	height: 100px;
+	/*width: 100%;*/
+	overflow: auto;
+	border: 1px solid transparent;
+}
+
+.nbNavbarConfigOptionsOptionColumnHeader {
+	background-color: #aaaaaa;
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: bold;
+	color: #ffffff;
+	width: 250px;
+}
+
+.nbNavbarConfigOptionsValueColumnHeader {
+	background-color: #aaaaaa;
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: bold;
+	color: #ffffff;
+	width: 180px;
+}
+
+.nbNavbarConfigOptionsOptionColumn {
+	border-right: 1px solid #000000;
+	border-bottom: 1px solid transparent;
+	width: 250px;
+}
+
+.nbNavbarConfigOptionsHSpace {
+	width: 5px;
+}
+
+.nbNavbarConfigOptionsValueColumn {
+	border-bottom: 1px solid transparent;
+	width: 150px;
+}
+
+.nbNavbarConfigFieldLabel {
+	width: 100%;
+	white-space: nowrap;
+}
+
+.nbNavbarConfigFieldError {
+	border: 1px solid #ff0000;
+}

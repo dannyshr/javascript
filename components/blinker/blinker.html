@@ -1,0 +1,89 @@
+<html>
+	<head>
+		<title>Blink test</title>
+		<link href="resources/css/blinker.css" rel="stylesheet" type="text/css" />
+		<script src="../../../_shared/scripts/utils/utils.js" language="javascript"></script>
+		<script src="resources/scripts/blinker.js" language="javascript"></script>
+	</head>
+	<body>
+		<form>
+			<table border="1" cellpadding="0" cellspacing="0">
+				<tr>
+					<td colspan="2">
+						<input type="text" id="txt1" name="txt1" value="initial text1">
+					</td>
+					<td colspan="2">
+						<input type="text" id="txt2" name="txt2" value="initial text2">
+					</td>
+					<td colspan="2">
+						<input type="text" id="txt3" name="txt3" value="initial text3">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<button type="button" onclick="blinker1.blink();">
+							<table border="0" cellpadding="0" cellspacing="0">
+								<tr>
+									<td>
+										<img src="resources/images/locked.gif">
+									</td>
+									<td class="buttonText">
+										Blink
+									</td>
+								</tr>
+							</table>
+						</button>
+					</td>
+					<td>
+						<button type="button" onclick="blinker1.stopBlinking();">
+							<span class="buttonText">Stop Blinking</span>
+						</button>
+					</td>
+					<td>
+						<button type="button" onclick="blinker2.blink();">
+							<table border="0" cellpadding="0" cellspacing="0">
+								<tr>
+									<td>
+										<img src="resources/images/locked.gif">
+									</td>
+									<td class="buttonText">
+										Blink
+									</td>
+								</tr>
+							</table>
+						</button>
+					</td>
+					<td>
+						<button type="button" onclick="blinker2.stopBlinking();">
+							<span class="buttonText">Stop Blinking</span>
+						</button>
+					</td>
+					<td>
+						<button type="button" onclick="blinker3.blink();">
+							<table border="0" cellpadding="0" cellspacing="0">
+								<tr>
+									<td>
+										<img src="resources/images/locked.gif">
+									</td>
+									<td class="buttonText">
+										Blink
+									</td>
+								</tr>
+							</table>
+						</button>
+					</td>
+					<td>
+						<button type="button" onclick="blinker3.stopBlinking();">
+							<span class="buttonText">Stop Blinking</span>
+						</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+		<script language="javascript">
+			var blinker1 = new Blinker('txt1',null,true);
+			var blinker2 = new Blinker('txt2',null,true);
+			var blinker3 = new Blinker('txt3',null,true);
+		</script>
+	</body>
+</html>

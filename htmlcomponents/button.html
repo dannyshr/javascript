@@ -1,0 +1,234 @@
+<html>
+<head>
+	<title>Button</title>
+	<link href="resources/themes/blue/button/button.css" type="text/css" rel="stylesheet" id="themesLink" name="themesLink" />
+</head>
+
+<body >
+	<form id="frmButtons" >
+		<table>
+			<tr>
+				<td>Theme: </td>
+				<td>
+					<select size="1" id="cmbThemes" name="cmbThemes" onchange="changeTheme('themesLink',this.value);" >
+						<option value="resources/themes/black/button/button.css">Black</option>
+						<option value="resources/themes/blue/button/button.css" selected>Blue</option>
+						<option value="resources/themes/green/button/button.css">Green</option>
+						<option value="resources/themes/orange/button/button.css">Orange</option>
+						<option value="resources/themes/red/button/button.css">Red</option>
+						<option value="resources/themes/skyblue/button/button.css">Skyblue</option>
+						<option value="resources/themes/white/button/button.css">White</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		<label for="txt1">Text1: </label><input type="text" id="txt1" name="txt1" maxlength="10" value="">
+		<label for="txt2">Text2: </label><input type="text" id="txt2" name="txt2" maxlength="10" value="">
+		<table border="1">
+			<tr>
+				<th>
+					Button
+				</th>
+				<th>
+					Custom?
+				</th>
+				<th>
+					Disabled
+				</th>
+				<th>
+					Opacity
+				</th>
+				<th>
+					Position
+				</th>
+				<th>
+					Icon
+				</th>
+				<th>
+					Title
+				</th>
+				<th>
+					Type="Submit"
+				</th>
+			</tr>
+			<tr>
+				<td>
+					<input id="btn1" name="btn1" value="Button 1" type="button" imagePosition="imagePositionLeft" styleClassBackground="buttonBackground" styleClassBackgroundHover="buttonHoverBackground" styleClassBackgroundDisabled="buttonDisabledBackground" styleClass="button" styleClassHover="buttonHover" styleClassDisabled="buttonDisabled" styleClassOpaque="opaque" styleClassText="buttonText" styleClassTextHover="buttonTextHover" styleClassTextDisabled="buttonTextDisabled" image="" imageHover="" imageDisabled="" onmouseout="toggleButtonModeMouseout(this.id);" onmouseover="toggleButtonModeMouseover(this.id);" onclick="this.blur();if (confirmClickedButton(this.id)) {showClickedButton(this.id);} else {return false;}"/>
+				</td>
+				<td align="center">
+					<input id="cbBtn1Custom" name="cbBtn1Custom" type="checkbox" onclick="customizeButton('btn1',this.checked);" />
+				</td>
+				<td align="center">
+					<input id="cbBtn1Disabled" name="cbBtn1Disabled" type="checkbox" onclick="disableButton('btn1',this.checked);" />
+				</td>
+				<td align="center">
+					<input id="cbBtn1Opacity" name="cbBtn1Opacity" type="checkbox" onclick="toggleButtonOpacity('btn1',this.checked);" />
+				</td>
+				<td>
+					<select size="1" id="cmbPositions1" name="cmbPositions1" onchange="resetImagePosition('btn1',this.value);" >
+						<option value="" selected></option>
+						<option value="imagePositionBottom">Bottom</option>
+						<option value="imagePositionLeft">Left</option>
+						<option value="imagePositionRight">Right</option>
+						<option value="imagePositionTop">Top</option>
+					</select>
+				</td>
+				<td>
+					<select size="1" id="cmbIcons1" name="cmbIcons1" onchange="resetButtonIcon('btn1',this.value);" >
+						<option value="" selected></option>
+						<option value="resources/images/16x16/close.gif">close</option>
+						<option value="resources/images/16x16/collapse.gif">collapse</option>
+						<option value="resources/images/16x16/exclamation.gif">exclamation</option>
+						<option value="resources/images/16x16/expand.gif">expand</option>
+						<option value="resources/images/16x16/leaf.gif">leaf</option>
+						<option value="resources/images/16x16/refresh.gif">refresh</option>
+						<option value="resources/images/16x16/yes.gif">yes</option>
+					</select>
+				</td>
+				<td align="center">
+					<input id="btn1TitleText" name="btn1TitleText" type="text" value="" >
+					<input id="btn1Title" name="btn1Title" type="button" value="Set Title" onclick="setButtonTitle('btn1',document.getElementById('btn1TitleText').value);" />
+				</td>
+				<td align="center">
+					<input id="cbBtn1Submit" name="cbBtn1Submit" type="checkbox" onclick="toggleButtonSubmit('btn1',this.checked);" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input id="btn2" name="btn2" value="Button 2" type="button" imagePosition="imagePositionLeft" styleClassBackground="buttonBackground" styleClassBackgroundHover="buttonHoverBackground" styleClassBackgroundDisabled="buttonDisabledBackground" styleClass="button" styleClassHover="buttonHover" styleClassDisabled="buttonDisabled" styleClassOpaque="opaque" styleClassText="buttonText" styleClassTextHover="buttonTextHover" styleClassTextDisabled="buttonTextDisabled" image="" imageHover="" imageDisabled="" onmouseout="toggleButtonModeMouseout(this.id);" onmouseover="toggleButtonModeMouseover(this.id);" onclick="this.blur();if (confirmClickedButton(this.id)) {showClickedButton(this.id);} else {return false;}"/>
+				</td>
+				<td align="center">
+					<input id="cbBtn2Custom" name="cbBtn2Custom" type="checkbox" onclick="customizeButton('btn2',this.checked);" />
+				</td>
+				<td align="center">
+					<input id="cbBtn2Disabled" name="cbBtn2Disabled" type="checkbox" onclick="disableButton('btn2',this.checked);" />
+				</td>
+				<td align="center">
+					<input id="cbBtn2Opacity" name="cbBtn2Opacity" type="checkbox" onclick="toggleButtonOpacity('btn2',this.checked);" />
+				</td>
+				<td>
+					<select size="1" id="cmbPositions2" name="cmbPositions2" onchange="resetImagePosition('btn2',this.value);" >
+						<option value="" selected></option>
+						<option value="imagePositionBottom">Bottom</option>
+						<option value="imagePositionLeft">Left</option>
+						<option value="imagePositionRight">Right</option>
+						<option value="imagePositionTop">Top</option>
+					</select>
+				</td>
+				<td>
+					<select size="1" id="cmbIcons2" name="cmbIcons2" onchange="resetButtonIcon('btn2',this.value);" >
+						<option value="" selected></option>
+						<option value="resources/images/16x16/close.gif">close</option>
+						<option value="resources/images/16x16/collapse.gif">collapse</option>
+						<option value="resources/images/16x16/exclamation.gif">exclamation</option>
+						<option value="resources/images/16x16/expand.gif">expand</option>
+						<option value="resources/images/16x16/leaf.gif">leaf</option>
+						<option value="resources/images/16x16/refresh.gif">refresh</option>
+						<option value="resources/images/16x16/yes.gif">yes</option>
+					</select>
+				</td>
+				<td align="center">
+					<input id="btn2TitleText" name="btn2TitleText" type="text" value="" >
+					<input id="btn2Title" name="btn2Title" type="button" value="Set Title" onclick="setButtonTitle('btn2',document.getElementById('btn2TitleText').value);" />
+				</td>
+				<td align="center">
+					<input id="cbBtn2Submit" name="cbBtn2Submit" type="checkbox" onclick="toggleButtonSubmit('btn2',this.checked);" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input id="btn3" name="btn3" value="Button 3" type="button" imagePosition="imagePositionLeft" styleClassBackground="buttonBackground" styleClassBackgroundHover="buttonHoverBackground" styleClassBackgroundDisabled="buttonDisabledBackground" styleClass="button" styleClassHover="buttonHover" styleClassDisabled="buttonDisabled" styleClassOpaque="opaque" styleClassText="buttonText" styleClassTextHover="buttonTextHover" styleClassTextDisabled="buttonTextDisabled" image="" imageHover="" imageDisabled="" onmouseout="toggleButtonModeMouseout(this.id);" onmouseover="toggleButtonModeMouseover(this.id);" onclick="this.blur();if (confirmClickedButton(this.id)) {showClickedButton(this.id);} else {return false;}"/>
+				</td>
+				<td align="center">
+					<input id="cbBtn3Custom" name="cbBtn3Custom" type="checkbox" onclick="customizeButton('btn3',this.checked);" />
+				</td>
+				<td align="center">
+					<input id="cbBtn3Disabled" name="cbBtn3Disabled" type="checkbox" onclick="disableButton('btn3',this.checked);" />
+				</td>
+				<td align="center">
+					<input id="cbBtn3Opacity" name="cbBtn3Opacity" type="checkbox" onclick="toggleButtonOpacity('btn3',this.checked);" />
+				</td>
+				<td>
+					<select size="1" id="cmbPositions3" name="cmbPositions3" onchange="resetImagePosition('btn3',this.value);" >
+						<option value="" selected></option>
+						<option value="imagePositionBottom">Bottom</option>
+						<option value="imagePositionLeft">Left</option>
+						<option value="imagePositionRight">Right</option>
+						<option value="imagePositionTop">Top</option>
+					</select>
+				</td>
+				<td>
+					<select size="1" id="cmbIcons3" name="cmbIcons3" onchange="resetButtonIcon('btn3',this.value);" >
+						<option value="" selected></option>
+						<option value="resources/images/16x16/close.gif">close</option>
+						<option value="resources/images/16x16/collapse.gif">collapse</option>
+						<option value="resources/images/16x16/exclamation.gif">exclamation</option>
+						<option value="resources/images/16x16/expand.gif">expand</option>
+						<option value="resources/images/16x16/leaf.gif">leaf</option>
+						<option value="resources/images/16x16/refresh.gif">refresh</option>
+						<option value="resources/images/16x16/yes.gif">yes</option>
+					</select>
+				</td>
+				<td align="center">
+					<input id="btn3TitleText" name="btn3TitleText" type="text" value="" >
+					<input id="btn3Title" name="btn3Title" type="button" value="Set Title" onclick="setButtonTitle('btn3',document.getElementById('btn3TitleText').value);" />
+				</td>
+				<td align="center">
+					<input id="cbBtn3Submit" name="cbBtn3Submit" type="checkbox" onclick="toggleButtonSubmit('btn3',this.checked);" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input id="btn4" name="btn4" value="Button 4" type="button" imagePosition="imagePositionLeft" styleClassBackground="buttonBackground" styleClassBackgroundHover="buttonHoverBackground" styleClassBackgroundDisabled="buttonDisabledBackground" styleClass="button" styleClassHover="buttonHover" styleClassDisabled="buttonDisabled" styleClassOpaque="opaque" styleClassText="buttonText" styleClassTextHover="buttonTextHover" styleClassTextDisabled="buttonTextDisabled" image="" imageHover="" imageDisabled="" onmouseout="toggleButtonModeMouseout(this.id);" onmouseover="toggleButtonModeMouseover(this.id);" onclick="this.blur();if (confirmClickedButton(this.id)) {showClickedButton(this.id);} else {return false;}"/>
+				</td>
+				<td align="center">
+					<input id="cbBtn4Custom" name="cbBtn4Custom" type="checkbox" onclick="customizeButton('btn4',this.checked);" />
+				</td>
+				<td align="center">
+					<input id="cbBtn4Disabled" name="cbBtn4Disabled" type="checkbox" onclick="disableButton('btn4',this.checked);" />
+				</td>
+				<td align="center">
+					<input id="cbBtn4Opacity" name="cbBtn4Opacity" type="checkbox" onclick="toggleButtonOpacity('btn4',this.checked);" />
+				</td>
+				<td>
+					<select size="1" id="cmbPositions4" name="cmbPositions4" onchange="resetImagePosition('btn4',this.value);" >
+						<option value="" selected></option>
+						<option value="imagePositionBottom">Bottom</option>
+						<option value="imagePositionLeft">Left</option>
+						<option value="imagePositionRight">Right</option>
+						<option value="imagePositionTop">Top</option>
+					</select>
+				</td>
+				<td>
+					<select size="1" id="cmbIcons4" name="cmbIcons4" onchange="resetButtonIcon('btn4',this.value);" >
+						<option value="" selected></option>
+						<option value="resources/images/16x16/close.gif">close</option>
+						<option value="resources/images/16x16/collapse.gif">collapse</option>
+						<option value="resources/images/16x16/exclamation.gif">exclamation</option>
+						<option value="resources/images/16x16/expand.gif">expand</option>
+						<option value="resources/images/16x16/leaf.gif">leaf</option>
+						<option value="resources/images/16x16/refresh.gif">refresh</option>
+						<option value="resources/images/16x16/yes.gif">yes</option>
+					</select>
+				</td>
+				<td align="center">
+					<input id="btn4TitleText" name="btn4TitleText" type="text" value="" >
+					<input id="btn4Title" name="btn4Title" type="button" value="Set Title" onclick="setButtonTitle('btn4',document.getElementById('btn4TitleText').value);" />
+				</td>
+				<td align="center">
+					<input id="cbBtn4Submit" name="cbBtn4Submit" type="checkbox" onclick="toggleButtonSubmit('btn4',this.checked);" />
+				</td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td>
+					<input type="reset" value="Reset">
+				</td>
+			</tr>
+		</table>
+	</form>
+	<script src="resources/scripts/button.js" type="text/javascript"></script>
+	<script src="resources/scripts/shared.js" type="text/javascript"></script>
+</body>
+</html>

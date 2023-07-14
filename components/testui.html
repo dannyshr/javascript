@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<title>Wabclient Test</title>
+		<link id="lnkTheme" type="text/css" rel="stylesheet" href="../../../wabclient/css/themes/black/wab.css"/>
+		<link type="text/css" rel="stylesheet" href="test/test.css"/>
+		<script type="text/javascript" src="../../_shared/scripts/jquery/jquery.js"></script>
+		<script type="text/javascript" src="../../_shared/scripts/jquery/jquery.ui.full.js"></script>
+		<script type="text/javascript" src="../../../wabclient/scripts/wabclient.js"></script>
+		<script type="text/javascript" src="test/testui.js"></script>
+	</head>
+	<body>
+		<div id="uiLockerConfig" class="uiLockerConfig">
+			<div class="rowLineHeader">
+				UiLocker Config
+			</div>
+			<div class="rowLine">
+				uiLockerSample
+			</div>
+			<div class="rowLine">
+				<label for="txtDlgBackgroundColor">BackgroundColor: </label>
+				<input id="txtDlgBackgroundColor" size="7" type="text" value="#cccccc">
+			</div>
+			<div class="rowLine">
+				<label for="txtDlgOpacity">Opacity: </label>
+				<input id="txtDlgOpacity" size="4" type="text" value="0.50">
+			</div>
+			<div class="rowLine">
+				<div style="float:left;">
+					<input type="button" value="Show" onclick="renderUiLocker();">
+				</div>
+				<div style="float:right;">
+					<input type="button" value="Hide" onclick="hideUiLocker();">
+				</div>
+			</div>
+		</div>
+		
+		<div id="uiLockerSample" class="uiLockerSample">
+			<div class="rowLineHeader">
+				UiLocker Sample
+			</div>
+			<div class="rowLine">
+				<label for="txtTextbox">Textbox</label>
+				<input id="txtTextbox" type="text" />
+			</div>
+			<div class="rowLine">
+				<label for="cbCheckBox">Checkbox</label>
+				<input id="cbCheckBox" type="checkbox" />
+			</div>
+			<div class="rowLine">
+				<label for="btnButton">Button</label>
+				<input id="btnButton" type="button" value="Button" onclick="alert('Button clicked...');" />
+			</div>
+		</div>
+		
+		<div class="windowConfig">
+			<div class="rowLineHeader">
+				Window Config
+			</div>
+			<div class="rowLine">
+				<label for="cbDlgIcon">Icon</label>
+				<input id="cbDlgIcon" type="checkbox">
+			</div>
+			<div class="rowLine">
+				<label for="txtDlgHeader">Header: </label>
+				<input id="txtDlgHeader" size="100" type="text" value="This is a very very very long window header text">
+			</div>
+			<div class="rowLine">
+				<label for="cbDlgCloseable">Closeable</label>
+				<input id="cbDlgCloseable" type="checkbox">
+			</div>
+			<div class="rowLine">
+				<label for="cbDlgMaximizeable">Maximizeable</label>
+				<input id="cbDlgMaximizeable" type="checkbox">
+			</div>
+			<div class="rowLine">
+				<label for="cbDlgCollapsible">Collapsible</label>
+				<input id="cbDlgCollapsible" type="checkbox">
+			</div>
+			<div class="rowLine">
+				<label for="cbDlgSB">Statusbar</label>
+				<input id="cbDlgSB" type="checkbox">
+			</div>
+			<div class="rowLine">
+				<label for="cbDlgRoundBorders">RoundBorders</label>
+				<input id="cbDlgRoundBorders" type="checkbox">
+			</div>
+			<div class="rowLine">
+				<label for="txtDlgRoundBorders">RoundBorders: </label>
+				<input id="txtDlgRoundBorders" size="4" type="text" value="tl,tr,bl,br">
+			</div>
+			<div class="rowLine">
+				<label for="cbDlgMovable">Movable</label>
+				<input id="cbDlgMovable" type="checkbox">
+			</div>
+			<div class="rowLine">
+				<label for="cbDlgResizable">Resizable</label>
+				<input id="cbDlgResizable" type="checkbox">
+			</div>
+			<div class="rowLine">
+				<label for="cbDlgRecenterOnWinResize">RecenterOnWinResize</label>
+				<input id="cbDlgRecenterOnWinResize" type="checkbox">
+			</div>
+			<div class="rowLine">
+				<label for="cbDlgModal">Modal</label>
+				<input id="cbDlgModal" type="checkbox">
+			</div>
+			<div class="rowLine">
+				<label for="txtResizableHanldes">Resize Handles: </label>
+				<input id="txtResizableHanldes" size="4" type="text" value="se">
+			</div>
+			<div class="rowLine">
+				<div style="float:left;">
+					<input type="button" value="Refresh" onclick="renderTestDialog();">
+				</div>
+				<div style="float:float;">
+					<input type="button" value="Show/Hide" onclick="setWindowDispplay();">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

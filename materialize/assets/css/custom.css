@@ -1,0 +1,173 @@
+/* fallback */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(../fonts/MaterialIcons-Regular.woff2) format('woff2'),
+       url(../fonts/MaterialIcons-Regular.woff) format('woff'),
+       url(../fonts/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+.dark {
+	background-color: #3b3b3b;
+}
+
+.appbar_top {
+	z-index: 998;
+}
+
+.side_pannel {
+	display: block;
+	background-color:#ffffff;
+    position: absolute;
+    width: 350px;
+    left: -105%;
+    top: 64px;
+    will-change: transform;
+    height: 92%;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	box-shadow: 5px 5px 5px grey;
+	z-index: 997;
+}
+
+.pw_modal {
+	width: 180px;
+	overflow-y: unset;
+}
+
+.page {
+			
+}
+
+.collapsible_panel {
+	position: absolute;
+	/*width: 100%;*/
+}
+
+.collapsibleHeaderRow {
+	height: 60px;
+}
+
+.collapsibleHeaderCol {
+	height: 100%;
+}
+
+.collapsibleHeaderText {
+	font-size: 20px;
+	font-weight: bold;
+    position: absolute;
+	padding-left: 10px;
+    margin-top: 5px;
+}
+
+.collapsibleContentRow {
+	
+}
+
+.collapsibleContentCol {
+	height: 100%;
+}
+
+.icon_button {
+	cursor: pointer;	
+	border-radius: 50%;
+	width: 26px;
+	height: 24px;
+	background-color: #ffffff;
+	box-shadow: 5px 5px 5px grey;
+	margin-left: 5px;
+	margin-top: 10px;
+}
+
+.icon_button:hover {
+	/*box-shadow: 10px 10px 10px grey;*/
+	box-shadow: 0 2px 4px 0 grey, 0 4px 5px 0 grey, 0 1px 10px 0 grey;
+}
+
+._card {
+	box-shadow: 5px 5px 5px grey;	
+}
+
+.grid {
+	height: 350px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	border: 1px solid transparent; 
+}
+
+.grid_row {
+	height: 60px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.hspacer {
+	display: inline-block;
+	width: 10px;
+	background-color: transparent;
+}
+
+.modal-header {
+	border-radius: 0 0 2px 2px;
+	background-color: #fafafa;
+	padding: 4px 6px;
+	height: 56px;
+	width: 100%;
+}
+
+.modal_content {
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 10px;
+}
+
+.jul_modal {
+	width: 60%;
+	overflow-y: unset;  
+}
+
+.input-field {
+	margin-top: 0px;
+}
+
+.input-field > label:not(.label-icon).active {
+  -webkit-transform: translateY(-10px) scale(0.8);
+          transform: translateY(-10px) scale(0.8);
+  -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+}
+
+.select-wrapper + label {
+	top: -14px;
+}

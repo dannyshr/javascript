@@ -1,0 +1,88 @@
+.body {
+    height: 100%;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    background-color: lightyellow;
+    margin-left: 0px;
+    margin-top: 0px;
+}
+
+.dialog {
+    border: 1px solid transparent;
+    background-color: lightyellow;
+    box-shadow: 5px 5px 20px #666666;
+    border-radius: 30px;
+}
+
+.dialogHeader {
+    color: #666666;
+}
+
+.inputText {
+    color: #666666;
+}
+
+.inputText:focus {
+    box-shadow: 5px 5px 10px #000000;
+    border-bottom: 2px solid forestgreen;
+}
+
+.inputText::placeholder {
+    color: #666666;
+}
+
+.inputErrorContainer {
+    color: #ff0000;
+}
+
+.button {
+    background-color: forestgreen;
+    color: lightyellow;
+}
+
+.button:focus {
+    outline: 1px solid #303030;
+    box-shadow: 5px 5px 10px #000000;
+}
+
+.loginErrorContainer {
+    color: #ff0000;
+}
+
+.select {
+    color: #666666;
+    background-color: rgba(0,0,0,0.06);
+    border-bottom: 1px solid #303030;
+}
+
+.select:focus {
+    outline: 1px solid transparent;
+    box-shadow: 5px 5px 10px #000000;
+    border-bottom: 2px solid forestgreen;
+}
+
+.studioPage {
+    background-color: lightyellow;
+    color: #666666;
+}
+
+.studioHeaderText {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.collapsibleHandle {
+    background-color: rgba(0,0,0,0.2);
+    color: #666666;
+}
+
+.collapsibleHandleButton {
+    background-color: forestgreen;
+    color: lightyellow;
+}
+
+.collapsibleHandleButton:focus{
+    outline: 1px solid #303030;
+    box-shadow: 5px 5px 10px #000000;
+}

@@ -1,0 +1,28 @@
+//TODOs
+Number 	Description 																				Status
+======	====================================================================================== 		========
+001 	fix bug - preloader doesn't display															
+002 	fix bug - checkbox doesn't display well in overflowed rows 									done
+003 	fix bug - don't delete DOM node when updating a component, since it deletes all children 	done
+004 	when updating a component, save the old id to get a hold of the current DOM node and 		done
+		update it, and all of it's child component's renderto attribute 							
+005 	when deleting a component add a confirmation dialog, since all child components will be  	done
+		deleted as well
+006		fix bug - attributes table is NOT re-rendered if already exists in DOM, always render 		done 
+		it based on component type or name
+007 	add support for value setting in attributes table lists 									done
+008 	add support for pull and push layouts 														done
+009 	add support for shadows attribute 															done
+010 	add support for tabs 																		
+011		add support for tabs as a container's child components within the attributes table 			
+012 	when updating an input component, the JUL library removes the <input> without removing 		
+		its wrapper 
+013 	when rendering a component's attributes table, set some defaults and disable some 				 
+ 		attributes, according to the component's type
+014 	add support for components mappings instead of new for each component 						
+015 	add support for all classes, when updating theme  											
+016 	add support for sliding container 															
+017 	add support for collapsible container 														
+018 	add support for model, view, and controller tabs 											
+019 	add support for dynamic events binding and handlers 										
+020 	add support for dynamic field binding 														

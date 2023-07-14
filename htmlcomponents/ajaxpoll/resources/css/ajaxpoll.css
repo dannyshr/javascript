@@ -1,0 +1,92 @@
+
+.chatBox {
+	height:120px;
+	width:750px;
+	overflow:hidden;
+	border: 1px solid black;
+	background-color: white;
+	font-family: arial;
+	font-size: 10px;
+	font-weight:normal;
+}
+
+.chatBoxTable {
+	width:100%;
+}
+
+.chatBoxTableContainer {
+	height:101px;
+	width:100%;
+	overflow:auto;
+	background-color: white;
+	font-family: arial;
+	font-size: 10px;
+	font-weight:normal;
+}
+
+.chatBoxTableHeaderRow {
+	background-color:#aaaaaa;
+	border: 1px solid black;
+	height:20px;
+}
+
+.chatBoxTableHeaderColId {
+	width:50px;
+}
+
+.chatBoxTableHeaderColTime {
+	width:250px;
+	border-left: 1px solid black;
+}
+
+.chatBoxTableHeaderColSender {
+	width:100px;
+	border-left: 1px solid black;
+}
+
+.chatBoxTableHeaderColMessage {
+	width:350px;
+	border-left: 1px solid black;
+}
+
+.chatBoxTableColId {
+	width:50px;
+	border-bottom: 1px solid black;
+	padding-left: 5px;
+}
+
+.chatBoxTableColTime {
+	width:250px;
+	border-bottom: 1px solid black;
+	border-left: 0px solid transparent;
+	padding-left: 5px;
+}
+
+.chatBoxTableColSender {
+	width:100px;
+	border-bottom: 1px solid black;
+	border-left: 0px solid transparent;
+	padding-left: 5px;
+}
+
+.chatBoxTableColMessage {
+	width:350px;
+	border-bottom: 1px solid black;
+	border-left: 0px solid transparent;
+	padding-left: 5px;
+}
+
+.chatBoxTableRow {
+	background-color: white;
+	height: 20px;
+}
+
+.chatBoxTableRowUpdated {
+	background-color: lightblue;
+	height: 20px;
+}
+
+.chatBoxTableRowAdded {
+	background-color: lightgreen;
+	height: 20px;
+}

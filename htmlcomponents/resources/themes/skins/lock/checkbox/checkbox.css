@@ -1,0 +1,120 @@
+
+.checkboxBottom {
+	text-align: center;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+.checkboxLeft {
+	text-align: center;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+.checkboxRight {
+	text-align: center;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+.checkboxTop {
+	text-align: center;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+.checkboxBoxLabel {
+	color: #336666;
+	font-family: verdana;
+	font-size: 11;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.checkboxBoxLabelDisabled {
+	color: gray;
+	font-family: verdana;
+	font-size: 11;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.checkboxBoxLabelHover {
+	color: #336fc6;
+	font-family: verdana;
+	font-size: 11;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.checkboxOff {
+	background-image: url('images/checkboxOff.gif');
+	background-position: top left;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: 0px solid #000000;
+	top: 1px;
+	height: 15px;
+	width: 15px;
+	cursor: pointer;
+}
+
+.checkboxOffDisabled {
+	background-image: url('images/checkboxOff_disabled.gif');
+	background-position: top left;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: 0px solid #000000;
+	top: 1px;
+	height: 15px;
+	width: 15px;
+	cursor: pointer;
+}
+
+.checkboxOffHover {
+	background-image: url('images/checkboxOff_hover.gif');
+	background-position: top left;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: 0px solid #000000;
+	top: 1px;
+	height: 15px;
+	width: 15px;
+	cursor: pointer;
+}
+
+.checkboxOn {
+	background-image: url('images/checkboxOn.gif');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: 0px solid #000000;
+	top: 1px;
+	height: 15px;
+	width: 15px;
+	cursor: pointer;
+}
+
+.checkboxOnDisabled {
+	background-image: url('images/checkboxOn_disabled.gif');
+	background-position: top left;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: 0px solid #000000;
+	top: 1px;
+	height: 15px;
+	width: 15px;
+	cursor: pointer;
+}
+
+.checkboxOnHover {
+	background-image: url('images/checkboxOn_hover.gif');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: 0px solid #000000;
+	top: 1px;
+	height: 15px;
+	width: 15px;
+	cursor: pointer;
+}

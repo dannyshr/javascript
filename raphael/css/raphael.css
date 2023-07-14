@@ -1,0 +1,50 @@
+
+.header {
+	position: fixed;
+	top: 1px;
+	left: 0px;
+	width:100%;
+	height: 20px;
+	background-color: #aaaaaa;
+	text-align: center;
+}
+.headerText {
+	color: #000000;
+	font-family: arial;
+	font-size: 16px;
+	font-weight: bold;
+}
+.footer {
+	position: fixed;
+	bottom: 1px;
+	left: 0px;
+	width:100%;
+	height: 20px;
+	background-color: #cccccc;
+	text-align: center;
+}
+.footerText {
+	color: #0000ff;
+	font-family: arial;
+	font-size: 14px;
+	font-weight: bold;
+}
+.mainPage {
+	position: fixed;
+	top: 20px;
+	left: 0px;
+	border: 1px solid #000000;
+	background-color: #ffffff;
+	width: 100%;
+	overflow-y: scroll;
+}
+.buttonsContainer {
+	border: 1px solid transparent;
+	background-color: #ffffff;
+	width: 99%;
+}
+.widgetCanvas {
+	border: 1px solid #000000;
+	background-color: #ffffff;
+	width: 98%;
+}

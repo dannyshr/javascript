@@ -1,0 +1,375 @@
+<html>
+<head>
+	<title>Checkbox</title>
+	<link href="resources/themes/white/checkbox/13x13/checkbox.css" type="text/css" rel="stylesheet" id="themesLink" name="themesLink" />
+</head>
+
+<body >
+	<form id="frmCheckboxes" >
+		<table>
+			<tr>
+				<td>Theme: </td>
+				<td>
+					<select size="1" id="cmbThemes" name="cmbThemes" onchange="changeTheme('themesLink',this.value);" >
+						<option value="resources/themes/black/checkbox/13x13/checkbox.css">Black 13x13</option>
+						<option value="resources/themes/black/checkbox/20x20/checkbox.css">Black 20x20</option>
+						<option value="resources/themes/blue/checkbox/13x13/checkbox.css" >Blue 13x13</option>
+						<option value="resources/themes/blue/checkbox/20x20/checkbox.css" >Blue 20x20</option>
+						<option value="resources/themes/green/checkbox/13x13/checkbox.css" >Green 13x13</option>
+						<option value="resources/themes/green/checkbox/20x20/checkbox.css" >Green 20x20</option>
+						<option value="resources/themes/orange/checkbox/13x13/checkbox.css">Orange 13x13</option>
+						<option value="resources/themes/orange/checkbox/20x20/checkbox.css">Orange 20x20</option>
+						<option value="resources/themes/red/checkbox/13x13/checkbox.css">Red 13x13</option>
+						<option value="resources/themes/red/checkbox/20x20/checkbox.css">Red 20x20</option>
+						<option value="resources/themes/skyblue/checkbox/13x13/checkbox.css">Skyblue 13x13</option>
+						<option value="resources/themes/skyblue/checkbox/20x20/checkbox.css">Skyblue 20x20</option>
+						<option value="resources/themes/white/checkbox/13x13/checkbox.css" selected>White 13x13</option>
+						<option value="resources/themes/white/checkbox/20x20/checkbox.css">White 20x20</option>
+						<option value="resources/themes/skins/lock/checkbox/checkbox.css">lock</option>
+						<option value="resources/themes/skins/niceFormGreen/checkbox/checkbox.css">niceFormGreen</option>
+						<option value="resources/themes/skins/niceFormSkyblue/checkbox/checkbox.css">niceFormSkyblue</option>
+						<option value="resources/themes/skins/niceFormYellow/checkbox/checkbox.css">niceFormYellow</option>
+						<option value="resources/themes/skins/safari/checkbox/checkbox.css">safari</option>
+						<option value="resources/themes/skins/special/checkbox/checkbox.css">special</option>
+						<option value="resources/themes/skins/styledBlue/checkbox/checkbox.css">styledBlue</option>
+						<option value="resources/themes/skins/styledRed/checkbox/checkbox.css">styledRed</option>
+						<option value="resources/themes/skins/ubuntu/checkbox/checkbox.css">ubuntu</option>
+						<option value="resources/themes/skins/ubuntu2/checkbox/checkbox.css">ubuntu2</option>
+						<option value="resources/themes/skins/vista/checkbox/checkbox.css">vista</option>
+						<option value="resources/themes/skins/volcanic/checkbox/checkbox.css">volcanic</option>
+						<option value="resources/themes/skins/ximian/checkbox/checkbox.css">ximian</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		<table border="1">
+			<tr>
+				<th>
+					Checkbox
+				</th>
+				<th>
+					Custom?
+				</th>
+				<th>
+					Use Skin?
+				</th>
+				<th>
+					Disabled
+				</th>
+				<th>
+					Alignment
+				</th>
+				<th>
+					Icon Unchecked
+				</th>
+				<th>
+					Icon Checked
+				</th>
+				<th>
+					Label
+				</th>
+				<th>
+					Title
+				</th>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" id="checkbox1" name="checkbox1" style="display:inline;" 
+						onclick="if (confirmClickedCheckbox(this.id)) {showClickedCheckbox(this.id);} else {return false;};" 
+						/>
+				</td>
+				<td align="center">
+					<input id="checkbox1Cust" name="checkbox1Cust" type="checkbox" onclick="customizeCheckbox('checkbox1',this.checked);" />
+				</td>
+				<td align="center">
+					<input id="checkbox1Skin" name="checkbox1Skin" type="checkbox" onclick="skinCheckbox('checkbox1',this.checked);" />
+				</td>
+				<td align="center">
+					<input id="checkbox1Dis" name="checkbox1Dis" type="checkbox" onclick="disableCheckbox('checkbox1',this.checked);" />
+				</td>
+				<td>
+					<select size="1" id="checkbox1CmbPositions" name="checkbox1CmbPositions" onchange="resetCheckboxPosition('checkbox1',this.value);" >
+						<option value="bottom">Bottom</option>
+						<option value="left" selected>Left</option>
+						<option value="right">Right</option>
+						<option value="top">Top</option>
+					</select>
+				</td>
+				<td>
+					<select size="1" id="checkbox1CmbUncheckedIcons" name="checkbox1CmbUncheckedIcons" onchange="resetUncheckedIcon('checkbox1',this.value);" >
+						<option value=""></option>
+						<option value="resources/images/14x14/add.gif">add</option>
+						<option value="resources/images/14x14/asterik.gif">asterik</option>
+						<option value="resources/images/14x14/checked.gif">checked</option>
+						<option value="resources/images/14x14/connect.gif">connect</option>
+						<option value="resources/images/14x14/delete.gif">delete</option>
+						<option value="resources/images/14x14/disconnect.gif">disconnect</option>
+						<option value="resources/images/14x14/empty.gif" selected>empty</option>
+						<option value="resources/images/14x14/link.gif">link</option>
+						<option value="resources/images/14x14/linkBroken.gif">linkBroken</option>
+						<option value="resources/images/14x14/lock.gif">lock</option>
+						<option value="resources/images/14x14/lock2.gif">lock2</option>
+						<option value="resources/images/14x14/star.gif">star</option>
+						<option value="resources/images/14x14/unchecked.gif">unchecked</option>
+						<option value="resources/images/14x14/unlock.gif">unlock</option>
+						<option value="resources/images/14x14/unlock2.gif">unlock2</option>
+					</select>
+				</td>
+				<td>
+					<select size="1" id="checkbox1CmbCheckedIcons" name="checkbox1CmbCheckedIcons" onchange="resetCheckedIcon('checkbox1',this.value);" >
+						<option value=""></option>
+						<option value="resources/images/14x14/add.gif">add</option>
+						<option value="resources/images/14x14/asterik.gif" >asterik</option>
+						<option value="resources/images/14x14/checked.gif" selected>checked</option>
+						<option value="resources/images/14x14/connect.gif">connect</option>
+						<option value="resources/images/14x14/delete.gif">delete</option>
+						<option value="resources/images/14x14/disconnect.gif">disconnect</option>
+						<option value="resources/images/14x14/empty.gif">empty</option>
+						<option value="resources/images/14x14/link.gif">link</option>
+						<option value="resources/images/14x14/linkBroken.gif">linkBroken</option>
+						<option value="resources/images/14x14/lock.gif">lock</option>
+						<option value="resources/images/14x14/lock2.gif">lock2</option>
+						<option value="resources/images/14x14/star.gif">star</option>
+						<option value="resources/images/14x14/unchecked.gif">unchecked</option>
+						<option value="resources/images/14x14/unlock.gif">unlock</option>
+						<option value="resources/images/14x14/unlock2.gif">unlock2</option>
+					</select>
+				</td>
+				<td align="center">
+					<input id="checkbox1LabelText" name="checkbox1LabelText" type="text" value="checkbox1" size="10" >
+					<input id="checkbox1LabelButton" name="checkbox1LabelButton" type="button" value="Set Label" onclick="setCheckboxLabel('checkbox1',document.getElementById('checkbox1LabelText').value);" />
+				</td>
+				<td align="center">
+					<input id="checkbox1TitleText" name="checkbox1TitleText" type="text" value="" size="10" >
+					<input id="checkbox1Title" name="checkbox1Title" type="button" value="Set Title" onclick="setCheckboxTitle('checkbox1',document.getElementById('checkbox1TitleText').value);" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" id="checkbox2" name="checkbox2" style="display:inline;" 
+						onclick="if (confirmClickedCheckbox(this.id)) {showClickedCheckbox(this.id);} else {return false;};" 
+						/>
+				</td>
+				<td align="center">
+					<input id="checkbox2Cust" name="checkbox2Cust" type="checkbox" onclick="customizeCheckbox('checkbox2',this.checked);" />
+				</td>
+				<td align="center">
+					<input id="checkbox2Skin" name="checkbox2Skin" type="checkbox" onclick="skinCheckbox('checkbox2',this.checked);" />
+				</td>
+				<td align="center">
+					<input id="checkbox2Dis" name="checkbox2Dis" type="checkbox" onclick="disableCheckbox('checkbox2',this.checked);" />
+				</td>
+				<td>
+					<select size="1" id="checkbox2CmbPositions" name="checkbox2CmbPositions" onchange="resetCheckboxPosition('checkbox2',this.value);" >
+						<option value="bottom">Bottom</option>
+						<option value="left" selected>Left</option>
+						<option value="right">Right</option>
+						<option value="top">Top</option>
+					</select>
+				</td>
+				<td>
+					<select size="1" id="checkbox2CmbUncheckedIcons" name="checkbox2CmbUncheckedIcons" onchange="resetUncheckedIcon('checkbox2',this.value);" >
+						<option value=""></option>
+						<option value="resources/images/14x14/add.gif">add</option>
+						<option value="resources/images/14x14/asterik.gif">asterik</option>
+						<option value="resources/images/14x14/checked.gif">checked</option>
+						<option value="resources/images/14x14/connect.gif">connect</option>
+						<option value="resources/images/14x14/delete.gif">delete</option>
+						<option value="resources/images/14x14/disconnect.gif">disconnect</option>
+						<option value="resources/images/14x14/empty.gif" selected>empty</option>
+						<option value="resources/images/14x14/link.gif">link</option>
+						<option value="resources/images/14x14/linkBroken.gif">linkBroken</option>
+						<option value="resources/images/14x14/lock.gif">lock</option>
+						<option value="resources/images/14x14/lock2.gif">lock2</option>
+						<option value="resources/images/14x14/star.gif">star</option>
+						<option value="resources/images/14x14/unchecked.gif">unchecked</option>
+						<option value="resources/images/14x14/unlock.gif">unlock</option>
+						<option value="resources/images/14x14/unlock2.gif">unlock2</option>
+					</select>
+				</td>
+				<td>
+					<select size="1" id="checkbox2CmbCheckedIcons" name="checkbox2CmbCheckedIcons" onchange="resetCheckedIcon('checkbox2',this.value);" >
+						<option value=""></option>
+						<option value="resources/images/14x14/add.gif">add</option>
+						<option value="resources/images/14x14/asterik.gif" >asterik</option>
+						<option value="resources/images/14x14/checked.gif" selected>checked</option>
+						<option value="resources/images/14x14/connect.gif">connect</option>
+						<option value="resources/images/14x14/delete.gif">delete</option>
+						<option value="resources/images/14x14/disconnect.gif">disconnect</option>
+						<option value="resources/images/14x14/empty.gif">empty</option>
+						<option value="resources/images/14x14/link.gif">link</option>
+						<option value="resources/images/14x14/linkBroken.gif">linkBroken</option>
+						<option value="resources/images/14x14/lock.gif">lock</option>
+						<option value="resources/images/14x14/lock2.gif">lock2</option>
+						<option value="resources/images/14x14/star.gif">star</option>
+						<option value="resources/images/14x14/unchecked.gif">unchecked</option>
+						<option value="resources/images/14x14/unlock.gif">unlock</option>
+						<option value="resources/images/14x14/unlock2.gif">unlock2</option>
+					</select>
+				</td>
+				<td align="center">
+					<input id="checkbox2LabelText" name="checkbox2LabelText" type="text" value="checkbox2" size="10" >
+					<input id="checkbox2LabelButton" name="checkbox2LabelButton" type="button" value="Set Label" onclick="setCheckboxLabel('checkbox2',document.getElementById('checkbox2LabelText').value);" />
+				</td>
+				<td align="center">
+					<input id="checkbox2TitleText" name="checkbox2TitleText" type="text" value="" size="10" >
+					<input id="checkbox2Title" name="checkbox2Title" type="button" value="Set Title" onclick="setCheckboxTitle('checkbox2',document.getElementById('checkbox2TitleText').value);" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" id="checkbox3" name="checkbox3" style="display:inline;" 
+						onclick="if (confirmClickedCheckbox(this.id)) {showClickedCheckbox(this.id);} else {return false;};" 
+						/>
+				</td>
+				<td align="center">
+					<input id="checkbox3Cust" name="checkbox3Cust" type="checkbox" onclick="customizeCheckbox('checkbox3',this.checked);" />
+				</td>
+				<td align="center">
+					<input id="checkbox3Skin" name="checkbox3Skin" type="checkbox" onclick="skinCheckbox('checkbox3',this.checked);" />
+				</td>
+				<td align="center">
+					<input id="checkbox3Dis" name="checkbox3Dis" type="checkbox" onclick="disableCheckbox('checkbox3',this.checked);" />
+				</td>
+				<td>
+					<select size="1" id="checkbox3CmbPositions" name="checkbox3CmbPositions" onchange="resetCheckboxPosition('checkbox3',this.value);" >
+						<option value="bottom">Bottom</option>
+						<option value="left" selected>Left</option>
+						<option value="right">Right</option>
+						<option value="top">Top</option>
+					</select>
+				</td>
+				<td>
+					<select size="1" id="checkbox3CmbUncheckedIcons" name="checkbox3CmbUncheckedIcons" onchange="resetUncheckedIcon('checkbox3',this.value);" >
+						<option value=""></option>
+						<option value="resources/images/14x14/add.gif">add</option>
+						<option value="resources/images/14x14/asterik.gif">asterik</option>
+						<option value="resources/images/14x14/checked.gif">checked</option>
+						<option value="resources/images/14x14/connect.gif">connect</option>
+						<option value="resources/images/14x14/delete.gif">delete</option>
+						<option value="resources/images/14x14/disconnect.gif">disconnect</option>
+						<option value="resources/images/14x14/empty.gif" selected>empty</option>
+						<option value="resources/images/14x14/link.gif">link</option>
+						<option value="resources/images/14x14/linkBroken.gif">linkBroken</option>
+						<option value="resources/images/14x14/lock.gif">lock</option>
+						<option value="resources/images/14x14/lock2.gif">lock2</option>
+						<option value="resources/images/14x14/star.gif">star</option>
+						<option value="resources/images/14x14/unchecked.gif">unchecked</option>
+						<option value="resources/images/14x14/unlock.gif">unlock</option>
+						<option value="resources/images/14x14/unlock2.gif">unlock2</option>
+					</select>
+				</td>
+				<td>
+					<select size="1" id="checkbox3CmbCheckedIcons" name="checkbox3CmbCheckedIcons" onchange="resetCheckedIcon('checkbox3',this.value);" >
+						<option value=""></option>
+						<option value="resources/images/14x14/add.gif">add</option>
+						<option value="resources/images/14x14/asterik.gif" >asterik</option>
+						<option value="resources/images/14x14/checked.gif" selected>checked</option>
+						<option value="resources/images/14x14/connect.gif">connect</option>
+						<option value="resources/images/14x14/delete.gif">delete</option>
+						<option value="resources/images/14x14/disconnect.gif">disconnect</option>
+						<option value="resources/images/14x14/empty.gif">empty</option>
+						<option value="resources/images/14x14/link.gif">link</option>
+						<option value="resources/images/14x14/linkBroken.gif">linkBroken</option>
+						<option value="resources/images/14x14/lock.gif">lock</option>
+						<option value="resources/images/14x14/lock2.gif">lock2</option>
+						<option value="resources/images/14x14/star.gif">star</option>
+						<option value="resources/images/14x14/unchecked.gif">unchecked</option>
+						<option value="resources/images/14x14/unlock.gif">unlock</option>
+						<option value="resources/images/14x14/unlock2.gif">unlock2</option>
+					</select>
+				</td>
+				<td align="center">
+					<input id="checkbox3LabelText" name="checkbox3LabelText" type="text" value="checkbox3" size="10" >
+					<input id="checkbox3LabelButton" name="checkbox3LabelButton" type="button" value="Set Label" onclick="setCheckboxLabel('checkbox3',document.getElementById('checkbox3LabelText').value);" />
+				</td>
+				<td align="center">
+					<input id="checkbox3TitleText" name="checkbox3TitleText" type="text" value="" size="10" >
+					<input id="checkbox3Title" name="checkbox3Title" type="button" value="Set Title" onclick="setCheckboxTitle('checkbox3',document.getElementById('checkbox3TitleText').value);" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" id="checkbox4" name="checkbox4" style="display:inline;" 
+						onclick="if (confirmClickedCheckbox(this.id)) {showClickedCheckbox(this.id);} else {return false;};" 
+						/>
+				</td>
+				<td align="center">
+					<input id="checkbox4Cust" name="checkbox4Cust" type="checkbox" onclick="customizeCheckbox('checkbox4',this.checked);" />
+				</td>
+				<td align="center">
+					<input id="checkbox4Skin" name="checkbox4Skin" type="checkbox" onclick="skinCheckbox('checkbox4',this.checked);" />
+				</td>
+				<td align="center">
+					<input id="checkbox4Dis" name="checkbox4Dis" type="checkbox" onclick="disableCheckbox('checkbox4',this.checked);" />
+				</td>
+				<td>
+					<select size="1" id="checkbox4CmbPositions" name="checkbox4CmbPositions" onchange="resetCheckboxPosition('checkbox4',this.value);" >
+						<option value="bottom">Bottom</option>
+						<option value="left" selected>Left</option>
+						<option value="right">Right</option>
+						<option value="top">Top</option>
+					</select>
+				</td>
+				<td>
+					<select size="1" id="checkbox4CmbUncheckedIcons" name="checkbox4CmbUncheckedIcons" onchange="resetUncheckedIcon('checkbox4',this.value);" >
+						<option value=""></option>
+						<option value="resources/images/14x14/add.gif">add</option>
+						<option value="resources/images/14x14/asterik.gif">asterik</option>
+						<option value="resources/images/14x14/checked.gif">checked</option>
+						<option value="resources/images/14x14/connect.gif">connect</option>
+						<option value="resources/images/14x14/delete.gif">delete</option>
+						<option value="resources/images/14x14/disconnect.gif">disconnect</option>
+						<option value="resources/images/14x14/empty.gif" selected>empty</option>
+						<option value="resources/images/14x14/link.gif">link</option>
+						<option value="resources/images/14x14/linkBroken.gif">linkBroken</option>
+						<option value="resources/images/14x14/lock.gif">lock</option>
+						<option value="resources/images/14x14/lock2.gif">lock2</option>
+						<option value="resources/images/14x14/star.gif">star</option>
+						<option value="resources/images/14x14/unchecked.gif">unchecked</option>
+						<option value="resources/images/14x14/unlock.gif">unlock</option>
+						<option value="resources/images/14x14/unlock2.gif">unlock2</option>
+					</select>
+				</td>
+				<td>
+					<select size="1" id="checkbox4CmbCheckedIcons" name="checkbox4CmbCheckedIcons" onchange="resetCheckedIcon('checkbox4',this.value);" >
+						<option value=""></option>
+						<option value="resources/images/14x14/add.gif">add</option>
+						<option value="resources/images/14x14/asterik.gif" >asterik</option>
+						<option value="resources/images/14x14/checked.gif" selected>checked</option>
+						<option value="resources/images/14x14/connect.gif">connect</option>
+						<option value="resources/images/14x14/delete.gif">delete</option>
+						<option value="resources/images/14x14/disconnect.gif">disconnect</option>
+						<option value="resources/images/14x14/empty.gif">empty</option>
+						<option value="resources/images/14x14/link.gif">link</option>
+						<option value="resources/images/14x14/linkBroken.gif">linkBroken</option>
+						<option value="resources/images/14x14/lock.gif">lock</option>
+						<option value="resources/images/14x14/lock2.gif">lock2</option>
+						<option value="resources/images/14x14/star.gif">star</option>
+						<option value="resources/images/14x14/unchecked.gif">unchecked</option>
+						<option value="resources/images/14x14/unlock.gif">unlock</option>
+						<option value="resources/images/14x14/unlock2.gif">unlock2</option>
+					</select>
+				</td>
+				<td align="center">
+					<input id="checkbox4LabelText" name="checkbox4LabelText" type="text" value="checkbox4" size="10" >
+					<input id="checkbox4LabelButton" name="checkbox4LabelButton" type="button" value="Set Label" onclick="setCheckboxLabel('checkbox4',document.getElementById('checkbox4LabelText').value);" />
+				</td>
+				<td align="center">
+					<input id="checkbox4TitleText" name="checkbox4TitleText" type="text" value="" size="10" >
+					<input id="checkbox4Title" name="checkbox4Title" type="button" value="Set Title" onclick="setCheckboxTitle('checkbox4',document.getElementById('checkbox4TitleText').value);" />
+				</td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td>
+					<input type="reset" value="Reset">
+				</td>
+			</tr>
+		</table>
+	</form>
+	<script src="resources/scripts/checkbox.js" type="text/javascript"></script>
+	<script src="resources/scripts/shared.js" type="text/javascript"></script>
+</body>
+</html>

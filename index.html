@@ -1,1 +1,73 @@
+<!DOCTYPE html>
+<html id="htmlPageTag" lang="en">
+<!--<![endif]-->
 
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta content="IE=11" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1">
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <title>Javascript Examples</title>
+    <link rel="icon" href="https://github.githubassets.com/favicons/favicon.svg" />
+
+    <script type="text/javascript">
+        let arrJsSamples = [
+            { name: "Ajax Polling", link: "components/ajaxpoll/ajaxpoll.html" },
+            { name: "blinker", link: "components/blinker/blinker.html" },
+            { name: "clock", link: "components/clock/clock.html" },
+            { name: "button", link: "htmlcomponents/button.html" },
+            { name: "inbox", link: "components/inbox/inbox.html" },
+            { name: "ivritnekuda", link: "ivritnekuda/index.html" },
+            { name: "slidingpanel", link: "components/slidingpanel/slidingPanel.html" },
+            { name: "jqDock", link: "jqDock/jqDock.html" },
+            { name: "ui", link: "components/testui.html" },
+            { name: "gauge", link: "telemetry/gauge.html.html" },
+            { name: "progressbar", link: "telemetry/progressbar.html" },
+            { name: "telemetry", link: "telemetry/telemetry.html" },
+            { name: "raphael", link: "raphael/raphael.html" },
+            { name: "compconfig", link: "compconfig/compconfig.html" },
+            { name: "acronyms", link: "acronyms/acronyms.html" },
+            { name: "templateHTML", link: "templateHTML/htmlPageTemplate.html" },
+            { name: "jul login", link: "jul/login.html" },
+            { name: "jul studio", link: "jul/studio.html" },
+            { name: "jul autocomplete", link: "jul/autocomplete.html" },
+            { name: "jul config", link: "jul/config.html" }
+        ];
+        function renderSamples() {
+            let containerId = "linksTable";
+            let html = '';
+            let container;
+
+            //get the container
+            container = document.getElementById(containerId);
+
+            //generate the html
+            for (let i=0; i<arrJsSamples.length; i++) {
+                html += '<tr>';
+                html += '<td>' + (i+1) + '</td>';
+                html += '<td>' + arrJsSamples[i].name + '</td>';
+                html += '<td><a href="' + arrJsSamples[i].link + '" target="_blank">' + arrJsSamples[i].link + '</a></td>';
+                html += '</tr>';
+            }
+
+            //render the html
+            container.innerHTML = html;
+        }
+    </script>
+
+</head>
+
+<body onload="renderSamples();">
+    <h1>Javascript examples</h1>
+
+    <table rules="all" style="border: 1px solid #000000;">
+        <thead>
+            <th>#</th>
+            <th>name</th>
+            <th>link</th>
+        </thead>
+        <tbody id="linksTable">
+        </tbody>
+    </table>
+</body>
+</html>

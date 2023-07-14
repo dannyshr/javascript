@@ -1,0 +1,180 @@
+<html>
+	<head>
+		<title>Sliding Panel</title>
+		<link href="resources/css/portlet.css" rel="stylesheet" type="text/css" />
+		<link href="resources/css/slidingPanel.css" rel="stylesheet" type="text/css" >
+	</head>
+	<body>
+		<form id="frm1" action="">
+			<div id="slidingPanel1" class="slidingPanel" 
+				panelMainContainerId="slidingPanel1_MainContainer" 
+				panelContentsContainerTdId="slidingPanel1_ContentsContainerTd" 
+				panelContentsContainerId="slidingPanel1_Contents"
+				panelHandlerContainerTdId="slidingPanel1_HandlerContainerTd" 
+				panelHandlerContainerId="slidingPanel1_HandlerContainer" 
+				panelHandlerId="slidingPanel1_HandlerImage" 
+				handlerRelativePosition="bottom" 
+				handlerContainerAlignment="center" 
+				handlerImageCollapsed="resources/images/plus.png" 
+				handlerImageExpanded="resources/images/minus.png" 
+				state="collapsed" 
+				position="topleft" 
+				openEffect="show" 
+				closeEffect="hide" 
+				linkButtonStyleClass="linkButton" 
+				imageButtonStyleClass="imageButton" 
+				imageButtonStyleClassHover="imageButtonHover" 
+				navButtonPrevStyleClass="navButtonPrev" 
+				navButtonnextStyleClass="navButtonNext" 
+				>
+				<table id="slidingPanel1_MainContainer" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td id="slidingPanel1_ContentsContainerTd">
+							<div id="slidingPanel1_Contents" class="slidingPanelContentsDiv">
+								<table border="0" cellspacing="0" cellpadding="0">
+									<tr>
+										<td>
+											<img class="navButtonPrev" src="resources/images/ArrowLeft.png" title="Click here to move to the previous set of items">
+										</td>
+										<td class="middleAlignedPanel">
+											<div id="menu1_slidingMenu" class="slidingMenu" >
+												<table class="slidingMenuItems" border="0" cellspacing="0" cellpadding="0">
+													<tr>
+														<td><div class="spacerColumn"></div></td>
+														<td>
+															<a href="#" class="linkButton" portlet="portlet1">
+																<img title="Portlet 1" src="resources/images/Camera.png" class="imageButton"> 
+															</a>
+														</td>
+														<td>
+															<a  href="#" class="linkButton" portlet="portlet2">
+																<img title="Portlet 2" src="resources/images/iMac.png" class="imageButton"> 
+															</a>
+														</td>
+														<td>
+															<a  href="#" class="linkButton" portlet="portlet3">
+																<img title="Portlet 3" src="resources/images/Notebook.png" class="imageButton"> 
+															</a>
+														</td>
+														<td>
+															<a  href="#" class="linkButton" portlet="portlet4">
+																<img title="Portlet 4" src="resources/images/Printer.png" class="imageButton"> 
+															</a>
+														</td>
+														<td>
+															<a  href="#" class="linkButton" portlet="portlet5">
+																<img title="Portlet 5" src="resources/images/Floppy.png" class="imageButton"> 
+															</a>
+														</td>
+														<td>
+															<a  href="#" class="linkButton" portlet="portlet6">
+																<img title="Portlet 6" src="resources/images/Games.png" class="imageButton"> 
+															</a>
+														</td>
+														<td><div class="spacerColumn"></div></td>
+													</tr>
+												</table>
+											</div>
+										</td>
+										<td>
+											<img class="navButtonNext" src="resources/images/ArrowRight.png" title="Click here to move to the next set of items">
+										</td>
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td id="slidingPanel1_HandlerContainerTd" align="center" valign="middle">
+							<div id="slidingPanel1_HandlerContainer" class="slidingPanelHandlerContainer">
+								<table class="slidingPanelHandlerContainerTable" border="0" align="center" cellspacing="0" cellpadding="0">
+									<tr>
+										<td class="slidingPanelHandlerPreTd">
+											<div class="slidingPanelHandlerPre"></div>
+										</td>
+										<td>
+											<div class="slidingPanelHandler">
+												<img id="slidingPanel1_HandlerImage" class="slidingPanelHandlerImage" src="resources/images/plus.png" title="Click here to collapse/expand this panel.." />
+											</div>
+										</td>
+										<td class="slidingPanelHandlerPostTd">
+											<div class="slidingPanelHandlerPost"></div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			<div id="interfaceDiv" class="interfaceDiv">
+				<table border="1">
+					<tr>
+						<th>Comp</th>
+						<th>Component State</th>
+						<th>Component Position</th>
+						<th>Handler Position</th>
+						<th>Handler Alignment</th>
+						<th>Open Effect</th>
+						<th>Close Effect</th>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>
+							<select size="1" id="cmbStates1">
+								<option value="closed" >closed</option>
+								<option value="collapsed" selected>collapsed</option>
+								<option value="expanded" >expanded</option>
+							</select>
+						</td>
+						<td>
+							<select size="1" id="cmbPositions1">
+								<option value="bottomCenter" >bottomCenter</option>
+								<option value="bottomLeft" >bottomLeft</option>
+								<option value="bottomRight" >bottomRight</option>
+								<option value="middleCenter" >middleCenter</option>
+								<option value="middleLeft" >middleLeft</option>
+								<option value="middleRight" >middleRight</option>
+								<option value="topCenter" >topCenter</option>
+								<option value="topLeft" selected>topLeft</option>
+								<option value="topRight" >topRight</option>
+							</select>
+						</td>
+						<td>
+							<select size="1" id="cmbHandlerPositions1">
+								<option value="bottom" selected>bottom</option>
+								<option value="left" >left</option>
+								<option value="right" >right</option>
+								<option value="top" >top</option>
+							</select>
+						</td>
+						<td>
+							<select size="1" id="cmbHandlerAlignments1">
+								<option value="bottom" >bottom</option>
+								<option value="center" selected>center</option>
+								<option value="left" >left</option>
+								<option value="middle" >middle</option>
+								<option value="right" >right</option>
+								<option value="top" >top</option>
+							</select>
+						</td>
+						<td>
+							<select size="1" id="cmbOpenEffects1">
+								<option value="show" selected>show</option>
+							</select>
+						</td>
+						<td>
+							<select size="1" id="cmbCloseEffects1">
+								<option value="hide" selected>hide</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</form>
+		<script src="../../../_shared/scripts/jquery/jquery.js" type="text/javascript"></script>
+		<script src="resources/scripts/slidingPanel.js" type="text/javascript" ></script>
+		<script src="resources/scripts/config.js" type="text/javascript" ></script>
+	</body>
+</html>

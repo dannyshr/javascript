@@ -1,0 +1,124 @@
+
+.opaque {
+	opacity: .75;
+	filter: alpha(opacity=75);
+}
+
+.buttonBackground {
+	background-image: url('images/buttonBg.png');
+	background-position: center center;
+	background-repeat: repeat-x;
+	background-color: #2626e5;
+	filter: progid:DXImageTransform.Microsoft.Gradient (GradientType=0,StartColorStr='#ffffffff',EndColorStr='#ff2626e5');
+	border-bottom: #000000 1px solid;
+	border-left: #000000 1px solid; 
+	border-right: #000000 1px solid; 
+	border-top: #000000 1px solid;
+	height: 40px;
+	width: auto;
+	cursor: pointer;
+}
+
+.buttonHoverBackground {
+	background-image: url('images/buttonBg_hover.png');
+	background-position: center center;
+	background-repeat: repeat-x;
+	background-color: #2626ef;
+	filter: progid:DXImageTransform.Microsoft.Gradient (GradientType=0,StartColorStr='#ffffffff',EndColorStr='#ff2626ef');
+	border-bottom: #000000 1px solid;
+	border-left: #000000 1px solid; 
+	border-right: #000000 1px solid; 
+	border-top: #000000 1px solid; 
+	height: 40px;
+	width: auto;
+	cursor: pointer;
+}
+
+.buttonDisabledBackground {
+	background-image: url('images/buttonBg_dis.png');
+	background-position: center center;
+	background-repeat: repeat-x;
+	background-color: #aaaaaa;
+	filter: progid:DXImageTransform.Microsoft.Gradient (GradientType=0,StartColorStr='#ffffffff',EndColorStr='#ffaaaaaa');
+	border-bottom: #000000 1px solid;
+	border-left: #000000 1px solid; 
+	border-right: #000000 1px solid; 
+	border-top: #000000 1px solid; 
+	height: 40px;
+	width: auto;
+	cursor: pointer;
+}
+
+.button {
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.buttonHover {
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.buttonDisabled {
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.buttonText {
+	color: #336666;
+	font-family: verdana;
+	font-size: 12;
+	font-weight: bold;
+}
+
+.buttonTextDisabled {
+	color: white;
+	font-family: verdana;
+	font-size: 12;
+	font-weight: bold;
+}
+
+.buttonTextHover {
+	color: #336666;
+	font-family: verdana;
+	font-size: 12;
+	font-weight: bold;
+}
+
+.imagePositionBottom {
+	background-position: bottom center;
+	text-align: center;
+	vertical-align: top;
+	padding-bottom: 15px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.imagePositionTop {
+	background-position: top center;
+	text-align: center;
+	vertical-align: bottom;
+	padding-top: 15px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.imagePositionRight {
+	background-position: center right;
+	text-align: left;
+	vertical-align: middle;
+	padding-right: 15px;
+	margin-top: 2px;
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
+.imagePositionLeft {
+	background-position: center left;
+	text-align: right;
+	vertical-align: middle;
+	padding-left: 15px;
+	margin-top: 2px;
+	margin-left: 2px;
+	margin-right: 2px;
+}

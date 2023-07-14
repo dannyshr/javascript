@@ -1,0 +1,159 @@
+<html>
+	<head>
+		<title>Test</title>
+		<script type="text/javascript">
+			function listFilesInPath() {
+				var _path = document.getElementById("path").value;
+				var lst = listFiles(_path);
+				var currObj = null;
+				var htm = "";
+				var html = "";
+				var index = 0;
+				var filePath = null;
+				var path = null;
+				var fileName = null;
+				var fileType = null;
+				var fileSize = null;
+				var lastModif = null;
+				
+				if (lst==null) {
+					return;
+				}
+				
+				for (var i=0;i<lst.length;i++) {
+					index++;
+					currObj = lst[i];
+					filePath = currObj[0];
+					path = filePath.substring(0,filePath.lastIndexOf("\\")-1);
+					fileName = filePath.substring(filePath.lastIndexOf("\\")+1);
+					fileType = fileName.substring(fileName.lastIndexOf(".")+1);
+					fileSize = currObj[1];
+					lastModif = new Date(currObj[2]);
+					lastModif = formatDateTime(lastModif);
+					htm +=  "<tr>";
+					htm +=  "<td>" + index + "</td>";
+					htm +=  "<td style=\"white-space:nowrap;\">" + filePath + "</td>";
+					htm +=  "<td style=\"white-space:nowrap;\">" + path + "</td>";
+					htm +=  "<td style=\"white-space:nowrap;\">" + fileName + "</td>";
+					htm +=  "<td>" + fileType + "</td>";
+					htm +=  "<td>" + fileSize + "</td>";
+					htm +=  "<td style=\"white-space:nowrap;\">" + lastModif + "</td>";
+					htm +=  "</tr>";
+				}
+				html +=  "<table border=\"1\">";
+				html +=  "<tr>";
+				html +=  "<th>Num</th>";
+				html +=  "<th>File Path</th>";
+				html +=  "<th>Path</th>";
+				html +=  "<th>File Name</th>";
+				html +=  "<th>File Type</th>";
+				html +=  "<th>File Size</th>";
+				html +=  "<th>Last Modified</th>";
+				html +=  "</tr>";
+				html +=  htm;
+				html +=  "</table>";
+				document.getElementById("data").innerHTML = html;
+			}
+			
+			function formatDateTime(_dateTime) {
+				//declare locals
+				var day,month,year,hour,minute,secs,milliSecs = null;
+				var dateDelim = "/";
+				var dtDelim = " ";
+				var timeDelim = ":";
+				var retVal = null;
+				
+				//check for nulls
+				if (_dateTime==null) {
+					return null;
+				}
+				
+				//get the date's parts
+				day = _dateTime.getDate();
+				month = _dateTime.getMonth()+1;
+				year = _dateTime.getFullYear();
+				hour = _dateTime.getHours();
+				minute = _dateTime.getMinutes();
+				secs = _dateTime.getSeconds();
+				milliSecs = _dateTime.getMilliseconds();
+				
+				//fix the parts
+				if (day<10) {
+					day = "0" + day;
+				}
+				if (month<10) {
+					month = "0" + month;
+				}
+				if (hour<10) {
+					hour = "0" + hour;
+				}
+				if (minute<10) {
+					minute = "0" + minute;
+				}
+				if (secs<10) {
+					secs = "0" + secs;
+				}
+				
+				//render the string
+				//retVal = day+dateDelim+month+dateDelim+year+dtDelim+hour+timeDelim+minute+timeDelim+secs+timeDelim+milliSecs;
+				retVal = day+dateDelim+month+dateDelim+year+dtDelim+hour+timeDelim+minute+timeDelim+secs;
+				
+				return retVal;
+			}
+			
+			function listFiles(_path) {
+				if(window.Components) {
+					try {
+						netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+						var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);  
+						file.initWithPath(_path);
+						var entries = file.directoryEntries;
+						var entry = null;
+						var filePath = null;
+						var fileSize = null;
+						var lastModif = null;
+						var fileObj = null;
+						var array = [];
+						while(entries.hasMoreElements()) {
+							entry = entries.getNext();
+							entry.QueryInterface(Components.interfaces.nsIFile);
+							if (entry.exists() && entry.isFile()) {
+								fileObj = [];
+								filePath = String(entry.path);
+								fileSize = String(entry.fileSize);
+								lastModif = entry.lastModifiedTime;
+								fileObj.push(filePath);
+								fileObj.push(fileSize);
+								fileObj.push(lastModif);
+								array.push(fileObj);
+							}
+						}
+						return array;
+					}
+					catch(ex) {
+						//alert("Exception while attempting to list files\n\n" + ex);
+						return false;
+					}
+				}
+				return null;
+			}
+		</script>
+	</head>
+	<body>
+		<table border="0">
+			<tr>
+				<td>
+					<input id="path" type="text" value="c:\\danny\docs" />
+				</td>
+				<td>
+					<input id="btnList" type="button" value="List" onclick="listFilesInPath();" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div id="data" style="border:1px solid black;width:1000px;height:250px;overflow:auto;"></div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

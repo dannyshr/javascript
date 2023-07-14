@@ -1,0 +1,772 @@
+<html>
+	<head>
+		<title>Border Layout</title>
+		<style type="text/css">
+			body {
+				overflow: hidden;
+				margin-top: 0px;
+			}
+			
+			.menu {
+				width: 200px;
+				height: 100%;
+				background-color: #ffffff;
+			}
+			
+			.page {
+				width: 100%;
+				height: 100%;
+				background-color: #cccccc;
+			}
+			
+			.north {
+				top: 0px;
+				left: 0px;
+				display: block;
+				border: 1px solid #ff0000;
+				height: 90px;
+				width: 100%;
+			}
+			
+			.northHeader {
+				height: 30px;
+				width: 100%;
+				background-color: #ccffa0;
+			}
+			
+			.northBody {
+				height: 60px;
+				width: 100%;
+				background-color: #03ff00;
+			}
+			
+			.south {
+				bottom: 0px;
+				left: 0px;
+				display: block;
+				border: 1px solid #0000ff;
+				height: 90px;
+				width: 100%;
+			}
+			
+			.southHeader {
+				height: 30px;
+				width: 100%;
+				background-color: #0045f3;
+			}
+			
+			.southBody {
+				height: 60px;
+				width: 100%;
+				background-color: #0000ff;
+			}
+			
+			.center {
+				width: 93%;
+			}
+			
+			.west {
+				top: 92px;
+				left: 0px;
+				display: block;
+				border: 1px solid #ff0000;
+				height: 90%;
+				width: 238px;
+			}
+			
+			.westHeader {
+				height: 100%;
+				width: 30px;
+				background-color: #ffffff;
+			}
+			
+			.westBody {
+				height: 100%;
+				width: 200px;
+				background-color: #ff0000;
+			}
+			
+			.east {
+				top: 92px;
+				right: 0px;
+				display: block;
+				border: 1px solid #ff0000;
+				height: 90%;
+				width: 238px;
+			}
+			
+			.eastHeader {
+				height: 100%;
+				width: 30px;
+				background-color: #ffffff;
+			}
+			
+			.eastBody {
+				height: 100%;
+				width: 200px;
+				background-color: #ff0000;
+			}
+			
+		</style>
+		<script type="text/javascript" language="javascript" src="jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" language="javascript">
+			function handleOnLoad() {
+				//render components
+				var renderTo = "page";
+				renderLayout(renderTo);
+				
+				//attach events
+				attachWindowResizeEvent();
+				attachCollapseButtonsEvents();
+				
+				//fire events
+				resizeComponents();
+			}
+			
+			function getNorthPartId() {
+				return "north";
+			}
+			
+			function getSouthPartId() {
+				return "south";
+			}
+			
+			function getWestPartId() {
+				return "west";
+			}
+			
+			function getEastPartId() {
+				return "east";
+			}
+			
+			function getPartCollapseButtonId(partId) {
+				return partId+"BtnCollapse";
+			}
+			
+			function getPartCloseButtonId(partId) {
+				return partId+"BtnClose";
+			}
+			
+			function getPartBodyId(partId) {
+				return partId+"Body";
+			}
+			
+			function getPartHeaderId(partId) {
+				return partId+"Header";
+			}
+			
+			function getHorizontalType() {
+				return "h";
+			}
+			
+			function getVerticalType() {
+				return "v";
+			}
+			
+			function collapseComponent(containerId,bodyId,type) {
+				//declare locals
+				var containerComp = document.getElementById(containerId);
+				var bodyComp = document.getElementById(bodyId);
+				var containerSize = null;
+				var bodySize = null;
+				
+				//check for nulls
+				if (containerComp==null || bodyComp==null || type==null) {
+					return;
+				}
+				
+				//get the components' size
+				if (type.toLowerCase()=="h") {
+					containerSize = $("#"+containerId).height();
+					bodySize = $("#"+bodyId).height();
+				}
+				else if (type.toLowerCase()=="v") {
+					containerSize = $("#"+containerId).width();
+					bodySize = $("#"+bodyId).width();
+				}
+				
+				//animate the container's height
+				if (type.toLowerCase()=="h") {
+					$("#"+bodyId).animate({height: 0+'px'},1000);
+					$("#"+containerId).animate({height: (containerSize-bodySize)+'px'},1000);
+				}
+				else if (type.toLowerCase()=="v") {
+					$("#"+bodyId).animate({width: 0+'px'},1000);
+					$("#"+containerId).animate({width: (containerSize-bodySize)+'px'},1000);
+				}
+			}
+			
+			function expandComponent(containerId,bodyId,origBodySize,type) {
+				//declare locals
+				var containerComp = document.getElementById(containerId);
+				var bodyComp = document.getElementById(bodyId);
+				var containerSize = null;
+				
+				//check for nulls
+				if (containerComp==null || bodyComp==null || type==null) {
+					return;
+				}
+				
+				//get the components' size
+				if (type.toLowerCase()=="h") {
+					containerSize = $("#"+containerId).height();
+				}
+				else if (type.toLowerCase()=="v") {
+					containerSize = $("#"+containerId).width();
+				}
+				containerSize = containerSize+origBodySize;
+				
+				//animate the container's height
+				if (type.toLowerCase()=="h") {
+					$("#"+bodyId).animate({height: origBodySize+'px'},1000);
+					$("#"+containerId).animate({height: containerSize+'px'},1000);
+				}
+				else if (type.toLowerCase()=="v") {
+					$("#"+bodyId).animate({width: origBodySize+'px'},1000);
+					$("#"+containerId).animate({width: containerSize+'px'},1000);
+				}
+			}
+			
+			function renderLayout(renderTo) {
+				//declare locals
+				var _containerComp = document.getElementById(renderTo);
+				var _northId = getNorthPartId();
+				var _southId = getSouthPartId();
+				var _westId = getWestPartId();
+				var _eastId = getEastPartId();
+				var _html = "";
+				
+				//check for nulls
+				if (_containerComp==null) {
+					return;
+				}
+				
+				//build the html
+				_html += '<table border="1" style="width:100%;height:100%;" cellpadding="0" cellspacing="0">';
+				_html += '<tr>';
+				_html += '<td colspan="3">';
+				_html += '<div id="'+_northId+'" class="'+_northId+'">';
+				_html += renderHorizontalPartBody(_northId,"North Header","^");
+				_html += '</div>';
+				_html += '</td>';
+				_html += '</tr>';
+				_html += '<tr>';
+				_html += '<td>';
+				_html += '<div id="'+_westId+'" class="'+_westId+'">';
+				_html += renderVerticalPartBody(_westId,"West Header","w");
+				_html += '</div>';
+				_html += '</td>';
+				_html += '<td class="center">';
+				_html += '<div id="center" class="center">';
+				_html += '</div>';
+				_html += '</td>';
+				_html += '<td>';
+				_html += '<div id="'+_eastId+'" class="'+_eastId+'">';
+				_html += renderVerticalPartBody(_eastId,"East Header","e");
+				_html += '</div>';
+				_html += '</td>';
+				_html += '</tr>';
+				_html += '<tr>';
+				_html += '<td colspan="3">';	
+				_html += '<div id="'+_southId+'" class="'+_southId+'">';
+				_html += renderHorizontalPartBody(_southId,"South Footer","v");
+				_html += '</div>';
+				_html += '</td>';
+				_html += '</tr>';
+				_html += '</table>';
+				
+				//render the html
+				_containerComp.innerHTML = _html;
+			}
+			
+			function renderHorizontalPartBody(partId,partHeader,buttonCaption) {
+				//declare locals
+				var bodyPartId = getPartBodyId(partId);
+				var btnCollapsePartId = getPartCollapseButtonId(partId);
+				var btnClosePartId = getPartCloseButtonId(partId);
+				var _html = "";
+				
+				//build the html
+				_html += '<table border="0" style="width:100%;" cellpadding="0" cellspacing="0">';
+				_html += '<tr>';
+				_html += '<td>';
+				_html += '<div id="'+partId+'Header" class="'+partId+'Header">';
+				_html += '<table border="0" style="width:100%;" cellpadding="0" cellspacing="0">';
+				_html += '<tr>';
+				_html += '<td>';
+				_html += partHeader;
+				_html += '</td>';
+				_html += '<td style="width:30px;text-align:right;">';
+				_html += '<input id="'+btnCollapsePartId+'" type="button" value="'+buttonCaption+'" />';
+				_html += '</td>';
+				_html += '<td style="width:30px;text-align:right;">';
+				_html += '<input id="'+btnClosePartId+'" type="button" value="x" />';
+				_html += '</td>';
+				_html += '</tr>';
+				_html += '</table>';
+				_html += '</div>';
+				_html += '</td>';
+				_html += '</tr>';
+				_html += '<tr>';
+				_html += '<td>';
+				_html += '<div id="'+bodyPartId+'" class="'+bodyPartId+'">';
+				_html += '</div>';
+				_html += '</td>';
+				_html += '</tr>';
+				_html += '</table>';
+				
+				//return the method's value
+				return _html;
+			}
+			
+			function renderVerticalPartBody(partId,partHeader,partType) {
+				//declare locals
+				var bodyPartId = getPartBodyId(partId);
+				var _partType = partType;
+				var _btnCaption = null;
+				var _html = "";
+				
+				//set dfaults if necessary
+				if (_partType==null || !_partType.length || _partType.length<1) {
+					_partType = "west";
+				}
+				
+				//build the html
+				_html += '<table border="0" style="height:100%;" cellpadding="0" cellspacing="0">';
+				_html += '<tr>';
+				_html += '<td>';
+				if (_partType.toLowerCase()=="w" || _partType.toLowerCase()=="west") {
+					_html += renderVerticalBodyPart(bodyPartId);
+				}
+				else if (_partType.toLowerCase()=="e" || _partType.toLowerCase()=="east") {
+					_btnCaption = ">>";
+					_html += renderVerticalHeaderPart(partId,partHeader,_btnCaption);
+				}
+				_html += '</td>';
+				_html += '<td>';
+				if (_partType.toLowerCase()=="w" || _partType.toLowerCase()=="west") {
+					_btnCaption = "<<";
+					_html += renderVerticalHeaderPart(partId,partHeader,_btnCaption);
+				}
+				else if (_partType.toLowerCase()=="e" || _partType.toLowerCase()=="east") {
+					_html += renderVerticalBodyPart(bodyPartId);
+				}
+				_html += '</td>';
+				_html += '</tr>';
+				_html += '</table>';
+				
+				//return the method's value
+				return _html;
+			}
+			
+			function renderVerticalBodyPart(bodyPartId) {
+				//declare locals
+				var _html = "";
+				
+				//build the html
+				_html += '<div id="'+bodyPartId+'" class="'+bodyPartId+'">';
+				_html += '</div>';
+				
+				//return the method's value
+				return _html;
+			}
+			
+			function renderVerticalHeaderPart(partId,partHeader,btnCaption) {
+				//declare locals
+				var btnCollapsePartId = getPartCollapseButtonId(partId);
+				var btnClosePartId = getPartCloseButtonId(partId);
+				var headerPartId = getPartHeaderId(partId);
+				var _html = "";
+				
+				//build the html
+				_html += '<table border="0" class="'+headerPartId+'" cellpadding="0" cellspacing="0">';
+				_html += '<tr>';
+				_html += '<td style="height:35px;width:100%;vertical-align:top;">';
+				_html += '<input id="'+btnClosePartId+'" type="button" value="x" style="width:100%;" />';
+				_html += '</td>';
+				_html += '</tr>';
+				_html += '<tr>';
+				_html += '<td style="height:35px;vertical-align:top;">';
+				_html += '<input id="'+btnCollapsePartId+'" type="button" value="'+btnCaption+'" />';
+				_html += '</td>';
+				_html += '</tr>';
+				_html += '<tr>';
+				_html += '<td style="vertical-align:top;">';
+				_html += '<div id="'+headerPartId+'" class="'+headerPartId+'Text">';
+				_html += renderVerticalString(partHeader);
+				_html += '</div>';
+				_html += '</td>';
+				_html += '</tr>';
+				_html += '</table>';
+				
+				//return the method's value
+				return _html;
+			}
+			
+			function renderVerticalString(string) {
+				//declare locals
+				var _html = "";
+				
+				//check for nulls
+				if (string==null || !string.length || string.length<1) {
+					return _html;
+				}
+				
+				//build the html
+				_html += '<table border="0" cellpadding="0" cellspacing="0">';
+				
+				//loop through the length
+				for (var i=0;i<string.length;i++) {
+					_html += '<tr>';
+					_html += '<td>';
+					_html += string[i];
+					_html += '</td>';
+					_html += '</tr>';
+				}
+				_html += '</table>';
+				
+				//return the method's value
+				return _html;
+			}
+			
+			function attachWindowResizeEvent() {
+				document.getElementsByTagName("body")[0].onresize = function() {
+					resizeComponents();
+				};
+			}
+			
+			function resizeComponents() {
+				//declare locals
+				var northId = getNorthPartId();
+				var southId = getSouthPartId();
+				var westId = getWestPartId();
+				var eastId = getEastPartId();
+				var windowHeight = $(window).height();
+				var northHeight = $("#"+northId).height();
+				var southHeight = $("#"+southId).height();
+				var borderWidthInterval = 10;
+				var middlePartPercentage = 70;
+				var middlePartHeight = 0;
+				middlePartHeight = windowHeight - (northHeight+southHeight+borderWidthInterval);
+				//middlePartHeight = (windowHeight*middlePartPercentage)/100;
+				
+				$("#"+westId).css('height',middlePartHeight+'px');
+				$("#"+eastId).css('height',middlePartHeight+'px');
+			}
+			
+			function attachCollapseButtonsEvents() {
+				//declare locals
+				var partIds = new Array();
+				var bodyIds = new Array();
+				
+				//populate the arrays
+				partIds.push(getNorthPartId());
+				partIds.push(getSouthPartId());
+				partIds.push(getWestPartId());
+				partIds.push(getEastPartId());
+				bodyIds.push(getPartBodyId(partIds[0]));
+				bodyIds.push(getPartBodyId(partIds[1]));
+				bodyIds.push(getPartBodyId(partIds[2]));
+				bodyIds.push(getPartBodyId(partIds[3]));
+				
+				attachCollapseNorthBtnEvent(partIds[0],bodyIds[0]);
+				attachCollapseSouthBtnEvent(partIds[1],bodyIds[1]);
+				attachCollapseWestBtnEvent(partIds[2],bodyIds[2]);
+				attachCollapseEastBtnEvent(partIds[3],bodyIds[3]);
+				
+				for (var i=0;i<partIds.length;i++) {
+					attachCloseBtnEvent(partIds[i]);
+				}
+			}
+			
+			function attachCollapseNorthBtnEvent(partId,bodyId) {
+				var _compId = getPartCollapseButtonId(partId);
+				var _compObj = document.getElementById(_compId);
+				var origBodyHeight = $("#"+bodyId).height();
+				var type = getHorizontalType();
+				
+				//check for nulls
+				if (_compObj==null) {
+					return;
+				}
+				
+				_compObj.onclick = function() {
+					if (_compObj.value.toLowerCase()=="^") {
+						collapseNorth(partId,bodyId,origBodyHeight,type);
+						_compObj.value = "v";
+					}
+					else if (_compObj.value.toLowerCase()=="v") {
+						expandNorth(partId,bodyId,origBodyHeight,type);
+						_compObj.value = "^";
+					}
+				};
+			}
+			
+			function attachCollapseSouthBtnEvent(partId,bodyId) {
+				var _compId = getPartCollapseButtonId(partId);
+				var _compObj = document.getElementById(_compId);
+				var origBodyHeight = $("#"+bodyId).height();
+				var type = getHorizontalType();
+				
+				//check for nulls
+				if (_compObj==null) {
+					return;
+				}
+				
+				_compObj.onclick = function() {
+					if (_compObj.value.toLowerCase()=="v") {
+						collapseSouth(partId,bodyId,origBodyHeight,type);
+						_compObj.value = "^";
+					}
+					else if (_compObj.value.toLowerCase()=="^") {
+						expandSouth(partId,bodyId,origBodyHeight,type);
+						_compObj.value = "v";
+					}
+				};
+			}
+			
+			function attachCollapseWestBtnEvent(partId,bodyId) {
+				var _compId = getPartCollapseButtonId(partId);
+				var _compObj = document.getElementById(_compId);
+				var origBodySize = $("#"+bodyId).width();
+				var type = getVerticalType();
+				
+				//check for nulls
+				if (_compObj==null) {
+					return;
+				}
+				
+				_compObj.onclick = function() {
+					if (_compObj.value.toLowerCase()=="<<") {
+						collapseWest(partId,bodyId,origBodySize,type);
+						_compObj.value = ">>";
+					}
+					else if (_compObj.value.toLowerCase()==">>") {
+						expandWest(partId,bodyId,origBodySize,type);
+						_compObj.value = "<<";
+					}
+				};
+			}
+			
+			function attachCollapseEastBtnEvent(partId,bodyId) {
+				var _compId = getPartCollapseButtonId(partId);
+				var _compObj = document.getElementById(_compId);
+				var origBodySize = $("#"+bodyId).width();
+				var type = getVerticalType();
+				
+				//check for nulls
+				if (_compObj==null) {
+					return;
+				}
+				
+				_compObj.onclick = function() {
+					if (_compObj.value.toLowerCase()==">>") {
+						collapseEast(partId,bodyId,origBodySize,type);
+						_compObj.value = "<<";
+					}
+					else if (_compObj.value.toLowerCase()=="<<") {
+						expandEast(partId,bodyId,origBodySize,type);
+						_compObj.value = ">>";
+					}
+				};
+			}
+			
+			function attachCloseBtnEvent(partId) {
+				var _compId = getPartCloseButtonId(partId);
+				var _compObj = document.getElementById(_compId);
+				var _northId = getNorthPartId();
+				var _southId = getSouthPartId();
+				var _northBodyId = getPartBodyId(_northId);
+				var _southBodyId = getPartBodyId(_southId);
+
+				//check for nulls
+				if (_compObj==null) {
+					return;
+				}
+				
+				_compObj.onclick = function() {
+					if (partId.toLowerCase()=="north") {
+						closeHorizontalPart(_northId,_northBodyId);
+					}
+					else if (partId.toLowerCase()=="south") {
+						closeHorizontalPart(_southId,_southBodyId);
+					}
+					$("#"+partId).hide();
+				};
+			}
+			
+			function collapseNorth(partId,bodyId,origBodySize,type) {
+				//declare locals
+				var _westId = getWestPartId();
+				var _eastId = getEastPartId();
+				var containerHeight = $("#"+partId).height();
+				var westHeight = $("#"+_westId).height();
+				var eastHeight = $("#"+_eastId).height();
+				
+				//collapse the component
+				collapseComponent(partId,bodyId,type);		
+				
+				//animate the related components
+				if (!isHidden(_westId)) {
+					$("#"+_westId).animate({top: (containerHeight-origBodySize)+'px',height: (westHeight+origBodySize)+'px'},1000);
+				}
+				if (!isHidden(_eastId)) {
+					$("#"+_eastId).animate({top: (containerHeight-origBodySize)+'px',height: (eastHeight+origBodySize)+'px'},1000);
+				}
+			}
+			
+			function expandNorth(partId,bodyId,origBodySize,type) {
+				//declare locals
+				var _westId = getWestPartId();
+				var _eastId = getEastPartId();
+				var containerHeight = $("#"+partId).height();
+				var westHeight = $("#"+_westId).height();
+				var eastHeight = $("#"+_eastId).height();
+				
+				//collapse the component
+				expandComponent(partId,bodyId,origBodySize,type);		
+				
+				//animate the related components
+				if (!isHidden(_westId)) {
+					$("#"+_westId).animate({top: (containerHeight+origBodySize)+'px',height: (westHeight-origBodySize)+'px'},1000);
+				}
+				if (!isHidden(_eastId)) {
+					$("#"+_eastId).animate({top: (containerHeight+origBodySize)+'px',height: (eastHeight-origBodySize)+'px'},1000);
+				}
+			}
+			
+			function collapseSouth(partId,bodyId,origBodySize,type) {
+				//declare locals
+				var _westId = getWestPartId();
+				var _eastId = getEastPartId();
+				var westHeight = $("#"+_westId).height();
+				var eastHeight = $("#"+_eastId).height();
+				
+				//collapse the component
+				collapseComponent(partId,bodyId,type);		
+				
+				//animate the related components
+				if (!isHidden(_westId)) {
+					$("#"+_westId).animate({height: (westHeight+origBodySize)+'px'},1000);
+				}
+				if (!isHidden(_eastId)) {
+					$("#"+_eastId).animate({height: (eastHeight+origBodySize)+'px'},1000);
+				}
+			}
+			
+			function expandSouth(partId,bodyId,origBodySize,type) {
+				//declare locals
+				var _westId = getWestPartId();
+				var _eastId = getEastPartId();
+				var westHeight = $("#"+_westId).height();
+				var eastHeight = $("#"+_eastId).height();
+				
+				//collapse the component
+				expandComponent(partId,bodyId,origBodySize,type);		
+				
+				//animate the related components
+				if (!isHidden(_westId)) {
+					$("#"+_westId).animate({height: (westHeight-origBodySize)+'px'},1000);
+				}
+				if (!isHidden(_eastId)) {
+					$("#"+_eastId).animate({height: (eastHeight-origBodySize)+'px'},1000);
+				}
+			}
+			
+			function collapseWest(partId,bodyId,origBodySize,type) {
+				//collapse the component
+				collapseComponent(partId,bodyId,type);		
+			}
+			
+			function expandWest(partId,bodyId,origBodySize,type) {
+				//collapse the component
+				expandComponent(partId,bodyId,origBodySize,type);		
+			}
+			
+			function collapseEast(partId,bodyId,origBodySize,type) {
+				//collapse the component
+				collapseComponent(partId,bodyId,type);		
+			}
+			
+			function expandEast(partId,bodyId,origBodySize,type) {
+				//collapse the component
+				expandComponent(partId,bodyId,origBodySize,type);		
+			}
+			
+			function closeHorizontalPart(partId,bodyId) {
+				//declare locals
+				var _westId = getWestPartId();
+				var _eastId = getEastPartId();
+				var containerHeight = $("#"+partId).height();
+				var westHeight = $("#"+_westId).height();
+				var eastHeight = $("#"+_eastId).height();
+				
+				//close the component
+				$("#"+partId).hide();	
+				
+				//animate the related components
+				if (partId.toLowerCase()=="north") {
+					if (!isHidden(_westId)) {
+						$("#"+_westId).animate({top: 0+'px',height: (westHeight+containerHeight)+'px'},1000);
+					}
+					if (!isHidden(_eastId)) {
+						$("#"+_eastId).animate({top: 0+'px',height: (eastHeight+containerHeight)+'px'},1000);
+					}
+				}
+				else if (partId.toLowerCase()=="south") {
+					if (!isHidden(_westId)) {
+						$("#"+_westId).animate({height: (westHeight+containerHeight)+'px'},1000);
+					}
+					if (!isHidden(_eastId)) {
+						$("#"+_eastId).animate({height: (eastHeight+containerHeight)+'px'},1000);
+					}
+				}
+			}
+			
+			function isHidden(compId) {
+				//declare locals
+				var _compObj = document.getElementById(compId);
+				var _display = null;
+				var _isHidden = true;
+				
+				//check for nulls
+				if (_compObj==null) {
+					return _isHidden;
+				}
+				
+				//get the current display
+				_display = _compObj.style.display;
+				
+				//set defaults
+				if (_display==null || !_display.length || _display.length<1) {
+					_display = "block";
+				}
+				
+				//check the display
+				if (_display.toLowerCase()=="none") {
+					_isHidden = true;
+				}
+				else {
+					_isHidden = false;
+				}
+				
+				//return the method's value
+				return _isHidden;
+			}
+			
+		</script>
+	</head>
+	<body onload="handleOnLoad();">
+		<table border="0" style="width:100%;height:99%;" cellpadding="0" cellspacing="0">
+			<tr>
+				<td class="menu">
+					<div id="menu" class="menu">
+					</div>
+				</td>
+				<td>
+					<div id="page" class="page"></div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

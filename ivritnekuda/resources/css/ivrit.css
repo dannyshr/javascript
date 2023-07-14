@@ -1,0 +1,247 @@
+.main {
+	/* margin: 0px 1px 0px 1px; */
+	background-color: #000000;
+}
+
+.mainApp {
+	height: 98%;
+	width: 99%;
+	border: 0px solid #000000;
+	position: relative;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: top right;
+	overflow: hidden;
+}
+
+.topDiv {
+	height: 96%;
+	wwidth: 100%;
+}
+
+.table {
+	height: 100%;
+	width: 100%;
+	
+}
+
+.header{
+	height: 100px;
+	width: 100%;
+	text-align: right;
+	vertical-align: middle;
+}
+
+.headerText {
+	color: #ffffff;
+	font-family: verdana;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: center;
+	white-space: nowrap;
+}
+
+a.headerText {
+	color: #ffffff;
+	font-family: verdana;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	vertical-align: center;
+	white-space: nowrap;
+}
+
+.footer {
+	border: 0px solid #000000;
+	height: 4%;
+	width: 100%;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.footerText {
+	color: #ffffff;
+	font-family: verdana;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: center;
+	white-space: nowrap;
+}
+
+.topAlignedCol {
+	vertical-align: top;
+}
+
+.rightAlignedCol {
+	text-align: right;
+}
+
+.middleAlignedCol {
+	vertical-align: middle;
+}
+
+.borderedCol {
+	border: 0px solid transparent;
+}
+
+.flowBox {
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: 10px;
+}
+
+.topRightDiv {
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: 135px;
+	width: 90%;
+}
+
+.scrollingContainer {
+	width: 130px;	/* Width of second box */
+	height: 520px; 	/* Height of second box */
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: 10px;
+}
+
+.scrollingContent {
+	position: relative;
+	font-size: 11px;
+}
+
+.mainContents{ 
+	position: relative;
+	overflow: hidden;
+	height: 91%;
+	width: 99%;
+	border: 0px solid #ffffff;
+	text-align: right;
+	padding-top: 10px;
+}
+
+.menu {
+	height: 34px;
+	border: 0px solid #000000;
+	background-color: transparent;
+	padding-right: 30px;
+	text-align: right;
+}
+
+.menuItem {
+	border: none;
+	height: 30px;
+	width: 110px;
+	overflow: hidden;
+	background-color: transparent;
+	cursor: pointer;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.menuItemButton {
+	width: 100%;
+	height:100%;
+	border: none;
+	background-image: url('../images/button1.gif'); 
+	background-position: right center;
+	background-color: transparent;
+	text-align: center;
+	vertical-align: top;
+	cursor: pointer;
+}
+
+.menuItemButtonHover {
+	width: 100%;
+	height:100%;
+	border: none;
+	background-image: url('../images/button2.gif'); 
+	background-position: right center;
+	background-color: transparent;
+	text-align: center;
+	vertical-align: top;
+	cursor: pointer;
+}
+
+
+.menuItemButtonImage {
+	width: 16px;
+	text-align: left;
+	vertical-align: middle;
+}
+
+.menuItemButtonText {
+	padding-right: 5px;
+	color: #000000;
+	font-family: arial;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: bold;
+	text-align: center;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+.contents {
+	position: relative;
+	overflow: auto;
+	top: 0px;
+	left: 0px;
+	height: 350px;
+	width: 100%;
+	border: 0px solid #000000;
+	text-align: right;
+	
+}
+
+.innerContents {
+	height: 100%; 
+	width: 100%; 
+	position: absolute;
+	overflow: hidden;
+	display: none;
+	background-color: transparent;
+	white-space: wrap;
+	color: #ffffff;
+	font-family: arial;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: bold;
+	
+}
+
+.innerContentstext {
+	color: #ffffff;
+	font-family: arial;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: bold;
+	
+	}
+	
+.bookItem {
+	border-top: 0px outset transparent;
+	border-left: 0px inset transparent;
+	border-bottom: 0px outset transparent;
+	border-right: 0px inset transparent;
+	height: 180px;
+	overflow: hidden;
+	background-color: transparent;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.bookItemImage {
+	height: 180px;
+	border: none;
+	vertical-align: middle;
+}

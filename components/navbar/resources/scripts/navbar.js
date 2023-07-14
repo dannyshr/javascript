@@ -418,7 +418,7 @@ function Navbar(_config) {
 		var _imagesPath = null;
 		
 		//set the return value
-		_imagesPath = this._getThemesPath()+"_shared/images/";
+		_imagesPath = this._getThemesPath()+"shared/images/";
 		
 		//return the method's value
 		return _imagesPath;

@@ -26,7 +26,7 @@
 				//declare locals
 				var config = {
 					containerId: "cpuGauge"
-					,url: "http://localhost:9090/nit/agents/cpuAgent.jsp?action=getCpu"
+					,url: "http://localhost:8080/showcase/apps/nit/agents/cpuAgent.jsp?action=getCpu"
 					,label: "CPU (%)"
 					,refreshInterval: 2000
 					,dataMethod: "getCpu()"
@@ -46,7 +46,7 @@
 				//declare locals
 				var config = {
 					containerId: "ramGauge"
-					,url: "http://localhost:9090/nit/agents/cpuAgent.jsp?action=getRam"
+					,url: "http://localhost:8080/showcase/apps/nit/agents/heapAgent.jsp?action=getHeap"
 					,label: "RAM (MB)"
 					,refreshInterval: 2000
 					,dataMethod: "getRam()"

@@ -152,7 +152,12 @@ function Gauge(config) {
 		//get the gauge's parts
 		_opts = this.getOptions();
 		_gauge = this.getGauge();
-		_data = this.getGaugeData(parseInt(json.data[0]));
+		if (json.hasOwnProperty("data")) {
+			_data = this.getGaugeData(parseInt(json.data[0]));
+		}
+		else if (json.hasOwnProperty("heap")) {
+			_data = this.getGaugeData(parseInt(json.heap.free)/(1000*1000*1000));
+		}
 		
 		//re-render the gauge
 		_gauge.draw(_data,_opts);

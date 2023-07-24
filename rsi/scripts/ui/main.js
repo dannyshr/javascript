@@ -316,11 +316,11 @@ function loadServersJQuery() {
 		return;
 	}
 	var opts = {
-		type:"POST"
+		type:"GET"
 		,url:"data/serversData.html"
 	}
 	$.ajax({
-		type:"POST"
+		type:"GET"
 		,url:"data/serversData.html"
 		,success: function(data) {
 			serversLoaded(data,opts);

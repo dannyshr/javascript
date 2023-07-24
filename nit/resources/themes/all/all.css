@@ -1,0 +1,12 @@
+
+.iconInbox {
+	background-image: url("../../icons/inboxOpen.png");
+}
+
+.tabIconServer {
+	background-image: url("../../icons/server.png");
+}
+
+.tabIconWeb {
+	background-image: url("../../icons/world.png");
+}

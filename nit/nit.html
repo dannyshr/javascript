@@ -1,0 +1,517 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<title>NIT (beta)</title>
+		<link href="resources/scripts/ext-3.2.1/resources/css/ext-all.css" rel="stylesheet" type="text/css" />
+		<script src="resources/scripts/ext-3.2.1/adapter/ext/ext-base.js" type="text/javascript"></script>
+		<script src="resources/scripts/ext-3.2.1/ext-all.js" type="text/javascript"></script>
+		<script src="resources/scripts/ext-3.2.1/plugins/Ext.ux.plugins.WindowDrawer.js" language="javascript"></script>
+		<script src="resources/scripts/bindows/bindows_gauges.js" language="javascript"></script>
+		<script language="javascript">
+			Ext.onReady(function(){
+				var win;
+				win = new Ext.Window({
+					layout      : 'fit',
+					width       : 300,
+					height      : 130,
+					modal       : false,
+					minHeight   : 130,
+					minWidth   	: 300,
+					closeAction :'hide',
+					plain       : true,
+					closable    : false,
+					collapsible	: false,
+					resizable	: false,
+					constrain   : true,
+					title       : 'Non Intrusive Telemetry (beta)',
+					x 			: 20,
+					y 			: 20,
+					html 		: "<div><img style=\"height:120;width:120;\" src=\"resources/icons/telemetry.gif\"></div>",
+					tbar        : [
+					{
+							text: 'Connect',
+							enableToggle: true,
+							handler: function() {
+								toggleConnectionDialog(win,this.pressed);
+							}
+					},
+					{
+							text: 'Load Test',
+							enableToggle: true,
+							handler: function() {
+								toggleLoadTestDialog(win,this.pressed);
+							}
+					}],
+					plugins : [
+						new Ext.ux.plugins.WindowDrawer({
+							xtype     : 'windowdrawer',
+							side      : 's', // Can be n e s w
+							animate   : true,
+							resizable : false,
+							width     : 150,
+							minWidth  : 150,
+							items : [
+								new Ext.FormPanel({
+									url:'#',
+									frame:true,
+									title: 'Remote Agent',
+									bodyStyle:'padding:5px 5px 0',
+									width: 280,
+									defaultType: 'textfield',
+									buttonAlign : 'right',
+									items: [{
+											id: 'txtAgent',
+											name: 'txtAgent',
+											hideLabel:true,
+											value : '/agent.jsp',
+											width:250
+										}
+									],
+									buttons: [
+										{ 
+											text: 'Connect',
+											handler: function() {
+												connectToAgent(win);
+											}
+										}
+									]
+								})			
+							]
+						}),
+						new Ext.ux.plugins.WindowDrawer({
+							xtype     : 'windowdrawer',
+							side      : 'e', // Can be n e s w
+							animate   : true,
+							resizable : false,
+							width     : 290,
+							minWidth  : 290,
+							items : [
+								new Ext.FormPanel({
+									url:'#',
+									frame:true,
+									title: 'Url to load test',
+									bodyStyle:'padding:5px 5px 0',
+									width: 280,
+									defaultType: 'textfield',
+									buttonAlign : 'right',
+									items: [{
+											id: 'txtUrl',
+											name: 'txtUrl',
+											hideLabel:true,
+											value : '/agent.jsp',
+											width:250
+										}
+									],
+									buttons: [
+									{ 
+											text: 'start load test',
+											handler: function() {
+												startLoadTest(win);
+											}
+									}]
+								})			
+							]
+						})
+					]
+				});
+
+				win.show();
+			});
+			
+		</script>
+		
+		<script language="javascript">
+			function Map() {
+				if (this.arrKeys==null) {
+					this.arrKeys=new Array();
+				}
+				if (this.arrValues==null) {
+					this.arrValues=new Array();
+				}
+				this.get=get;
+				this.contains=contains;
+				this.put=put;
+				this.indexOf=indexOf;
+			}
+			
+			function isArray(obj) {
+				//returns true is it is an array
+				if (obj.constructor.toString().indexOf("Array") == -1) {
+					return false;
+				}
+				return true;
+			}
+			
+			function get(key) {
+				//declare locals
+				var retVal = null;
+				var index = -1;
+				
+				//check for nulls
+				if (key==null || key=="" || 
+					this.arrKeys==null || !isArray(this.arrKeys) ||
+					this.arrValues==null || !isArray(this.arrValues)) {
+					return null;
+				}
+
+				//get the key's index
+				index = this.indexOf(key);
+				
+				//set the return value
+				if (index>-1 && this.arrValues.length>index) {
+					retVal = this.arrValues[index];
+				}
+				
+				//return the method's value
+				return retVal;
+			}
+			
+			function put(key,value) {
+				//declare locals
+				var index = this.indexOf(key);
+				if (index==-1) {
+					this.arrKeys.push(key);
+					this.arrValues.push(value);
+				}
+				else if (this.arrValues.length>index) {
+					this.arrValues[index] = value;
+				}
+			}
+			
+			function contains(key) {
+				//declare locals
+				var index = this.indexOf(key);
+				
+				//return the method's value
+				return (index==-1 ? false : true);
+			}
+			
+			function indexOf(key) {
+				//declare locals
+				var currKey = null;
+				var index = -1;
+				
+				//check for nulls
+				if (key==null || key=="" || 
+					this.arrKeys==null || !isArray(this.arrKeys)) {
+					return true;
+				}
+				
+				//loop through the keys
+				for (var i=0;i<this.arrKeys.length;i++) {
+					//get the current key
+					currKey = this.arrKeys[i];
+					
+					//compare it with the given key
+					if (currKey.toLowerCase()==key.toLowerCase()) {
+						index = i;
+						break;
+					}
+				}
+				
+				//return the method's value
+				return index;
+			}
+			
+			function Monitor(winHandler) {
+				this.winHandler = winHandler;
+				this.gagueId = winHandler+"GaugeDiv";
+				this.gaugeObj = null;
+				this.intervalId = winHandler+"IntervalId";
+				this.interval = 1000;
+				this.monitored = false;
+			}
+		</script>
+		
+		<script language="javascript">
+			//declare global variables
+			var winVarPrefix = "win";
+			var winCounter = 0;
+			var winMap = new Map();
+			var MESSAGES_HEADER = "NIT - System Message";
+			
+			function getAgentString() {
+				var txtId = "txtAgent";
+				var txtObj = null;
+				var txtValue = null;
+				
+				//get elements by their ids
+				txtObj = document.getElementById(txtId);
+				
+				//check for nulls
+				if (txtObj==null) {
+					return null;
+				}
+				
+				//return the method's value
+				return txtObj.value;
+			}
+			
+			function toggleConnectionDialog(_win,show) {
+				if (show) {
+					_win.drawers.s.show();
+				}
+				else {
+					_win.drawers.s.hide();
+				}
+				var txtId = "txtAgent";
+				var txtObj = document.getElementById(txtId);
+				if (txtObj==null) {
+					return;
+				}
+				var url = window.location.href;
+				url = url.substring(0,url.lastIndexOf("/"));
+				txtObj.value = url + "/agents/heapAgent.jsp";
+				//var url = "http://localhost:8080/wab/agents/heapAgent.jsp";
+				//txtObj.value = url;
+			}
+			
+			function toggleLoadTestDialog(_win,show) {
+				if (show) {
+					_win.drawers.e.show();
+				}
+				else {
+					_win.drawers.e.hide();
+				}
+			}
+			
+			function startLoadTest() {
+			}
+			
+			function stopLoadTest() {
+			}
+			
+			function connectToAgent(_mainWin) {
+				var agentValue = getAgentString();
+				var monitorObj = null;
+				var winHandler = null;
+				var gaugeDivId = null;
+				var gaugeObj = null; 
+				
+				if (agentValue==null || agentValue=="") {
+					Ext.Msg.show({
+					   title:MESSAGES_HEADER,
+					   msg: 'You must fill in the remote agent\'s location first',
+					   buttons: Ext.Msg.OK,
+					   icon: Ext.MessageBox.WARNING
+					});
+				}
+				else {
+					//check if the window map already contains a window for this agent
+					if (winMap.contains(agentValue)) {
+						//get the window's handler
+						monitorObj = winMap.get(agentValue);
+						
+						//show it
+						winHandler = monitorObj.winHandler;
+						winHandler.show();
+					}
+					else {
+						//create a new win var name
+						winCounter++;
+						monitorObj = new Monitor(winVarPrefix+winCounter);
+						
+						//create a new window
+						winHandler = monitorObj.winHandler;
+						gaugeDivId = monitorObj.gagueId;
+						winHandler = createWin(agentValue,winHandler);
+						winHandler.show();
+						gaugeObj = bindows.loadGaugeIntoDiv("resources/bindows/g_speedometer_01.xml", gaugeDivId);
+						monitorObj.gaugeObj = gaugeObj;
+						
+						//put it in the map
+						monitorObj.winHandler = winHandler;
+						winMap.put(agentValue,monitorObj);
+						attachMonitor(agentValue);
+					}
+				}
+			}
+
+			function pollServerData(_agentUrl) {
+				Ext.Ajax.request({
+					url: _agentUrl,
+					success: function(response,opts) {
+						ajaxSuccess(response,opts,_agentUrl);
+					},
+					failure: function(response,opts) {
+						ajaxFailure(response,opts,_agentUrl);
+					},
+					params: { "action" : "getHeap" }
+				});
+			}
+
+			function ajaxSuccess(response,opts,_agentUrl) {
+				var monitorObj = winMap.get(_agentUrl);
+				setGagueValue(response,monitorObj.gaugeObj);
+			}
+			
+			function ajaxFailure(response,opts,_agentUrl) {
+				//stop the monitor
+				stopMonitor(_agentUrl);
+				
+				//hide the monitor window
+				var monitor = winMap.get(_agentUrl);
+				if (monitor!=null) {
+					monitor.winHandler.hide();
+				}
+				
+				//display an error message
+				Ext.Msg.show({
+				   title: MESSAGES_HEADER,
+				   msg: "An error occured while trying to connect to ["+_agentUrl+"]. Status code is: "+response.status+".",
+				   buttons: Ext.Msg.OK,
+				   icon: Ext.MessageBox.WARNING
+				});
+			}
+			
+			function attachMonitor(_agentUrl) {
+				Ext.Ajax.request({
+					url: _agentUrl,
+					success: function(response,opts) {
+						attachSuccess(response,opts,_agentUrl);
+					},
+					failure: function(response,opts) {
+						attachFailure(response,opts,_agentUrl);
+					},
+					params: { "action" : "getHeap" }
+				});
+			}
+
+			function attachSuccess(response,opts,_agentUrl) {
+				var monitorObj = winMap.get(_agentUrl);
+				setGagueMaxValue(response,monitorObj.gaugeObj);
+			}
+
+			function attachFailure(response,opts,_agentUrl) {
+				//hide the monitor window
+				var monitor = winMap.get(_agentUrl);
+				if (monitor!=null) {
+					monitor.winHandler.hide();
+				}
+				
+				//display an error message
+				Ext.Msg.show({
+				   title: MESSAGES_HEADER,
+				   msg: "Unable to attach teletemry to agent ["+_agentUrl+"]. Status code is: "+response.status+".",
+				   buttons: Ext.Msg.OK,
+				   icon: Ext.MessageBox.WARNING
+				});
+			}
+			
+			function setGagueMaxValue(response,gaugeObj) {
+				var respObj = eval("("+response.responseText+")");
+				var maxMem = parseInt(Math.random()*10000);
+				//var maxMem = parseInt(respObj.heap.max)/1000;
+				if (gaugeObj!=null) {
+					gaugeObj.scale.setEndValue(maxMem);
+				}
+			}
+			
+			function setGagueValue(response,gaugeObj) {
+				var respObj = eval("("+response.responseText+")");
+				var freeMem = parseInt(respObj.heap.free)/1000;
+				if (gaugeObj!=null) {
+					gaugeObj.needle.setValue(freeMem);
+					gaugeObj.label.setText(freeMem);
+				}
+			}
+			
+			function showSettings(_agentHost) {
+				Ext.Msg.show({
+				   title: MESSAGES_HEADER,
+				   msg: "showing monitor settings for ["+_agentHost+"]",
+				   buttons: Ext.Msg.OK,
+				   icon: Ext.MessageBox.INFO
+				});
+			}
+			
+			function startMonitor(_agentHost) {
+				//declare locals
+				var monitorObj = null;
+				var intervalId = null;
+				
+				//get the agent's monitor
+				monitorObj = winMap.get(_agentHost);
+				
+				//check for nulls
+				if (monitorObj!=null) {
+					if (!monitorObj.monitored) {
+						intervalId = monitorObj.intervalId;
+						intervalId = window.setInterval("pollServerData('"+_agentHost+"')",monitorObj.interval);
+						//update the map
+						monitorObj.intervalId = intervalId;
+						monitorObj.monitored = true;
+						winMap.put(_agentHost,monitorObj);
+					}
+				}
+			}
+
+			function stopMonitor(_agentHost) {
+				//declare locals
+				var monitorObj = null;
+				
+				//get the agent's monitor
+				monitorObj = winMap.get(_agentHost);
+				
+				//check for nulls
+				if (monitorObj!=null) {
+					if (monitorObj.monitored) {
+						try {
+							//stop the thread
+							window.clearInterval(monitorObj.intervalId);
+							//update the map
+							monitorObj.monitored = false;
+							winMap.put(_agentHost,monitorObj);
+						}
+						catch(error) {}
+					}
+				}
+			}
+
+			function createWin(_agentHost,_varName) {
+				_varName = new Ext.Window({
+					layout      : 'fit',
+					width       : 300,
+					height      : 300,
+					modal       : false,
+					minHeight   : 300,
+					minWidth   	: 300,
+					closeAction :'hide',
+					plain       : true,
+					closable    : true,
+					collapsible	: true,
+					resizable	: true,
+					constrain   : true,
+					title       : _agentHost,
+					html 		: "<div id=\""+_varName+"GaugeDiv\" style=\"width:200px;height:200px;\"><div>",
+					tbar        : [
+						{
+							text: 'start monitor',
+							handler: function() {
+								startMonitor(_agentHost);
+							}
+						},
+						{
+							text: 'stop monitor',
+							handler: function() {
+								stopMonitor(_agentHost);
+							}
+						},
+						{
+							text: 'settings',
+							handler: function() {
+								showSettings(_agentHost);
+							}
+						}
+					]
+				});
+				
+				//return the method's value
+				return _varName;
+			}
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

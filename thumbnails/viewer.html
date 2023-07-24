@@ -1,0 +1,289 @@
+<html>
+<head>
+	<title>thumbnails-viewer</title>
+	<style type="text/css">
+		.header {
+			width: 98%;
+			height: 30px;
+			text-align: left;
+			border: 1px solid #000000;
+			background-color: #000000;
+			color: #ffffff;
+		}
+		
+		.covers {
+			width: 98%;
+			height: 95%;
+			overflow-x: hidden;
+			overflow-y: auto;
+			border: 1px solid #000000;
+			background-color: #ffffff;
+		}
+		
+		.headerColumn {
+			float: left;
+			height: 30px;
+		}
+		
+		.column {
+			width: 200px;
+			height: 250px;
+			border: 1px solid #000000;
+		}
+		
+		.rowSpacer {
+			height: 20px;
+		}
+		
+		.columnSpacer {
+			float: left;
+			width: 20px;
+			height: 30px;
+		}
+		
+		.coverRow {
+			height: 250px;
+		}
+		
+		.cover {
+			float: left;
+			width: 200px;
+			height: 250px;
+			border: 1px solid #0000ff;
+			background-color: #aaaacc;
+			cursor: pointer;
+		}
+		
+		.bookInfo {
+			float: left;
+			width: 200px;
+			height: 250px;
+			border: 1px solid #0000ff;
+			background-color: transparent;
+			display: none;
+			cursor: pointer;
+		}
+		
+		.bookInfoRow {
+			text-align: left;
+			font-family: verdana;
+			height: 20px;
+		}
+		
+		.bookInfoRowLabel {
+			font-weight: bold;
+		}
+		
+		.bookInfoRowValue {
+			font-weight: normal;
+		}
+		
+	</style>
+	<script type="text/javascript">
+		function handleOnLoad() {
+			renderHeader();
+			renderCovers();
+		}
+		
+		function getColumnsComboId() {
+			return "cmbCols";
+		}
+		
+		function getCoversComboId() {
+			return "cmbCovers";
+		}
+		
+		function getWidthComboId() {
+			return "cmbWidth";
+		}
+		
+		function getHeightComboId() {
+			return "cmbHeight";
+		}
+		
+		function renderHeader() {
+			var containerId = "header";
+			var html = "";
+			html += renderColumnsCombo();
+			html += renderColSpacer();
+			html += renderCoversCombo();
+			html += renderSizeCombo("Width");
+			html += renderColSpacer();
+			html += renderSizeCombo("Height");
+			document.getElementById(containerId).innerHTML = html;
+			document.getElementById(getColumnsComboId()).value = "5";
+			document.getElementById(getWidthComboId()).value = "200";
+			document.getElementById(getHeightComboId()).value = "250";
+		}
+		
+		function renderColSpacer() {
+			var html = "";
+			html += '<div class="columnSpacer"></div>';
+			//return the method's value
+			return html;
+		}
+		
+		function renderRowSpacer() {
+			var html = "";
+			html += '<div class="rowSpacer"></div>';
+			//return the method's value
+			return html;
+		}
+		
+		function renderColumnsCombo() {
+			var elemId = getColumnsComboId();
+			var html = "";
+			var start = 1;
+			var end = 8;
+			
+			html += '<div class="headerColumn">';
+			html += '<label for="' + elemId + '">Columns: </label>';
+			html += '<select id="' + elemId + '" size="1" onchange="renderCovers();">';
+			for (var i=start;i<=end;i++) {
+				html += '<option value="' + i + '">' + i + '</option>';
+			}
+			html += '</select>';
+			html += '</div>';
+			
+			//return the method's value
+			return html;
+		}
+		
+		function renderCoversCombo() {
+			var elemId = getCoversComboId();
+			var html = "";
+			var start = 10;
+			var step = 10;
+			var end = 100;
+			
+			html += '<div class="headerColumn">';
+			html += '<label for="' + elemId + '">Covers: </label>';
+			html += '<select id="' + elemId + '" size="1" onchange="renderCovers();">';
+			for (var i=start;i<=end;i+=step) {
+				html += '<option value="' + i + '">' + i + '</option>';
+			}
+			html += '</select>';
+			html += '</div>';
+			
+			//return the method's value
+			return html;
+		}
+		
+		function renderSizeCombo(label) {
+			var elemId = null;
+			var html = "";
+			var start = 100;
+			var step = 10;
+			var end = 1000;
+			
+			if (label==null || label==undefined || label=="undefined" || label=="") {
+				return html; 
+			}
+			else if (label.toLowerCase()=="width") {
+				elemId = getWidthComboId();
+			}
+			else if (label.toLowerCase()=="height") {
+				elemId = getHeightComboId();
+			}
+			
+			html += '<div class="headerColumn">';
+			html += '<label for="' + elemId + '">' + label + ': </label>';
+			html += '<select id="' + elemId + '" size="1" onchange="resizeCovers();">';
+			for (var i=start;i<=end;i+=step) {
+				html += '<option value="' + i + '">' + i + '</option>';
+			}
+			html += '</select>';
+			html += '</div>';
+			
+			//return the method's value
+			return html;
+		}
+		
+		function renderCovers() {
+			var containerId = "covers";
+			var numCols = document.getElementById(getColumnsComboId()).value;
+			var numCovers = document.getElementById(getCoversComboId()).value;
+			var numRows = ((numCovers%numCols==0) ? numCovers/numCols : (numCovers/numCols)+1);
+			var id = "";
+			var html = "";
+			
+			//html += 'numRows='+numRows;
+			//loop through the number of items
+			for (var i=1;i<=numRows;i++) {
+				if (i>1) {
+					html += renderRowSpacer();
+				}
+				html += '<div class="coverRow">';
+				for (var j=1;j<=numCols;j++) {
+					if (j>1) {
+						html += renderColSpacer();
+					}
+					id = i + '_' + j;
+					html += '<div class="cover" id="cover' + id + '" onclick="showBookInfo(\'' + id + '\',true);" title="Click here to show/hide book info">';
+					html += 'cover';
+					html += '</div>';
+					html += '<div class="bookInfo" id="bookInfo' + id + '" onclick="showBookInfo(\'' + id + '\',false);" title="Click here to show/hide book info">';
+					html += '<div class="bookInfoRow"><span class="bookInfoRowLabel">Book Info</span><span class="bookInfoRowValue"></span></div>';
+					html += '<div class="bookInfoRow"><span class="bookInfoRowLabel">label 1: </span><span class="bookInfoRowValue"> value 1</span></div>';
+					html += '<div class="bookInfoRow"><span class="bookInfoRowLabel">label 2: </span><span class="bookInfoRowValue"> value 2</span></div>';
+					html += '<div class="bookInfoRow"><span class="bookInfoRowLabel">label 3: </span><span class="bookInfoRowValue"> value 3</span></div>';
+					html += '<div class="bookInfoRow"><span class="bookInfoRowLabel">label 4: </span><span class="bookInfoRowValue"> value 4</span></div>';
+					html += '<div class="bookInfoRow"><span class="bookInfoRowLabel">label 5: </span><span class="bookInfoRowValue"> value 5</span></div>';
+					html += '</div>';
+				}
+				html += '</div>';
+			}
+			
+			//render the html
+			document.getElementById(containerId).innerHTML = html;
+			resizeCovers();
+		}
+		
+		function resizeCovers() {
+			var parentClassName = "coverRow";
+			var classNames = ["cover","bookInfo"];
+			var width = document.getElementById(getWidthComboId()).value;
+			var height = document.getElementById(getHeightComboId()).value;
+			var parentNodes = null;
+			var nodes = null;
+			
+			//fix the parent nodes' height
+			parentNodes = document.getElementsByClassName(parentClassName);
+			for (var i=0;i<parentNodes.length;i++) {
+				parentNodes[i].style.height = height+"px";
+			}
+			
+			//fix the cover nodes' wisth and height
+			for (var i=0;i<classNames.length;i++) {
+				nodes = document.getElementsByClassName(classNames[i]);
+				for (var j=0;j<nodes.length;j++) {
+					nodes[j].style.width = width+"px";
+					nodes[j].style.height = height+"px";
+				}
+			}
+		}
+		
+		function showBookInfo(id, show) {
+			var elemCover = document.getElementById("cover" + id);
+			var elemInfo = document.getElementById("bookInfo" + id);
+			if (show==true) {
+				elemCover.style.display = "none";
+				elemInfo.style.display = "block";
+			}
+			else {
+				elemCover.style.display = "block";
+				elemInfo.style.display = "none";
+			}
+		}
+		
+	</script>
+</head>
+<body onload="handleOnLoad();">
+	<center>
+		<div class="header" id="header">
+		</div>
+		<div class="covers" id="covers">
+		<div>
+	</center>
+</body>
+</html>

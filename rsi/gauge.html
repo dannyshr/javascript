@@ -25,12 +25,13 @@
 			function getCpuGaugeConfig() {
 				//declare locals
 				var config = {
-					containerId: "cpuGauge"
-					,url: "http://localhost:8080/showcase/apps/nit/agents/cpuAgent.jsp?action=getCpu"
-					,label: "CPU (%)"
-					,refreshInterval: 2000
-					,dataMethod: "getCpu()"
-					,onsuccess: function(requestUrl,response) {
+					containerId: "cpuGauge",
+					url: "data/getrand.js?action=getcpu",
+					//url: "http://localhost:8080/showcase/apps/nit/agents/cpuAgent.jsp?action=getCpu",
+					label: "CPU (%)",
+					refreshInterval: 2000,
+					dataMethod: "getCpu()",
+					onsuccess: function(requestUrl,response) {
 						cpuOnSuccess(requestUrl,response);
 					}
 					,onfailure: function(requestUrl,response) {
@@ -45,12 +46,13 @@
 			function getRamGaugeConfig() {
 				//declare locals
 				var config = {
-					containerId: "ramGauge"
-					,url: "http://localhost:8080/showcase/apps/nit/agents/heapAgent.jsp?action=getHeap"
-					,label: "RAM (MB)"
-					,refreshInterval: 2000
-					,dataMethod: "getRam()"
-					,onsuccess: function(requestUrl,response) {
+					containerId: "ramGauge",
+					url: "data/getrand.js?action=getmem",
+					//url: "http://localhost:8080/showcase/apps/nit/agents/heapAgent.jsp?action=getHeap",
+					label: "RAM (MB)",
+					refreshInterval: 2000,
+					dataMethod: "getRam()",
+					onsuccess: function(requestUrl,response) {
 						ramOnSuccess(requestUrl,response);
 					}
 					,onfailure: function(requestUrl,response) {
@@ -79,15 +81,17 @@
 			}
 			
 			function getCpu() {
-				var _requestObj = cpuGauge.getRequest();
-				RSI.add(_requestObj);
-				RSI.doGet(_requestObj.url);
+				cpuGauge.onSuccess(null, null);
+				//var _requestObj = cpuGauge.getRequest();
+				//RSI.add(_requestObj);
+				//RSI.doGet(_requestObj.url);
 			}
 			
 			function getRam() {
-				var _requestObj = ramGauge.getRequest();
-				RSI.add(_requestObj);
-				RSI.doGet(_requestObj.url);
+				ramGauge.onSuccess(null, null);
+				// var _requestObj = ramGauge.getRequest();
+				// RSI.add(_requestObj);
+				// RSI.doGet(_requestObj.url);
 			}
 			
 			function startCpu() {

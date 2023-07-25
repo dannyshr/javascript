@@ -112,17 +112,14 @@ function Gauge(config) {
 	};
 	this.getJson=function(response) {
 		//declare locals
-		var _response = null;
 		var json = null;
+		let min = 1;
+		let max = 100;
+		let _randNum = Math.floor(Math.random() * (max - min + 1)) + min;
 		
 		//fix the response
-		_response = response;
-		_response = _response.replace("\"[","[");
-		_response = _response.replace("]\"","]");
-		_response = _response.replace("\"{","{");
-		_response = _response.replace("}\"","}");
-		json = eval(" ("+_response+") ");
-		
+		json = {"data": _randNum};
+
 		//return the method's value
 		return json;
 	};
@@ -152,13 +149,14 @@ function Gauge(config) {
 		//get the gauge's parts
 		_opts = this.getOptions();
 		_gauge = this.getGauge();
+
 		if (json.hasOwnProperty("data")) {
-			_data = this.getGaugeData(parseInt(json.data[0]));
+			_data = this.getGaugeData(parseInt(json.data));
 		}
-		else if (json.hasOwnProperty("heap")) {
-			_data = this.getGaugeData(parseInt(json.heap.free)/(1000*1000*1000));
+		else {
+			_data = Math.floor(Math.random() * (100 - 1 + 1)) + 1;
 		}
-		
+
 		//re-render the gauge
 		_gauge.draw(_data,_opts);
 	};

@@ -53,8 +53,8 @@ function getComponentProperties() {
 		,{name:"threshold",type:"int",defaultValue:"100",readonly:false,required:false}
 		,{name:"alertOnThreshold",type:"booleanlist",defaultValue:"false",values:["alertOnThresholdScreen:true","alertOnThresholdEmail:true","alertOnThresholdSMS:true"],readonly:false,required:false}
 		,{name:"dataSource",type:"list",defaultValue:"PCPerf",values:["PCPerf"],readonly:false,required:true}
-		,{name:"dataSourceUrl",type:"string",defaultValue:"",readonly:false,required:false}
-		,{name:"respKeyToMeasure",type:"string",defaultValue:"",readonly:false,required:false}
+		,{name:"dataSourceUrl",type:"string",defaultValue:"https://ngapps.harel-group.co.il/claims-health/metrics",readonly:false,required:false}
+		,{name:"respKeyToMeasure",type:"string",defaultValue:"mem.free",readonly:false,required:false}
 	];
 	
 	//return the method's value

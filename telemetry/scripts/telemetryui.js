@@ -1,6 +1,7 @@
 
 //declare globals
-var _mapComponents = null;
+let _mapComponents = null;
+let _mapConfigs = null;
 
 $(document).ready(function() {
 	//load the correct resource bundle
@@ -9,6 +10,7 @@ $(document).ready(function() {
 	
 	//create a new map
 	_mapComponents = new Utils.Map();
+	_mapConfigs = new Utils.Map();
 	
 	//render the ui
 	renderHeader();
@@ -51,6 +53,8 @@ function getComponentProperties() {
 		,{name:"threshold",type:"int",defaultValue:"100",readonly:false,required:false}
 		,{name:"alertOnThreshold",type:"booleanlist",defaultValue:"false",values:["alertOnThresholdScreen:true","alertOnThresholdEmail:true","alertOnThresholdSMS:true"],readonly:false,required:false}
 		,{name:"dataSource",type:"list",defaultValue:"PCPerf",values:["PCPerf"],readonly:false,required:true}
+		,{name:"dataSourceUrl",type:"string",defaultValue:"",readonly:false,required:false}
+		,{name:"respKeyToMeasure",type:"string",defaultValue:"",readonly:false,required:false}
 	];
 	
 	//return the method's value
@@ -73,6 +77,14 @@ function getDataSourceElementId() {
 
 function getAlertThresholdElementId() {
 	return getNewComponentDialogId()+"alertOnThreshold";
+}
+
+function getDataSourceUrlElementId() {
+	return getNewComponentDialogId()+"dataSourceUrl";
+}
+
+function getResponseMeasureKeyElementId() {
+	return getNewComponentDialogId()+"respKeyToMeasure";
 }
 
 function getDataSourceValue() {
@@ -131,7 +143,52 @@ function showDataFilter(_dataSource) {
 
 function attachGaugeButtonsEvents(_compId) {
 	attachGaugeStartButtonEventOnlick(_compId);
-	//attachGaugeSettingsButtonEventOnlick();
+	attachGaugeSettingsButtonEventOnlick(_compId);
+}
+
+function attachGaugeSettingsButtonEventOnlick(_gaugeId) {
+	//declare locals
+	var _elemId = _gaugeId + "_btnSettings";
+	var _elemObj = null;
+	
+	//get elements by their id
+	_elemObj = document.getElementById(_elemId);
+	
+	//check for nulls
+	if (_elemObj==null) {
+		return;
+	}
+	
+	//attach the event
+	_elemObj.onclick = function() {
+		//declare locals
+		let _compId = _elemObj.id;
+		let _gaugeConfig = _mapConfigs.get(_gaugeId);
+		let message = "_gaugeId=[" + _gaugeId + "]\n";
+		message += "_buttonId=[" + _compId + "]\n";
+		message += "_gaugeConfig=[" + JSON.stringify(_gaugeConfig) + "]";
+		//alert(message);
+
+		let dlgId = getNewComponentDialogId();
+		let _props = getComponentProperties();
+		let _currProp = null;
+		let _currPropName = null;
+		let _currPropValue = null;
+		let dlgElem = document.getElementById(dlgId);
+		if (dlgElem!=null && dlgElem!=undefined && dlgElem!="undefined") {
+			for (var i=0;i<_props.length;i++) {
+				//get the current property
+				_currProp = _props[i];
+				
+				//get the property's name
+				_currPropName = _currProp.name;
+
+				//set the html component's value
+				document.getElementById(dlgId+_currPropName).value = _gaugeConfig[_currPropName];
+			}
+			dlgElem.style.display = "block";
+		}
+	};
 }
 
 function attachGaugeStartButtonEventOnlick(_gaugeId) {
@@ -158,7 +215,7 @@ function attachGaugeStartButtonEventOnlick(_gaugeId) {
 		var _prevClass = null;
 		var _newClass = null;
 		var _methodName = null;
-		_methodName = "refreshGaugeWithRandValue";
+		_methodName = "refreshGaugeWithTelemetryData";
 		//_methodName = "loadTelemetryDataFile";
 		
 		//check the button's value
@@ -407,6 +464,8 @@ function getComponentsToTranslate() {
 		,{id:"dlgNewGaugeLbl_alertOnThresholdEmail",atts:["innerHTML"],keys:["dlgNewGauge.label.alertOnThresholdEmail"]}
 		,{id:"dlgNewGaugeLbl_alertOnThresholdSMS",atts:["innerHTML"],keys:["dlgNewGauge.label.alertOnThresholdSMS"]}
 		,{id:"dlgNewGaugeLbl_dataSource",atts:["innerHTML"],keys:["dlgNewGauge.label.dataSource"]}
+		,{id:"dlgNewGaugeLbl_dataSourceUrl",atts:["innerHTML"],keys:["dlgNewGauge.label.dataSourceUrl"]}
+		,{id:"dlgNewGaugeLbl_respKeyToMeasure",atts:["innerHTML"],keys:["dlgNewGauge.label.respKeyToMeasure"]}
 		,{id:"dlgNewGaugeLbl_measureType",atts:["innerHTML"],keys:["dlgNewGauge.label.measureType"]}
 		,{id:".gaugeContainerBtnClose",atts:["title"],keys:["gauge.btnClose.tooltip"]}
 		,{id:".btnStartGauge",atts:["title","value"],keys:["gauge.btnStart.tooltip","gauge.btnStart.caption"]}
@@ -621,15 +680,21 @@ function createNewComponent() {
 	else if (_gaugeType=="justGauge") {
 		_gaugeClass = "justgauge";
 	}
-	
-	//get the new gauge's number
-	_newElemNum = getNextCompNumber();
-	
-	//get the id of the container cell
-	_containerCellId = getCompContainerCellId(_newElemNum);
-	
-	//render the gauge's container
-	renderGaugeContainer(_containerCellId, _gaugeConfig.id, _gaugeClass,_newElemNum);
+
+	//check if the component already exists
+	if (_mapComponents.contains(_gaugeConfig.id)) {
+		_gaugeObj = _mapComponents.get(_gaugeConfig.id);
+	}
+	else {
+		//get the new gauge's number
+		_newElemNum = getNextCompNumber();
+		
+		//get the id of the container cell
+		_containerCellId = getCompContainerCellId(_newElemNum);
+		
+		//render the gauge's container
+		renderGaugeContainer(_containerCellId, _gaugeConfig.id, _gaugeClass,_newElemNum);
+	}
 
 	//set the gauge's title
 	if (_gaugeType=="jGaugeDefault" || _gaugeType=="jGaugeTaco") {
@@ -644,7 +709,12 @@ function createNewComponent() {
 	if (_gaugeType=="jGaugeDefault") {
 		var _size = null;
 		//_size = "small";
-		_gaugeObj = new jGauge(_size);
+		if (_mapComponents.contains(_gaugeConfig.id)) {
+			_gaugeObj = _mapComponents.get(_gaugeConfig.id);
+		}
+		else {
+			_gaugeObj = new jGauge(_size);
+		}
 		_gaugeObj.id = _gaugeConfig.id;
 		_gaugeObj.label.suffix = " " + _gaugeConfig.label;
 		//_gaugeObj.ticks.color = 'rgba(0,0,0,1)';
@@ -659,7 +729,12 @@ function createNewComponent() {
 		_gaugeObj.init();
 	}
 	else if (_gaugeType=="jGaugeTaco") {
-		_gaugeObj = new jGauge();
+		if (_mapComponents.contains(_gaugeConfig.id)) {
+			_gaugeObj = _mapComponents.get(_gaugeConfig.id);
+		}
+		else {
+			_gaugeObj = new jGauge();
+		}
 		_gaugeObj.id = _gaugeConfig.id;
 		_gaugeObj.autoPrefix = autoPrefix.si; // Use SI prefixing (i.e. 1k = 1000).
 		_gaugeObj.imagePath = 'images/jgauge_face_taco.png';
@@ -688,15 +763,21 @@ function createNewComponent() {
 		_gaugeObj.init();
 	}
 	else if (_gaugeType=="justGauge") {
-		_gaugeConfig["showMinMax"] = _gaugeConfig["showTicks"];
-		_gaugeConfig["shadowOpacity"] = 1;
-		_gaugeConfig["shadowSize"] = 0;
-		_gaugeConfig["shadowVerticalOffset"] = 12;
-		_gaugeConfig["value"] = 0;
-		_gaugeObj = new JustGage(_gaugeConfig);
+		if (_mapComponents.contains(_gaugeConfig.id)) {
+			_gaugeObj = _mapComponents.get(_gaugeConfig.id);
+		}
+		else {
+			_gaugeConfig["showMinMax"] = _gaugeConfig["showTicks"];
+			_gaugeConfig["shadowOpacity"] = 1;
+			_gaugeConfig["shadowSize"] = 0;
+			_gaugeConfig["shadowVerticalOffset"] = 12;
+			_gaugeConfig["value"] = 0;
+			_gaugeObj = new JustGage(_gaugeConfig);
+		}
 	}
 	
 	//add the gauge to the map
+	_mapConfigs.put(_gaugeConfig.id, _gaugeConfig);
 	_mapComponents.put(_gaugeConfig.id, _gaugeObj);
 	
 	//close the dialog
@@ -757,14 +838,6 @@ function updateGaugeValue(_compId,_newValue) {
 	}
 }
 
-function refreshGaugeWithRandValue(_compId) {
-	//declare locals
-	var _newValue = getRandomIntPerGauge(_compId);
-	
-	//update the gauge
-	updateGaugeValue(_compId, _newValue);
-}
-
 function loadTelemetryDataFile(_compId) {
 	//declare locals
 	var _fileUrl = "pcperf.js";
@@ -799,3 +872,88 @@ function telemetryDataFileLoaded(_fileContents,_compId) {
 		updateGaugeValue(_compId, parseInt(_item.cpu));
 	}
 }
+
+function refreshGaugeWithTelemetryData(_compId) {
+	//declare locals
+	let _newValue = "";
+	let urlElemId = getDataSourceUrlElementId();
+	let urlElemVal = document.getElementById(urlElemId).value;
+	let respKeyId = getResponseMeasureKeyElementId();
+	let respKeyVal = document.getElementById(respKeyId).value;
+
+	//check for valid values
+	if (Utils.isEmpty(urlElemVal) || Utils.isEmpty(respKeyVal)) {
+		_newValue = getRandomIntPerGauge(_compId);
+		//update the gauge
+		updateGaugeValue(_compId, _newValue);
+	}
+	else {
+		//send an ajax request to the url, and get the response
+		sendAjax(urlElemVal, telemetry_Onsuccess, _compId);
+	}
+}
+
+function telemetry_Onsuccess(response, _compId) {
+	let jsonResp = JSON.parse(response);
+	let respKeyId = getResponseMeasureKeyElementId();
+	let respKeyVal = document.getElementById(respKeyId).value;
+	let footerElem = document.getElementById("footer");
+	footerElem.innerHTML = "respKeyVal=[" + respKeyVal + "]\n" + response;
+	_newValue = jsonResp[respKeyVal];
+	_newValue = parseInt(_newValue) / 1000;
+	//update the gauge
+	updateGaugeValue(_compId, _newValue);
+}
+
+function sendAjax(_url, _onsuccess, _onsuccessParam) {
+	//declare locals
+	var _request = null;
+	
+	//check for nulls
+	if (_url==null || _url=="") {
+		//do nothing
+		return null;
+	}
+	
+	//get an HTTP Request object
+	_request = getHttpRequest();
+	
+	//check the request's state
+	_request.OnReadyStateChange = function() {
+		if (_request.readyState == 4) {
+			if (_request.status == 200 || _request.status == 304) {
+				//declare locals
+				var _contents = _request.responseText;
+				
+				//check for an _onsuccess parameter
+				if (_onsuccess!=null && _onsuccess!="undefined") {
+					//invoke the onsuccess method
+					if ((typeof _onsuccess)=="function") {
+						_onsuccess(_contents, _onsuccessParam);
+					}
+					else if ((typeof _onsuccess)=="string"){
+						eval(_onsuccess+"("+_contents+", '"+_onsuccessParam+"')");
+					}
+				}
+			}
+			else {
+				alert('XML request error: ' + _request.statusText + ' (' + _request.status + ')');
+			}
+		}
+	};
+	
+	//send the request
+	_request.open('GET', _url, true);
+	_request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+	_request.setRequestHeader("Host", "ngapps.harel-group.co.il");
+	_request.setRequestHeader("Origin", "ngapps.harel-group.co.il");
+	_request.setRequestHeader("Referer", "https://ngapps.harel-group.co.il");
+	
+	try {
+		_request.send(null);
+	}
+	catch(err) {
+		//alert("An error occurred while trying to send ajax request to: [" + _url + "]");
+	}
+}
+

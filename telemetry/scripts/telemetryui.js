@@ -697,7 +697,7 @@ function createNewComponent() {
 	}
 
 	//set the gauge's title
-	if (_gaugeType=="jGaugeDefault" || _gaugeType=="jGaugeTaco") {
+	if (_gaugeType=="jGaugeDefault" || _gaugeType=="jGaugeTaco" || _gaugeType=="justGauge") {
 		_titleElemId = _gaugeConfig.id + getGaugeTitleIdSuffix();
 		updateGaugeTitle(_titleElemId,_gaugeConfig.title);
 	}

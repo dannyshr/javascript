@@ -27,7 +27,7 @@ JustGage = function(config) {
     
     // title : string
     // gauge title 
-    title : (config.title) ? config.title : "Title",
+    title : (config.label) ? config.label : "",
     
     // titleFontColor : string
     // color of gauge title 

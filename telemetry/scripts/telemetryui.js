@@ -767,6 +767,7 @@ function createNewComponent() {
 			_gaugeObj = _mapComponents.get(_gaugeConfig.id);
 		}
 		else {
+			_gaugeConfig["title"] = "";
 			_gaugeConfig["showMinMax"] = _gaugeConfig["showTicks"];
 			_gaugeConfig["shadowOpacity"] = 1;
 			_gaugeConfig["shadowSize"] = 0;

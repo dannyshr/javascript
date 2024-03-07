@@ -889,7 +889,7 @@ function refreshGaugeWithTelemetryData(_compId) {
 	}
 	else {
 		//send an ajax request to the url, and get the response
-		sendAjax(urlElemVal, telemetry_Onsuccess, _compId);
+		sendAjax(urlElemVal, "GET", null, telemetry_Onsuccess, _compId);
 	}
 }
 
@@ -905,7 +905,51 @@ function telemetry_Onsuccess(response, _compId) {
 	updateGaugeValue(_compId, _newValue);
 }
 
-function sendAjax(_url, _onsuccess, _onsuccessParam) {
+function getUserAgent() {
+	let userAgents = [];
+	userAgents.push("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36");
+	userAgents.push("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
+	userAgents.push("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0");
+
+	//get a random number
+	let rand = Math.floor(Math.random() * userAgents.length);
+
+	//return the method's value
+	return userAgents[rand];
+}
+
+//this functon sends an ajax request using the fetch() method
+async function sendAjax(url, httpMethod, data, _onsuccess, _onsuccessParam) {
+	// Default options are marked with *
+	const response = await fetch(url, {
+	  method: httpMethod, // *GET, POST, PUT, DELETE, etc.
+	  mode: "cors", // no-cors, *cors, same-origin
+	  cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+	  credentials: "same-origin", // include, *same-origin, omit
+	  headers: {
+		"Content-Type": "application/json",
+		"User-Agent": getUserAgent()
+		// 'Content-Type': 'application/x-www-form-urlencoded',
+	  },
+	  redirect: "follow", // manual, *follow, error
+	  referrerPolicy: "strict-origin-when-cross-origin", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+	  body: (data!=null ? JSON.stringify(data) : null), // body data type must match "Content-Type" header
+	});
+
+	//check for an _onsuccess parameter
+	if (_onsuccess!=null && _onsuccess!=undefined && _onsuccess!="undefined") {
+		//invoke the onsuccess method
+		if ((typeof _onsuccess)=="function") {
+			_onsuccess(response.json(), _onsuccessParam);
+		}
+		else if ((typeof _onsuccess)=="string"){
+			eval(_onsuccess+"("+response.json()+", '"+_onsuccessParam+"')");
+		}
+	}
+	//return response.json(); // parses JSON response into native JavaScript objects
+}
+
+function sendAjax2(_url, _onsuccess, _onsuccessParam) {
 	//declare locals
 	var _request = null;
 	

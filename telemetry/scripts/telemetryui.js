@@ -930,7 +930,11 @@ async function sendAjax(url, httpMethod, data, _onsuccess, _onsuccessParam) {
 			credentials: "same-origin", // include, *same-origin, omit
 			headers: {
 				"Content-Type": "application/json",
-				"User-Agent": getUserAgent()
+				"User-Agent": getUserAgent(),
+				"Sec-Fetch-Dest": "document",
+				"Sec-Fetch-Mode": "navigate",
+				"Sec-Fetch-Site": "none",
+				"Sec-Fetch-User": "?1"
 				// 'Content-Type': 'application/x-www-form-urlencoded',
 			},
 			redirect: "follow", // manual, *follow, error

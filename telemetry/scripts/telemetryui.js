@@ -920,33 +920,39 @@ function getUserAgent() {
 
 //this functon sends an ajax request using the fetch() method
 async function sendAjax(url, httpMethod, data, _onsuccess, _onsuccessParam) {
-	// Default options are marked with *
-	const response = await fetch(url, {
-	  method: httpMethod, // *GET, POST, PUT, DELETE, etc.
-	  mode: "cors", // no-cors, *cors, same-origin
-	  cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-	  credentials: "same-origin", // include, *same-origin, omit
-	  headers: {
-		"Content-Type": "application/json",
-		"User-Agent": getUserAgent()
-		// 'Content-Type': 'application/x-www-form-urlencoded',
-	  },
-	  redirect: "follow", // manual, *follow, error
-	  referrerPolicy: "strict-origin-when-cross-origin", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-	  body: (data!=null ? JSON.stringify(data) : null), // body data type must match "Content-Type" header
-	});
-
-	//check for an _onsuccess parameter
-	if (_onsuccess!=null && _onsuccess!=undefined && _onsuccess!="undefined") {
-		//invoke the onsuccess method
-		if ((typeof _onsuccess)=="function") {
-			_onsuccess(response.json(), _onsuccessParam);
-		}
-		else if ((typeof _onsuccess)=="string"){
-			eval(_onsuccess+"("+response.json()+", '"+_onsuccessParam+"')");
-		}
+	let methodName = "sendAjax(): ";
+	try {
+		// Default options are marked with *
+		const response = await fetch(url, {
+			method: httpMethod, // *GET, POST, PUT, DELETE, etc.
+			mode: "cors", // no-cors, *cors, same-origin
+			cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+			credentials: "same-origin", // include, *same-origin, omit
+			headers: {
+				"Content-Type": "application/json",
+				"User-Agent": getUserAgent()
+				// 'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			redirect: "follow", // manual, *follow, error
+			referrerPolicy: "strict-origin-when-cross-origin", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+			body: (data!=null ? JSON.stringify(data) : null), // body data type must match "Content-Type" header
+			});
+	
+			//check for an _onsuccess parameter
+			if (_onsuccess!=null && _onsuccess!=undefined && _onsuccess!="undefined") {
+				//invoke the onsuccess method
+				if ((typeof _onsuccess)=="function") {
+					_onsuccess(response.json(), _onsuccessParam);
+				}
+				else if ((typeof _onsuccess)=="string"){
+					eval(_onsuccess+"("+response.json()+", '"+_onsuccessParam+"')");
+				}
+			}
 	}
-	//return response.json(); // parses JSON response into native JavaScript objects
+	catch (error) {
+		let logMessage = methodName + "An error occured while trying to fetch remote URL. Error is: " + error;
+		console.error(logMessage);
+	}
 }
 
 function sendAjax2(_url, _onsuccess, _onsuccessParam) {

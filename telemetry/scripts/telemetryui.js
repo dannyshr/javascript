@@ -934,76 +934,23 @@ async function sendAjax(url, httpMethod, data, _onsuccess, _onsuccessParam) {
 				// 'Content-Type': 'application/x-www-form-urlencoded',
 			},
 			redirect: "follow", // manual, *follow, error
-			referrerPolicy: "strict-origin-when-cross-origin", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+			referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
 			body: (data!=null ? JSON.stringify(data) : null), // body data type must match "Content-Type" header
-			});
+		});
 	
-			//check for an _onsuccess parameter
-			if (_onsuccess!=null && _onsuccess!=undefined && _onsuccess!="undefined") {
-				//invoke the onsuccess method
-				if ((typeof _onsuccess)=="function") {
-					_onsuccess(response.json(), _onsuccessParam);
-				}
-				else if ((typeof _onsuccess)=="string"){
-					eval(_onsuccess+"("+response.json()+", '"+_onsuccessParam+"')");
-				}
+		//check for an _onsuccess parameter
+		if (_onsuccess!=null && _onsuccess!=undefined && _onsuccess!="undefined") {
+			//invoke the onsuccess method
+			if ((typeof _onsuccess)=="function") {
+				_onsuccess(response.json(), _onsuccessParam);
 			}
+			else if ((typeof _onsuccess)=="string"){
+				eval(_onsuccess+"("+response.json()+", '"+_onsuccessParam+"')");
+			}
+		}
 	}
 	catch (error) {
 		let logMessage = methodName + "An error occured while trying to fetch remote URL. Error is: " + error;
 		console.error(logMessage);
 	}
 }
-
-function sendAjax2(_url, _onsuccess, _onsuccessParam) {
-	//declare locals
-	var _request = null;
-	
-	//check for nulls
-	if (_url==null || _url=="") {
-		//do nothing
-		return null;
-	}
-	
-	//get an HTTP Request object
-	_request = getHttpRequest();
-	
-	//check the request's state
-	_request.OnReadyStateChange = function() {
-		if (_request.readyState == 4) {
-			if (_request.status == 200 || _request.status == 304) {
-				//declare locals
-				var _contents = _request.responseText;
-				
-				//check for an _onsuccess parameter
-				if (_onsuccess!=null && _onsuccess!="undefined") {
-					//invoke the onsuccess method
-					if ((typeof _onsuccess)=="function") {
-						_onsuccess(_contents, _onsuccessParam);
-					}
-					else if ((typeof _onsuccess)=="string"){
-						eval(_onsuccess+"("+_contents+", '"+_onsuccessParam+"')");
-					}
-				}
-			}
-			else {
-				alert('XML request error: ' + _request.statusText + ' (' + _request.status + ')');
-			}
-		}
-	};
-	
-	//send the request
-	_request.open('GET', _url, true);
-	_request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-	//_request.setRequestHeader("Host", "ngapps.harel-group.co.il");
-	//_request.setRequestHeader("Origin", "ngapps.harel-group.co.il");
-	//_request.setRequestHeader("Referer", "ngapps.harel-group.co.il");
-	
-	try {
-		_request.send(null);
-	}
-	catch(err) {
-		//alert("An error occurred while trying to send ajax request to: [" + _url + "]");
-	}
-}
-

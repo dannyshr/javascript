@@ -945,9 +945,9 @@ function sendAjax(_url, _onsuccess, _onsuccessParam) {
 	//send the request
 	_request.open('GET', _url, true);
 	_request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-	_request.setRequestHeader("Host", "ngapps.harel-group.co.il");
-	_request.setRequestHeader("Origin", "ngapps.harel-group.co.il");
-	_request.setRequestHeader("Referer", "https://ngapps.harel-group.co.il");
+	//_request.setRequestHeader("Host", "ngapps.harel-group.co.il");
+	//_request.setRequestHeader("Origin", "ngapps.harel-group.co.il");
+	//_request.setRequestHeader("Referer", "ngapps.harel-group.co.il");
 	
 	try {
 		_request.send(null);

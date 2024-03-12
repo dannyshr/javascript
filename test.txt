@@ -1,0 +1,15 @@
+https://digital-aws-t.harel-office.com/access/oauth/token
+
+{
+	"grant_type":"password"
+	,"username":"esbapi"
+	,"password": "zaq12wsx"
+	,"kodsystem": "esbapi"
+}
+
+{
+	"Authorization":"Basic d2ViX2FwcDp6YXExMndzeA==",
+	"X-Forwarded-For":"10.170.67.64",
+	"Origin":"https://digital-aws-t.harel-office.com", 
+	"host":"https://digital-aws-t.harel-office.com"
+}

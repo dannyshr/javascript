@@ -13,3 +13,669 @@ https://digital-aws-t.harel-office.com/access/oauth/token
 	"Origin":"https://digital-aws-t.harel-office.com", 
 	"host":"https://digital-aws-t.harel-office.com"
 }
+
+
+============================================================================================
+client.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Http Client</title>
+    <link rel="shortcut icon" type="image/ico" href="./images/favicon.ico">
+    <style>
+        .outerContainer {
+            width: 680px;
+            height: 600px;
+            border: 1px solid #000000;
+            border-radius: 10px;
+            box-shadow: 6px 6px #302F2F;
+        }
+
+        .innerContainer {
+            width: 660px;
+            height: 580px;
+            overflow-x: auto;
+            overflow-y: auto;
+            border: 0px solid transparent;
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+
+        .row {
+            float: none;
+            width: 620px;
+            height: 40px;
+        }
+
+        .rowHeaders {
+            float: none;
+            width: 620px;
+            height: 106px;
+        }
+
+        .col {
+            float: left;
+            height: 100%;
+            width: 300px;
+        }
+
+        .colButton {
+            float: left;
+            height: 100%;
+            width: 50px;
+            text-align: center;
+        }
+
+        .colWide {
+            float: left;
+            height: 100%;
+            width: calc(100% - 55px);
+        }
+
+        .colsDelimiter {
+            float: left;
+            height: 100%;
+            width: 5px;
+        }
+
+        .rowsDelimiter {
+            float: none;
+            height: 5px;
+            width: 100%;
+        }
+
+        .label {
+            vertical-align: top;
+            display: inline-block;
+            width: 110px;
+        }
+
+        .input {
+            width: calc(100% - 130px);
+        }
+
+        .button {
+            cursor: pointer;
+        }
+
+        .textareaShort {
+            width: calc(100% - 130px);
+            height: 30px;
+        }
+
+        .textarea {
+            width: calc(100% - 130px);
+            height: 80px;
+        }
+
+    </style>
+    <script type="text/javascript" src="scripts/axios.min.js"></script>
+    <script type="text/javascript">
+        let applicationPath = "/apps.microservices-info";
+
+        function getWorkMode() {
+            let workMode = null;
+            let cbId = "cbUseClient";
+            let cbComp = document.getElementById(cbId);
+            if (cbComp.checked===true) {
+                workMode = "client";
+            }
+            else {
+                workMode = "server";
+            }
+            return workMode;
+        }
+
+        function getQueryStringParam(paramKey) {
+            //declare locals
+            let methodName = "getQueryStringParam(): ";
+            let message = "";
+            let paramValue = "";
+            let currLocation = window.location.href;
+            let queryStringFirstDelimiter = "?";
+            let queryStringDelimiter = "&";
+            let keyValueDelimiter = "=";
+            let delimiterIndex;
+            let arrLocation;
+            let arrQueryStringItems;
+            let currKeyValueItem;
+            let arrKeysValues;
+            let currKey;
+            let currValue;
+
+            //check for nulls
+            if ((currLocation==null || currLocation=="undefined" || currLocation=="") || (paramKey==null || paramKey=="undefined" || paramKey=="")) {
+                message = methodName + "location or paramKey are empty or null !!";
+                console.error(message);
+                return paramValue;
+            }
+
+            //parse the request params
+            delimiterIndex = currLocation.indexOf(queryStringFirstDelimiter);
+            if (delimiterIndex==-1) {
+                message = methodName + "location has no delimiter char [" + queryStringFirstDelimiter + "] !!";
+                console.warn(message);
+                return paramValue;
+            }
+
+            //split the location
+            arrLocation = currLocation.split(queryStringFirstDelimiter);
+
+            //check for valid values
+            if (arrLocation[1]==null || arrLocation[1]=="undefined" || arrLocation[1]=="") {
+                message = methodName + "location has no values after delimiter char [" + queryStringFirstDelimiter + "] !!";
+                console.warn(message);
+                return paramValue;
+            }
+
+            //parse the query string again
+            delimiterIndex = arrLocation[1].indexOf(queryStringDelimiter);
+            if (delimiterIndex==-1) {
+                arrQueryStringItems = new Array(arrLocation[1]);
+            }
+            else {
+                arrQueryStringItems = arrLocation[1].split(queryStringDelimiter);
+            }
+
+            //loop through the items
+            for (var i=0;i<arrQueryStringItems.length;i++) {
+                //get the current item
+                currKeyValueItem = arrQueryStringItems[i];
+
+                //check for a key value delimiter
+                delimiterIndex = currKeyValueItem.indexOf(keyValueDelimiter);
+                if (delimiterIndex!=-1) {
+                    //split the item
+                    arrKeysValues = currKeyValueItem.split(keyValueDelimiter);
+
+                    //get the current key and value
+                    currKey = arrKeysValues[0];
+                    currValue = arrKeysValues[1];
+
+                    //check the key
+                    if (currKey.toLowerCase()==paramKey.toLowerCase()) {
+                        paramValue = currValue;
+                        break;
+                    }
+                }
+            }
+
+            message = methodName + "paramKey=[" + paramKey + "] paramValue=[" + paramValue + "]";
+            console.debug(message);
+
+            //return the method's value
+            return paramValue;
+        }
+
+        function getCookie(cookieName) {
+            // declare locals
+            let methodName = "getCookie(): ";
+            let message = "";
+            let name = cookieName + '=';
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let delimiter = ';';
+            let cookiesArray = null;
+            let cookie = null;
+            let cookieValue = '';
+
+            // split the cookie into an array by the ';' delimiter
+            if (decodedCookie.indexOf(delimiter) == -1) {
+                cookiesArray = new Array(decodedCookie);
+            }
+            else {
+                cookiesArray = decodedCookie.split(delimiter);
+            }
+
+            // loop through the array of cookies
+            for (let i = 0; i < cookiesArray.length ; i++) {
+                cookie = cookiesArray[i];
+                while (cookie.charAt(0) == ' ') {
+                    cookie = cookie.substring(1);
+                }
+                if (cookie.indexOf(name) == 0) {
+                    // set the cookie's value
+                    cookieValue = cookie.substring(name.length, cookie.length);
+                    break;
+                }
+            }
+
+            message = methodName + "cookieValue=[" + cookieValue + "] cookieName=[" + cookieName + "]";
+            console.debug(message);
+
+            //return the method's value
+            return cookieValue;
+        }
+
+        function sendAxiosRequest(_method, _url, _data, _config, onsuccess, onFailure) {
+            //declare locals
+            let methodName = "sendAxiosRequest(): ";
+            let logMessage = "";
+            let cookieName = "_csrf";
+            let cookieValue = getCookie(cookieName);
+            let cookies = "";
+
+            //check for a cookie
+            if (cookieValue!="undefined" && cookieValue!=null && cookieValue!="") {
+                cookies += cookieName + "=" + cookieValue;
+            }
+            if (cookies!=="undefined" && cookies!=null && cookies!="") {
+                cookies = "";
+            }
+            document.cookie = cookies;
+
+            //check for valid values
+            if (_url==null || _url=="") {
+                logMessage = "url is empty or null !!";
+                console.error(methodName + logMessage);
+                return;
+            }
+            logMessage = "sending ajax post to: " + _url;
+            console.debug(methodName + logMessage);
+
+            //send an ajax request
+            axios({ "method": _method, "url": _url, "data": _data, "config": _config})
+                .then(function (rawResponse) {
+                    //log the response
+                    let response = rawResponse.data;
+                    console.debug(methodName + JSON.stringify(response));
+
+                    //check the response
+                    if (onsuccess!==undefined && onsuccess!==null && onsuccess!=="") {
+                        if (typeof(onsuccess)=="function") {
+                            //invoke the onFailure function handler
+                            onsuccess(response);
+                        }
+                        else if (typeof(onsuccess)=="string") {
+                            //invoke the onFailure function handler
+                            if (typeof(response)=="string") {
+                                eval(onsuccess+"('"+response+"')");
+                            }
+                            else {
+                                eval(onsuccess+"("+response+")");
+                            }
+                        }
+                    }
+                })
+                .catch(function (error)  {
+                    //get the response
+                    let response = error.response;
+                    let responseStr = "";
+
+                    //check for a valid response
+                    if (response===undefined || response===null || response==="") {
+                        response = "responseEmpty";
+                    }
+                    if (typeof(response)=="object" && !Array.isArray(response)) {
+                        responseStr = JSON.stringify(response);
+                    }
+                    else if (typeof(response)=="string") {
+                        responseStr = response;
+                    }
+
+                    //check for an onFailure function handler
+                    if (onFailure!==undefined && onFailure!==null && onFailure!=="") {
+                        if (typeof(onFailure)=="function") {
+                            //invoke the onFailure function handler
+                            onFailure(response);
+                        }
+                        else if (typeof(onFailure)=="string") {
+                            //invoke the onFailure function handler
+                            eval(onFailure+"('"+responseStr+"')");
+                        }
+                    }
+                    else {
+                        //log the error
+                        console.error(methodName + responseStr);
+                    }
+                });
+        }
+
+        function sendRequest() {
+            //declare locals
+            let methodName = "sendRequest(): ";
+            let reqPath = "/startClient";
+            let ticket = getQueryStringParam("ticket");
+            let url = applicationPath + reqPath + "?ticket=" + ticket;
+            let onSuccess = sendRequestSuccess;
+            let onFailure = sendRequestFailure;
+            let paramsList = document.getElementById(getParamsElemId());
+            let headersList = document.getElementById(getHeadersElemId());
+            let numItems;
+            let currItem;
+            let itemParts;
+            let itemName;
+            let itemValue
+            let params = [];
+            let _headers = [];
+            let postData = {};
+
+            //loop through the elements
+            numItems = paramsList.options.length;
+            for (let i=0; i<numItems; i++) {
+                currItem = paramsList.options[i];
+                itemParts = currItem.value.split(getValuesDelimiter());
+                if (itemParts==null || itemParts==undefined || itemParts=="undefined") {
+                    continue;
+                }
+                if (itemParts.length && itemParts.length==2) {
+                    itemName = itemParts[0];
+                    itemValue = itemParts[1];
+                }
+                if (itemName==null || itemName==undefined || itemName=="" || itemValue==null || itemValue==undefined || itemValue=="") {
+                    continue;
+                }
+                else {
+                    if (itemValue.startsWith("{") || itemValue.startsWith("[")) {
+                        params.push(itemValue);
+                    }
+                    else {
+                        let json = "{" + itemName + ": " + itemValue + "}";
+                        params.push(JSON.stringify(json));
+                    }
+                }
+            }
+            numItems = headersList.options.length;
+            for (let i=0; i<numItems; i++) {
+                currItem = headersList.options[i];
+                itemParts = currItem.value.split(getValuesDelimiter());
+                if (itemParts==null || itemParts==undefined || itemParts=="undefined") {
+                    continue;
+                }
+                if (itemParts.length && itemParts.length==2) {
+                    itemName = itemParts[0];
+                    itemValue = itemParts[1];
+                }
+                if (itemName==null || itemName==undefined || itemName=="" || itemValue==null || itemValue==undefined || itemValue=="") {
+                    continue;
+                }
+                else {
+                    if (itemValue.startsWith("{") || itemValue.startsWith("[")) {
+                        _headers.push(itemValue);
+                    }
+                    else {
+                        let json = "{" + itemName + ": " + itemValue + "}";
+                        _headers.push(JSON.stringify(json));
+                    }
+                }
+            }
+
+            let destUrl = document.getElementById("destinationUrl").value;
+            let httpMethod = document.getElementById("httpMethod").value;
+            let numRequests = document.getElementById("numRequests").value;
+            if (destUrl==null || destUrl==undefined || destUrl=="undefined" || destUrl.trim()=="") {
+                console.error(methodName + "Destination Url field is required !! ");
+                return;
+            }
+            if (httpMethod==null || httpMethod==undefined || httpMethod=="undefined" || httpMethod.trim()=="") {
+                console.error(methodName + "Http Method field is required !! ");
+                return;
+            }
+            if (isNaN(numRequests)) {
+                console.error(methodName + "Number of Requests value must be numeric !! ");
+                return;
+            }
+            numRequests = parseInt(numRequests);
+            if (numRequests<1 || numRequests>1000) {
+                console.error(methodName + "Number of Requests value must be between 1 and 1000 !! ");
+                return;
+            }
+            postData["destUrl"] = destUrl;
+            postData["httpMethod"] = httpMethod;
+            postData["numRequests"] = numRequests;
+            postData["params"] = params;
+            postData["headers"] = _headers;
+
+            let config = {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
+
+            //check the work mode
+            let workMode = getWorkMode();
+            if (workMode.toLowerCase()=="client") {
+                let config = {
+                    headers: _headers
+                }
+                for (let i=0; i<numRequests; i++) {
+                    //send an ajax request using axios
+                    sendAxiosRequest(httpMethod, destUrl, params, config, onSuccess, onFailure);
+                }
+            }
+            else {
+                let config = {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+                //send an ajax request using axios
+                sendAxiosRequest("POST", url, postData, config, onSuccess, onFailure);
+            }
+        }
+
+        function sendRequestSuccess(response) {
+            let  methodName = "sendRequestSuccess(): ";
+            console.info(methodName + "request was sent successfully ["+JSON.stringify(response)+"]");
+        }
+
+        function sendRequestFailure(response) {
+            let  methodName = "sendRequestFailure(): ";
+            console.info(methodName + "An error occurred ["+response+"]");
+        }
+
+        function getHeadersElemId() {
+            return "headers";
+        }
+
+        function getParamsElemId() {
+            return "params";
+        }
+
+        function getHeaderNameElemId() {
+            return "headerName";
+        }
+
+        function getHeaderValueElemId() {
+            return "headerValue";
+        }
+
+        function getParamNameElemId() {
+            return "paramName";
+        }
+
+        function getParamValueElemId() {
+            return "paramValue";
+        }
+
+        function getValuesDelimiter() {
+            return "::";
+        }
+
+        function setParamToUpdate() {
+            let headerNameValue = document.getElementById(getParamsElemId()).value;
+            let delimiter = getValuesDelimiter();
+            let parts = headerNameValue.split(delimiter);
+            if (parts==null || parts==undefined || parts=="undefined") {
+                return;
+            }
+            if (parts.length && parts.length==2) {
+                let paramName = parts[0];
+                let paramValue = parts[1];
+                document.getElementById(getParamNameElemId()).value = paramName;
+                document.getElementById(getParamValueElemId()).value = paramValue;
+            }
+        }
+
+        function setHeaderToUpdate() {
+            let headerNameValue = document.getElementById(getHeadersElemId()).value;
+            let delimiter = getValuesDelimiter();
+            let parts = headerNameValue.split(delimiter);
+            if (parts==null || parts==undefined || parts=="undefined") {
+                return;
+            }
+            if (parts.length && parts.length==2) {
+                let headerName = parts[0];
+                let headerValue = parts[1];
+                document.getElementById(getHeaderNameElemId()).value = headerName;
+                document.getElementById(getHeaderValueElemId()).value = headerValue;
+            }
+        }
+
+        function saveOption(listId, nameElemId, valueElemId) {
+            let listElem = document.getElementById(listId);
+            let nameElemValue = document.getElementById(nameElemId).value;
+            let valueElemValue = document.getElementById(valueElemId).value;
+            let currOpt = null;
+            let currOptParts = null;
+            let itemIndex = -1;
+
+            //check for valid values
+            if (nameElemValue==null || nameElemValue==undefined || nameElemValue=="undefined" || nameElemValue.trim()=="") {
+                return;
+            }
+
+            //check if the name exists
+            for(let i = 0; i < listElem.options.length; i++) {
+                currOpt = listElem.options[i];
+                currOptParts = currOpt.value.split(getValuesDelimiter());
+                if (currOptParts==null || currOptParts==undefined || currOptParts=="undefined") {
+                    continue;
+                }
+                if (currOptParts.length && currOptParts.length==2) {
+                    if (currOptParts[0]==nameElemValue) {
+                        itemIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            //remove the entry from the list
+            if (itemIndex!=-1) {
+                listElem.remove(itemIndex);
+            }
+
+            //add a new entry to the list
+            if (valueElemValue!=null && valueElemValue!=undefined && valueElemValue!="undefined" && valueElemValue.trim()!="") {
+                let option = document.createElement("option");
+                option.value = nameElemValue + getValuesDelimiter() + valueElemValue;
+                option.text = option.value;
+                listElem.add(option);
+            }
+
+            //clear input values
+            document.getElementById(nameElemId).value = "";
+            document.getElementById(valueElemId).value = "";
+        }
+
+        function saveHeader() {
+            saveOption(getHeadersElemId(), getHeaderNameElemId(), getHeaderValueElemId());
+        }
+
+        function saveParam() {
+            saveOption(getParamsElemId(), getParamNameElemId(), getParamValueElemId());
+        }
+
+    </script>
+</head>
+<body>
+<div class="outerContainer">
+    <div class="innerContainer">
+        <div class="row">
+            <div class="colWide">
+                <label for="destinationUrl" class="label">Destination Url: </label>
+                <textarea class="textareaShort" id="destinationUrl" name="destinationUrl"></textarea>
+            </div>
+        </div>
+        <div class="rowsDelimiter"></div>
+        <div class="row">
+            <div class="colWide">
+                <label for="httpMethod" class="label">Http Method: </label>
+                <select id="httpMethod" name="httpMethod" value="" size="1">
+                    <option label="GET">GET</option>
+                    <option label="POST">POST</option>
+                    <option label="PUT">PUT</option>
+                    <option label="OPTIONS">OPTIONS</option>
+                    <option label="DELETE">DELETE</option>
+                    <option label="HEAD">HEAD</option>
+                    <option label="CONNECT">CONNECT</option>
+                    <option label="TRACE">TRACE</option>
+                    <option label="PATCH">PATCH</option>
+                </select>
+            </div>
+        </div>
+        <div class="rowsDelimiter"></div>
+        <div class="row">
+            <div class="colWide">
+                <label for="paramName" class="label">Param Name: </label>
+                <input type="text" class="input" id="paramName" name="paramName" value="" />
+            </div>
+        </div>
+        <div class="rowsDelimiter"></div>
+        <div class="rowHeaders">
+            <div class="colWide">
+                <label for="paramValue" class="label">Param Value: </label>
+                <textarea class="textarea" id="paramValue" name="paramValue"></textarea>
+            </div>
+            <div class="colsDelimiter"></div>
+            <div class="colButton">
+                <input id="btnSaveParam" name="btnSaveParam" class="button" type="button" onclick="saveParam();" value="Save" title="click here to save the param name and value" />
+            </div>
+        </div>
+        <div class="rowsDelimiter"></div>
+        <div class="rowHeaders">
+            <div class="colWide">
+                <label for="params" class="label">Params: </label>
+                <select id="params" name="params" value="" size="6" class="input" onchange="setParamToUpdate()">
+                </select>
+            </div>
+        </div>
+        <div class="rowsDelimiter"></div>
+        <div class="row">
+            <div class="colWide">
+                <label for="headerName" class="label">Header Name: </label>
+                <input type="text" class="input" id="headerName" name="headerName" value="" />
+            </div>
+        </div>
+        <div class="rowsDelimiter"></div>
+        <div class="rowHeaders">
+            <div class="colWide">
+                <label for="headerValue" class="label">Header Value: </label>
+                <textarea class="textarea" id="headerValue" name="headerValue"></textarea>
+            </div>
+            <div class="colsDelimiter"></div>
+            <div class="colButton">
+                <input id="btnSaveHeader" name="btnSaveHeader" class="button" type="button" onclick="saveHeader();" value="Save" title="click here to save the header name and value" />
+            </div>
+        </div>
+        <div class="rowsDelimiter"></div>
+        <div class="rowHeaders">
+            <div class="colWide">
+                <label for="headers" class="label">Headers: </label>
+                <select id="headers" name="headers" value="" size="6" class="input" onchange="setHeaderToUpdate()">
+                </select>
+            </div>
+        </div>
+        <div class="rowsDelimiter"></div>
+        <div class="row">
+            <div class="colWide">
+                <label for="numRequests" class="label" title="The number of requests to send to the destination url">Num Requests: </label>
+                <input type="number" id="numRequests" name="numRequests" min="1" max="1000" value="1" />
+            </div>
+        </div>
+        <div class="rowsDelimiter"></div>
+        <div class="row">
+            <div class="colWide">
+                <label for="cbUseClient" class="label" title="Un-check to use server-side to send requests">Client Mode: </label>
+                <input type="checkbox" id="cbUseClient" name="cbUseClient" checked="checked" />
+            </div>
+        </div>
+        <div class="rowsDelimiter"></div>
+        <div class="row">
+            <input type="button" class="button" onclick="sendRequest();" value="Send" title="click here to send a request to the server" />
+        </div>
+    </div>
+</div>
+</body>
+</html>
